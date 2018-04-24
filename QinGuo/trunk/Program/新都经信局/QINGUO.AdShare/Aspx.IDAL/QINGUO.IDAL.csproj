@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{847010A7-9EBE-4206-B75D-A8FDEEFBED4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QINGUO.IDAL</RootNamespace>
+    <AssemblyName>QINGUO.IDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="QINGUO.Common">
+      <HintPath>..\..\..\..\..\Lib\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdShare\IAAShare.cs" />
+    <Compile Include="FireApp\IElevatorBrand.cs" />
+    <Compile Include="FireApp\ISysFlow.cs" />
+    <Compile Include="FireApp\ISysAppointed.cs" />
+    <Compile Include="FireApp\ISysAppointCheckNotes.cs" />
+    <Compile Include="IAdActive.cs" />
+    <Compile Include="IBaseDAL.cs" />
+    <Compile Include="IEDynamic.cs" />
+    <Compile Include="FireApp\IFireBox.cs" />
+    <Compile Include="IOrderEvaluation.cs" />
+    <Compile Include="IOrderRunOrder.cs" />
+    <Compile Include="IOrderUserExtended.cs" />
+    <Compile Include="IOrderUserMoneyRecord.cs" />
+    <Compile Include="ISysDirc.cs" />
+    <Compile Include="ISysModel.cs" />
+    <Compile Include="ISysOperateLog.cs" />
+    <Compile Include="Shop\IShopCategory.cs" />
+    <Compile Include="Shop\IShopGoods.cs" />
+    <Compile Include="System\ISysCategory.cs" />
+    <Compile Include="System\ISysGroup.cs" />
+    <Compile Include="System\ISysCompany.cs" />
+    <Compile Include="System\ISysFeedback.cs" />
+    <Compile Include="System\ISysHatcity.cs" />
+    <Compile Include="System\ISysHatProvince.cs" />
+    <Compile Include="System\ISysDataBaseBack.cs" />
+    <Compile Include="System\ISysImgPic.cs" />
+    <Compile Include="System\ISysMaster.cs" />
+    <Compile Include="System\ISysMessageAuthCode.cs" />
+    <Compile Include="System\ISysPushInfo.cs" />
+    <Compile Include="System\ISysPushMessage.cs" />
+    <Compile Include="System\ISysPushUser.cs" />
+    <Compile Include="System\ISysUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\ISysBtnValue.cs" />
+    <Compile Include="System\ISysFun.cs" />
+    <Compile Include="System\ISysFunLinkBtnValue.cs" />
+    <Compile Include="System\ISysMasterRole.cs" />
+    <Compile Include="System\ISysRole.cs" />
+    <Compile Include="System\ISysRoleFun.cs" />
+    <Compile Include="System\ISysRoleRangeData.cs" />
+    <Compile Include="System\ISysHatarea.cs" />
+    <Compile Include="System\ISysRemarkSetting.cs" />
+    <Compile Include="System\ISysCompanyPaySet.cs" />
+    <Compile Include="ISysUserFriends.cs" />
+    <Compile Include="System\ISysCompanyCognate.cs" />
+    <Compile Include="System\ISysCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspx.DapperAccessBase\QINGUO.DapperAccessBase.csproj">
+      <Project>{B436ED0F-9DEF-4720-AF30-B1C01B6FABB2}</Project>
+      <Name>QINGUO.DapperAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.Model\QINGUO.Model.csproj">
+      <Project>{D8D1450F-BB50-49CE-BF13-4563DF593356}</Project>
+      <Name>QINGUO.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.ViewModel\QINGUO.ViewModel.csproj">
+      <Project>{BADFF8E8-3EA2-4BAF-98F6-362F4B7410F0}</Project>
+      <Name>QINGUO.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

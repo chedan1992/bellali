@@ -1,0 +1,9 @@
+1:添加 Mime类型
+
+key:.apk
+value:application/vnd.android.package-archive
+
+2:导出excel图片 需要引用office
+
+Microsoft Excel 15.0 Object Library
+Microsoft Office 12.0 Object Library

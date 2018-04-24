@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>忘记密码</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+    
+    <link rel="shortcut icon" href="/logo.gif" /> 
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f2f2f2;height:350px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="weui-cells__title">忘记密码</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">手机号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" placeholder="请输入手机号" id="phone">
+            </div>
+            <div class="weui-cell__ft">
+                <button id="codetime"  class="weui-vcode-btn" onclick="getcode()">获取验证码</button>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">验证码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" placeholder="请输入验证码" id="code">
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" class="weui-btn weui-btn_primary martop15 forgetpwdbtn" style="width: 90%; background-color:#ccc;">找回密码</a>
+
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script>
+        $(function () {
+            FastClick.attach(document.body);
+
+            setInterval(function () {
+                var phone = $("#phone").val();
+                var code = $("#code").val();
+                if (phone != "" && code != "") {
+                    $(".forgetpwdbtn").css("background-color", "#f84e4e").attr("onclick", "forgetpwd()");
+                } else {
+                    $(".forgetpwdbtn").css("background-color", "#ccc").attr("onclick", "");
+                }
+            }, 300);
+        });
+
+        function forgetpwd() {
+            var phone = $("#phone").val();
+            if (!(/^1[34578]\d{9}$/.test(phone))) {
+                $.toptip("手机号码有误，请重填！", 'error')
+                return false;
+            }
+            var code = $("#code").val();
+            //发送验证码
+            $.ajax({
+                url: comm.url + "/api/forgetcodePwd/" + phone + "/" + code,
+                type: 'post',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        $.toptip(d.msg, 'warning');
+                        var code = $("#code").val("");
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error')
+                }
+            });
+        }
+
+        var time = 60;
+        function getcode() {
+            var phone = $("#phone").val();
+            if (!(/^1[34578]\d{9}$/.test(phone))) {
+                $.toptip("手机号码有误，请重填！", 'error')
+                return false;
+            }
+            //发送验证码
+            $.ajax({
+                url: comm.url + "/api/sendCode/" + phone + "/1",
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        $("#codetime").html("60s重新获取").attr("onclick", "");
+                        $.toptip("验证码已发送，请注意查收！", 'success');
+                        var timeinterval = setInterval(function () {
+                            time--;
+                            $("#codetime").html(time + "s重新获取");
+                            if (time == 0) {
+                                time = 60;
+                                $("#codetime").html("获取验证码").attr("onclick", "getcode()");
+                                clearInterval(timeinterval);
+                            }
+                        }, 1000);
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                        $("#codetime").html("获取验证码").attr("onclick", "getcode()");
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error')
+                }
+            });
+        }
+    </script>
+</body>
+</html>

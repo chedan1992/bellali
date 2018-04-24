@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WebPortalAdmin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WebPortalAdmin_WebService_SDKService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://hprpt2.eucp.b2m.cn:8080/sdk/SDKService</Value>
+    </Setting>
+    <Setting Name="WebPortalAdmin_TServiceWeb_TService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://120.76.42.177:8033/Service/TService.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

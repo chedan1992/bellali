@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetAAInventoryClass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tfs" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAAInventoryClassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAAInventoryClassResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAAInventory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="tfs" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAAInventoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAAInventoryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAAInventoryClassSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAAInventoryClass" />
+  </wsdl:message>
+  <wsdl:message name="GetAAInventoryClassSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAAInventoryClassResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAAInventorySoapIn">
+    <wsdl:part name="parameters" element="tns:GetAAInventory" />
+  </wsdl:message>
+  <wsdl:message name="GetAAInventorySoapOut">
+    <wsdl:part name="parameters" element="tns:GetAAInventoryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="TServiceSoap">
+    <wsdl:operation name="GetAAInventoryClass">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取存货分类(产品类别) GetAAInventoryClass</wsdl:documentation>
+      <wsdl:input message="tns:GetAAInventoryClassSoapIn" />
+      <wsdl:output message="tns:GetAAInventoryClassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAAInventory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取存货(产品) GetAAInventory</wsdl:documentation>
+      <wsdl:input message="tns:GetAAInventorySoapIn" />
+      <wsdl:output message="tns:GetAAInventorySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TServiceSoap" type="tns:TServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAAInventoryClass">
+      <soap:operation soapAction="http://tempuri.org/GetAAInventoryClass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAAInventory">
+      <soap:operation soapAction="http://tempuri.org/GetAAInventory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TServiceSoap12" type="tns:TServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAAInventoryClass">
+      <soap12:operation soapAction="http://tempuri.org/GetAAInventoryClass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAAInventory">
+      <soap12:operation soapAction="http://tempuri.org/GetAAInventory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TService">
+    <wsdl:port name="TServiceSoap" binding="tns:TServiceSoap">
+      <soap:address location="http://120.76.42.177:8033/Service/TService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TServiceSoap12" binding="tns:TServiceSoap12">
+      <soap12:address location="http://120.76.42.177:8033/Service/TService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

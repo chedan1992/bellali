@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>发现</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+
+    <link rel="shortcut icon" href="/logo.gif" />
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body ontouchstart>
+    <div class="weui-tab">
+
+        <div class="weui-navbar">
+            <div class="weui-search-bar" id="searchBar" style="top: 0px; bottom: inherit; position: absolute; left: 0px; right: 0px;">
+                <div class="weui-search-bar__form">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
+                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                        <i class="weui-icon-search"></i>
+                        <span>搜索</span>
+                    </label>
+                </div>
+                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+            </div>
+        </div>
+        <div class="weui-tab__bd">
+            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active weui-pull-to-refresh" style="width:100%;top:44px;overflow: auto;overflow-x:hidden;">
+                <div class="weui-pull-to-refresh__layer">
+                    <div class='weui-pull-to-refresh__arrow'></div>
+                    <div class='weui-pull-to-refresh__preloader'></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新</div>
+                </div>
+                <div class="content">
+                </div>
+                <div class="weui-loadmore hide">
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">正在加载</span>
+                </div>
+            </div>
+        </div>
+        <div class="weui-tabbar">
+            <a href="home.html" class="weui-tabbar__item">
+                <!--<span class="weui-badge" style="position: absolute; top: -.4em; right: 1em;">8</span>-->
+                <div class="weui-tabbar__icon">
+                    <img src="./images/sy1.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">首页</p>
+            </a>
+            <a href="###" class="weui-tabbar__item  weui-bar__item--on">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/lb2.png" alt="" style="">
+                </div>
+                <p class="weui-tabbar__label">发现</p>
+            </a>
+            <a href="my.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/wd.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">我</p>
+            </a>
+        </div>
+    </div>
+    <a class=" gototop ">返回顶部</a>
+    
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/jquery.lazyload.js"></script>
+    <script src="../js/news.js"></script>
+    <script>
+        var user = comm.getStorage("user");
+        var loading = false;
+        var pagesize = 10, pageindex = 1, type = 0, dircid = "", userid = "";
+        $(function () {
+            FastClick.attach(document.body);
+            if (user != null && user != "") {
+                userid = user.id;
+            }
+
+            $(".weui-tab__bd-item").scroll(function () {
+                if ($(".weui-tab__bd-item").scrollTop() > 400) {
+                    $(".gototop").show();//一秒渐入动画
+                } else {
+                    $(".gototop").hide();//一秒渐隐动画
+                }
+            });
+
+            $(".gototop").click(function () {
+                $('.weui-tab__bd-item').animate({ scrollTop: 0 }, 1000);
+            });
+
+            $(".weui-tab__bd-item").height(comm.h - 41);
+            $(".weui-tab__bd-item").pullToRefresh().on("pull-to-refresh", function () {
+                setTimeout(function () {
+                    pageindex = 1;
+                    $("#tab1 .content").html("");
+                    page(type, dircid, userid, "", pagesize, pageindex);
+                    $(".weui-tab__bd-item").pullToRefreshDone();
+                }, 1000);
+            });
+            $(".weui-tab__bd-item").infinite().on("infinite", function () {
+                if (loading) return;
+                loading = true;
+                $("#tab1").find(".weui-loadmore").html('<i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span>').show();
+                setTimeout(function () {
+                    pageindex++;
+                    console.log(pageindex);
+                    page(type, dircid, userid, "", pagesize, pageindex);
+                }, 1000);
+            });
+            page(type, "", userid, "", pagesize, pageindex);
+
+            //搜索
+            $('#searchInput').bind('keyup', function (event) {
+                if (event.keyCode == "13") {
+                    //回车执行查询
+                    type = 0;
+                    dircid = '';
+                    pageindex = 1;
+                    $("#weather").hide();
+                    $("#tab1 .content").html("");
+                    page(type, dircid, userid, $(this).val(), pagesize, pageindex);
+                    $(".topnav .nav a").removeClass("weui-bar__item--on");
+                }
+            });
+        });
+
+        //请求新闻
+        function page(type, dircid, userid, search, pagesize, pageindex) {
+            $.ajax({
+                url: comm.url + "/api/getNews?type=" + type + "&dircid=" + dircid + "&userid=" + userid + "&search=" + search + "&pagesize=" + pagesize + "&pageindex=" + pageindex,
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        if (pageindex == 1 && d.data.length == 0) {
+                            $("#tab1 .content").html("<div style='text-align: center; color:#ccc;margin-top:10px;'><img src='images/sw1_--wu@2x.png' /><p>空空的,什么也没有！！</p></div>");
+                            $("#tab1").find(".weui-loadmore").hide();
+                            loading = true;
+                        } else if (d.data.length == 0) {
+                            loading = true;
+                            $("#tab1").find(".weui-loadmore").html('<span class="weui-loadmore__tips">已经加载完了</span>').show();
+                        } else {
+                            $.each(d.data, function (i, e) {
+                                new news({
+                                    id: "#tab1 .content",
+                                    style: e.template,
+                                    data: e
+                                }).init();
+                            });
+                            $("#tab1").find(".weui-loadmore").hide();
+                            loading = false;
+                        }
+                    } else {
+                        loading = false;
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                    $("#tab1").find(".weui-loadmore").hide();
+                    loading = false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

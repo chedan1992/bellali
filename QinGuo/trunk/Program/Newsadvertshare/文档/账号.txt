@@ -1,0 +1,17 @@
+云之讯  账号：jzgsic@sina.com  密码：jiang1314520
+腾讯云：345217603@qq.com  jiang1314520,,,
+
+服务器地址：139.199.66.49
+账号：Administrator
+密码：jiang1314520,,,
+
+数据库 ：139.199.66.49
+账号：sa
+密码：jiang1314520,,,
+
+http://main.jikefenxiang.net  后端    139.199.66.49:8002  gomrit 666666
+http://www.jikefenxiang.net  前端  139.199.66.49:8001
+
+
+
+

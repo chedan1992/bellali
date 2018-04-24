@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商品选择</title>
+    <script type="text/javascript">
+        var rowsAll = [];
+        var CheckList = [];
+        var TestListId = [];
+        Ext.onReady(function () {
+            //初始化
+            treeNodeId = 3;
+            //转义列
+            var Active = Ext.data.Record.create([
+                   { name: "Id", type: "string", mapping: "Id" },
+                  { name: "Name", type: "string", mapping: "Name" },
+                  { name: "Address", type: "string", mapping: "Address" },
+                  { name: "ReegistMoney", type: "decimal", mapping: "ReegistMoney" },
+                  { name: "RegisiTime", type: "datetime", mapping: "RegisiTime" },
+                  { name: "Order", type: "string", mapping: "Order" },
+                  { name: "Status", type: "string", mapping: "Status" },
+                  { name: "CreateTime", type: "datetime", mapping: "CreateTime" },
+                  { name: "Code", type: "string", mapping: "Code" },
+                  { name: "CityName", type: "string", mapping: "CityName" },
+                  { name: "Phone", type: "string", mapping: "Phone" },
+                  { name: "LinkUser", type: "string", mapping: "LinkUser" },
+                  { name: "Attribute", type: "Int", mapping: "Attribute" },
+                  { name: "LegalPerson", type: "string", mapping: "LegalPerson" },
+                  { name: "Introduction", type: "string", mapping: "Introduction" },
+                  { name: "Type", type: "string", mapping: "Type" },
+                  { name: "Nature", type: "string", mapping: "Nature" },
+                  { name: "LawyerName", type: "string", mapping: "LawyerName" },
+                  { name: "LawyerPhone", type: "string", mapping: "LawyerPhone" },
+                  { name: "ComPLon", type: "string", mapping: "ComPLon" },
+                  { name: "CompLat", type: "string", mapping: "CompLat" }
+            ]);
+
+            //数据源
+            var respon = Ext.lib.Ajax.getConnectionObject().conn;
+            respon.open("post", "/SysCompanyCognate/getSelected", false);
+            respon.send(null);
+            var result = Ext.util.JSON.decode(respon.responseText);
+            if (result) {
+                if (result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        TestListId.push(result[i].CId);
+                    }
+                }
+            }
+            //数据源
+            var store = GridStore(Active, '/SysCompany/SearchTopData?Attribute=' + treeNodeId);
+            var selections = new Array();
+            store.addListener('beforeload', function () {
+                var grid = top.Ext.getCmp("gg");
+                if (typeof (grid) != "undefined") {
+                    //刷新之前,当前列表选择的记录
+                    var rows = grid.getSelectionModel().getSelections();
+                    var gridstore = grid.getStore();
+                    if (rows.length > 0) {
+                        for (var i = 0; i < rows.length; i++) {
+                            var bool = true;
+                            for (var j = 0; j < TestListId.length; j++) {
+                                if (TestListId[j] == rows[i].data.Id) {
+                                    bool = false;
+                                    break;
+                                }
+                            }
+                            if (bool) {
+                                TestListId.push(rows[i].data.Id);
+                                rowsAll.push(rows[i].data);
+                            }
+                        }
+                        for (var k = 0; k < gridstore.getCount(); k++) {
+                            var record = gridstore.getAt(k);
+                            var bool = true;
+                            for (var i = 0; i < rows.length; i++) {
+                                if (record.data.Id == rows[i].data.Id) {
+                                    bool = false;
+                                    break;
+                                }
+                            }
+                            if (bool) {
+                                for (var j = 0; j < TestListId.length; j++) {
+                                    if (TestListId[j] == record.data.Id) {
+                                        TestListId.splice(j, 1);
+                                        rowsAll.splice(j, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            store.addListener('load', function () {
+                for (var i = 0; i < store.getCount(); i++) {
+                    var record = store.getAt(i);
+                    for (j = 0; j < TestListId.length; j++) {
+                        var id = TestListId[j];
+                        if (record.data.Id == id) {
+                            selections.push(record);
+                            break;
+                        }
+                    }
+                }
+                if (selections.length > 0) {
+                    sm.selectRecords(selections);
+                }
+            });
+
+            /*树形菜单*/
+            var tree = new Ext.tree.TreePanel({
+                width: 150,
+                layout: 'fit',
+                id: 'tree',
+                autoScroll: true,
+                animate: true,
+                enableDD: false,
+                bodyStyle: 'padding-top:4px',
+                lines: true, //显示树形控件的前导线
+                containerScroll: true,
+                root: {
+                    text: '单位类型',
+                    expanded: true,
+                    children: [
+                        {
+                            text: '消防单位',
+                            id: '3',
+                            leaf: true
+                        },
+                        {
+                            text: '维保单位',
+                            id: '4',
+                            leaf: true
+                        },
+                        {
+                            text: '供应商',
+                            id: '5',
+                            leaf: true
+                        }
+                    ]
+                },
+                minSize: 175,
+                maxWidth: 200,
+                margins: '0 2 0 0',
+                tbar: [
+                {
+                    xtype: 'tbtext',
+                    height: 21,
+                    text: ''
+                }
+            ],
+                listeners: {
+                    afterrender: function (tree) {
+                        tree.getRootNode().childNodes[0].select(); //默认选中第一个节点
+                    },
+                    click: treeitemclick
+                }
+            });
+
+            var west = new Ext.Panel({
+                region: 'west',
+                id: 'TreeWest',
+                layoutConfig: {
+                    animate: true
+                },
+                animCollapse: true,
+                split: true,
+                border: false,
+                width: 150,
+                minSize: 150,
+                maxSize: 200,
+                margins: '0 5 0 0',
+                layout: 'fit',
+                bodyStyle: 'border-left:0px;border-top:0px;border-bottom:0px;',
+                items: tree
+            });
+
+            var sm = new top.Ext.grid.CheckboxSelectionModel();
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['单位名称', 'Name'], ['联系人', 'LinkUser'], ['联系电话', 'Phone']];
+
+            var center = new Ext.grid.GridPanel({
+                id: 'gg',
+                region: 'center',
+                layout: 'fit',
+                store: store,
+                sm: sm,
+                stripeRows: true, //隔行颜色不同
+                loadMask: { msg: '数据请求中，请稍后...' },
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                 new Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                 sm, //设置行号
+                {
+                header: "单位名称",
+                dataIndex: 'Name',
+                width: 70,
+                menuDisabled: true
+            },
+                {
+                    header: "联系人",
+                    dataIndex: 'LinkUser',
+                    width: 70,
+                    menuDisabled: true
+                },
+              {
+                  header: "联系电话",
+                  dataIndex: 'Phone',
+                  width: 80,
+                  menuDisabled: true
+              }
+                ],
+            tbar: tbarTop(),
+            bbar: bbarTop(store), //分页工具条
+            viewConfig: {
+                forceFit: true,
+                enableRowBody: true,
+                scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+            },
+            listeners: {
+                beforerender: function () {
+                }
+            }
+        });
+
+        // 响应加载前事件，传递node参数 
+        center.store.on('beforeload', function (node) {
+            switch (parseInt(treeNodeId)) {
+                case 1: //
+                case 2: //
+                case 3:
+                case 4:
+                case 5:
+                    center.getStore().proxy.conn.url = '/SysCompany/SearchTopData?Attribute=' + treeNodeId;
+                    break;
+            }
+        });
+
+        //处理checkbox的勾选事件 
+        center.getSelectionModel().on('rowselect', function (sm, rowIdx, r) {
+            //alert('勾选了checkbox后，获得选中行的name:' + center.store.getAt(rowIdx).get('Type1Name'));
+            var ID = center.store.getAt(rowIdx).get('Id');
+            var ExistsOld = false;
+            var ExistsNew = false;
+            for (var i = 0; i < rowsAll.length; i++) {
+                if (CheckList[i] == ID) {
+                    ExistsOld = true;
+                    break;
+                }
+            }
+            if (ExistsOld == false) {
+                for (var i = 0; i < TestListId.length; i++) {
+                    if (TestListId[i] == ID) {
+                        ExistsNew = true;
+                        break;
+                    }
+                }
+            }
+            //添加选中记录
+            if (ExistsOld == false && ExistsNew == false) {
+                CheckList.push(ID);
+            }
+        });
+
+        //处理checkbox的取消勾选事件 
+        center.getSelectionModel().on('rowdeselect', function (sm, rowIdx, r) {
+            debugger
+            var ID = center.store.getAt(rowIdx).get('Id');
+            for (var i = 0; i < CheckList.length; i++) {
+                if (CheckList[i] == ID) {
+                    CheckList.remove(CheckList[i]);
+                    break;
+                }
+            }
+        });
+
+        var viewport = new Ext.Panel({
+            layout: 'border',
+            border: false,
+            height: 428,
+            renderTo: 'divShop',
+            items: [west, center],
+            listeners: {
+                afterrender: function () {
+
+                }
+            }
+        });
+
+    });
+
+    //切换菜单事件
+    function treeitemclick(node, e) {
+        if (node.isLeaf()) {
+            treeNodeId = node.id;
+            var grid = Ext.getCmp("gg");
+            var _store = Ext.getCmp("gg").store;
+            _store.reload({ params: { start: 0, limit: parseInt(Ext.getCmp("pagesize").getValue())} });
+        }
+    }
+
+    //格式化查询内容
+    function formartSequence(val, metadata, record, rowIndex, colIndex, store) {
+        var text = top.Ext.getCmp("comContent").getValue(); //输入框值
+        if (text != "") {
+            var e = new RegExp(text, "g");
+            return val.replace(e, "<span style='color:red;'>" + text + "</span>");
+        }
+        else {
+            return val;
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

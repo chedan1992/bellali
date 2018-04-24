@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BADFF8E8-3EA2-4BAF-98F6-362F4B7410F0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QINGUO.ViewModel</RootNamespace>
+    <AssemblyName>QINGUO.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Json\jsonCategoryTree.cs" />
+    <Compile Include="Json\JsonFunTree.cs" />
+    <Compile Include="Json\jsonFunTreeByChk.cs" />
+    <Compile Include="Json\JsonRoleFunZtree.cs" />
+    <Compile Include="Json\jsonSysBusinessCircle.cs" />
+    <Compile Include="Json\jsonSysCategory.cs" />
+    <Compile Include="Json\JsonTree.cs" />
+    <Compile Include="Json\jsonPapersTestView.cs" />
+    <Compile Include="Json\JsonRevenueRanking.cs" />
+    <Compile Include="EvaluationListView.cs" />
+    <Compile Include="JsonCompanyTree.cs" />
+    <Compile Include="Json\JsonFaultRanking.cs" />
+    <Compile Include="Json\jsonOrderStats.cs" />
+    <Compile Include="ModAdActiveView.cs" />
+    <Compile Include="ModChartElevatorBrandView.cs" />
+    <Compile Include="ModChartElevatorView.cs" />
+    <Compile Include="ModEDocumentView.cs" />
+    <Compile Include="ModMyPushView.cs" />
+    <Compile Include="ModOrderEvaluationView.cs" />
+    <Compile Include="ModOrderListView.cs" />
+    <Compile Include="ModPushMsgCompany.cs" />
+    <Compile Include="ModPushUserView.cs" />
+    <Compile Include="ModSysUserCategoryView.cs" />
+    <Compile Include="Json\ModTreeJson.cs" />
+    <Compile Include="ModViewDynamic.cs" />
+    <Compile Include="ModviewOrderList.cs" />
+    <Compile Include="ModViewSysCompany.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ModOrderStatsView.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\QINGUO.Common\QINGUO.Common.csproj">
+      <Project>{A6B494E6-7B95-486E-913A-602D7FF475D8}</Project>
+      <Name>QINGUO.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.Model\QINGUO.Model.csproj">
+      <Project>{D8D1450F-BB50-49CE-BF13-4563DF593356}</Project>
+      <Name>QINGUO.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

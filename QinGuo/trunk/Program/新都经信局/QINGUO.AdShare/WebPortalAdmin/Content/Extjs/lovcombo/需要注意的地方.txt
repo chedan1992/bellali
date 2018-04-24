@@ -1,0 +1,17 @@
+返回的displayField    ["1","管理员"]  [field1,field2]
+fieldLabel:'航班号',
+xtype:"lovcombo",        
+mode: 'local',
+maxLength:40,            
+width:150,               
+id:'flight_no',          
+name:'flight_no',
+editable:true,
+allowBlank:true,
+typeAhead:true,
+triggerAction: 'all',
+selectOnFocus:true,
+store:storefn,      
+valueField :"flight_no", 	//field1
+displayField: "flight_no"	//field2
+ //hiddenName:'flight_no'	//

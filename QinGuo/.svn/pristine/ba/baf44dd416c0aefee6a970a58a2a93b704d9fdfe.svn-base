@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  有关如何配置 ASP.NET 应用程序的详细信息，请访问
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <!--For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468-->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <section name="cachingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Caching.Configuration.CacheManagerSettings, Microsoft.Practices.EnterpriseLibrary.Caching"/>
+    <section name="dataConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings, Microsoft.Practices.EnterpriseLibrary.Data"/>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+    <section name="WebPortalAdmin.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <!--本地-->
+    <add name="WriteConnectionString" connectionString="Server=139.199.66.49;DataBase=91QINGUO_ADShare;Uid=ducq;Pwd=123qweasdzxc~;Pooling=true;Max Pool Size=40000;Min Pool Size=0;"/>
+    <add name="ReadConnectionString" connectionString="Server=139.199.66.49;DataBase=91QINGUO_ADShare;Uid=ducq;Pwd=123qweasdzxc~;Pooling=true;Max Pool Size=40000;Min Pool Size=0;"/>
+  </connectionStrings>
+  <cachingConfiguration defaultCacheManager="Cache Manager">
+  <cacheManagers>
+      <add name="Cache Manager" type="Microsoft.Practices.EnterpriseLibrary.Caching.CacheManager, Microsoft.Practices.EnterpriseLibrary.Caching" expirationPollFrequencyInSeconds="3600" maximumElementsInCacheBeforeScavenging="1000" numberToRemoveWhenScavenging="10" backingStoreName="NullBackingStore"/>
+    </cacheManagers>
+    <backingStores>
+      <add type="Microsoft.Practices.EnterpriseLibrary.Caching.BackingStoreImplementations.NullBackingStore, Microsoft.Practices.EnterpriseLibrary.Caching" name="NullBackingStore"/>
+    </backingStores>
+  </cachingConfiguration>
+  <dataConfiguration defaultDatabase="MainDb"/>
+  <appSettings>
+    <!--日志记录器-->
+    <add key="ApplicationLoger" value="ApplicationLog.CommonLogger"/>
+    <!--Dapper主库-->
+    <add key="WriteConnectionStringName" value="WriteConnectionString"/>
+    <!--Dapper从库-->
+    <add key="ReadConnectionStringName" value="WriteConnectionString"/>
+
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="DAL" value="QINGUO.DAL" />
+
+    <!--系统初始化公司主键-->
+    <add key="CompanyId" value="C0A38317-59DA-4DE2-9428-E5B66EDBC2CF"/>
+    <!--网站名称-->
+    <add key="WebSiteName" value="即刻分享后台信息管理系统"/>
+    <!--系统版本号-->
+    <add key="Version" value="v1.1.4"/>
+   
+    <!--百度编辑器图片上传路径-->
+    <add key="UploadFileDirectory" value="~/UploadFile"/>
+    <!--新闻图片保存路径-->
+    <add key="NewsPath" value="/UploadFile/News/"/>
+    <!--二维码生成地址管理-->
+    <add key="QRCode" value="/UploadFile/QRCode/"/>
+    <!--设备过期年限-->
+    <add key="LostYear" value="5"/>
+    <!--文章图片保存路径-->
+    <add key="EDynamic" value="/UploadFile/EDynamic/"/>
+    <!--文档图片保存路径-->
+    <add key="EDocument" value="/UploadFile/EDocument/"/>
+    <!--保证金-->
+    <add key="bail" value="1000"/>
+    <!--推送-管理员派单-->
+    <add key="AssignTitle" value="公司派单"/>
+    <!--数据库名称-->
+    <add key="DataBaseName" value="91QINGUO_ADShare"/>
+    <!--百度信息推送-->
+    <!--安卓用户api密钥-->
+    <add key="ApiKey" value="QFyiqHI8kT3tYa2SWgrF0N6j"/>
+    <!--安卓用户密钥-->
+    <add key="SecretKey" value="Gg9Z8FBintNSVGVkzOIvmGeg5FBAtbhf"/>
+    <!--是否为沙盒模式-->
+    <add key="SandBox" value="true"/>
+
+    <!--短信验证码-->
+    <add key="sn" value="0SDK-EBB-6699-REZOO"/>
+    <add key="pwd" value="877794"/>
+    <add key="用户编号" value="13496"/>
+    <add key="用户密码" value="593842"/>
+    <add key="通道编号" value="1462"/>
+    <!--邮箱通道-->
+    <add key="smtp" value="smtp.163.com"/>
+    <add key="from" value="15928877394@163.com"/>
+
+    <!--个推信息推送-->
+    <add key="APPID" value="yEDwOuB02q5dduauWkJEh7"/>
+    <add key="APPKEY" value="rWNvHQ88iNAiQQf3KxDpc4"/>
+    <add key="MASTERSECRET" value="BClt6Bj25O9qOFsxK1FDM4"/>
+    <add key="DeviceToken" value=""/>
+    
+    <!--支付回调路径-->
+    <!--提现-->
+    <add key="notifyurlW" value="http://120.27.193.165:8011/Elevator/WithdrawCashReturnHandler.ashx"/>
+  </appSettings>
+  <system.web>
+    <customErrors mode="Off">
+      <error statusCode="403" redirect="Temple/LoginError" />
+      <error statusCode="404" redirect="Temple/LoginError" />
+    </customErrors>
+    <httpRuntime maxRequestLength="102400" maxQueryStringLength="102400" executionTimeout="5000" requestValidationMode="2.0"/>
+
+    <compilation debug="true" targetFramework="4.0" />
+    <authentication mode="Forms">
+      <forms loginUrl="~/Account/Login" timeout="2880" />
+    </authentication>
+    <pages>
+      <namespaces>
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Optimization" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>
+  
+
+    <!--<sessionState mode="InProc" cookieless="false" customProvider="DefaultSessionProvider">
+      <providers>
+        <add name="DefaultSessionProvider" type="System.Web.Providers.DefaultSessionStateProvider, System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" connectionStringName="DefaultConnection" />
+      </providers>
+    </sessionState>-->
+    <sessionState mode="InProc" cookieless="UseCookies" timeout="30"> </sessionState>
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true" />
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" />
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+    <security>
+      <requestFiltering>
+        <requestLimits maxQueryString="204800"></requestLimits>
+      </requestFiltering>
+    </security>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+  </entityFramework>
+  <applicationSettings>
+    <WebPortalAdmin.Properties.Settings>
+      <setting name="WebPortalAdmin_WebService_SDKService" serializeAs="String">
+        <value>http://hprpt2.eucp.b2m.cn:8080/sdk/SDKService</value>
+      </setting>
+      <setting name="WebPortalAdmin_TServiceWeb_TService" serializeAs="String">
+        <value>http://120.76.42.177:8033/Service/TService.asmx</value>
+      </setting>
+    </WebPortalAdmin.Properties.Settings>
+  </applicationSettings>
+</configuration>

@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>升级会员</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+    
+    <link rel="shortcut icon" href="/logo.gif" /> 
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            height: 350px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="weui-cells__title">升级会员</div>
+
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">付款金额</label>
+                <em class="weui-form-preview__value" id="money">¥10.00</em>
+            </div>
+        </div>
+        <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">年限</label>
+                <span class="weui-form-preview__value">一年</span>
+            </div>
+            <div class="weui-form-preview__item">
+                <label class="weui-form-preview__label">会员说明</label>
+                <span class="weui-form-preview__value">升级vip会员，分享您的广告</span>
+            </div>
+        </div>
+        <div class="weui-cells__title">选择支付方式</div>
+        <div class="weui-cells weui-cells_radio">
+            <label class="weui-cell weui-check__label" for="x11">
+                <div class="weui-cell__bd">
+                    <p>
+                        <img src="images/sw2_qrzf_wechat@2x.png" style="vertical-align: middle; width: 50px; margin-right: 10px;" />微信支付
+                    </p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio1" id="x11" checked="checked">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            <label class="weui-cell weui-check__label hide" for="x12">
+                <div class="weui-cell__bd">
+                    <p>
+                        <img src="images/sw2_qrzf_alipay@2x.png" style="vertical-align: middle; width: 50px; margin-right: 10px;" />支付宝
+                    </p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" class="weui-check" id="x12">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+        </div>
+        <div class="weui-form-preview__ft">
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary pay" style="width: 90%;" href="javascript:">立即支付</a>
+        </div>
+    </div>
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script>
+        var user = comm.getStorage("user");
+        $(function () {
+            FastClick.attach(document.body);
+            if (user == null || user == "") {
+                $.modal({
+                    title: "提示",
+                    text: "登录已过期,请重新登录!",
+                    buttons: [
+                        {
+                            text: "确定", onClick: function () {
+                                go("login.html?return=pay.html");
+                            }
+                        }
+                    ]
+                });
+                return;
+            }
+
+            $.ajax({
+                url: comm.url + "/api/h5pay/" + user.cid,
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        $("#money").html("¥" + d.data);
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+
+            //获取预支付编号
+            $.ajax({
+                url: comm.url + "/api/h5pay/" + user.id + "/" + comm.getStorage("token"),
+                type: 'post',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        $(".pay").attr("src", d.data).addClass("bg");
+                    } else if (d.errorCode == 50) {
+                        $.modal({
+                            title: "提示",
+                            text: d.msg,
+                            buttons: [
+                              {
+                                  text: "确定", onClick: function () {
+                                      go("login.html?return=pay.html");
+                                  }
+                              }
+                            ]
+                        });
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

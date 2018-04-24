@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>广告管理</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+
+    <link rel="shortcut icon" href="/logo.gif" />
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .my-weui-cells {
+            margin-top: 0px;
+        }
+
+            .my-weui-cells:after, .my-weui-cells:before {
+                border: 0px;
+            }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .weui-toptips {
+            z-index: 502;
+        }
+
+        .clicknum {
+            float: right;
+            padding-right: 5px;
+        }
+
+        .weui-uploader__input-box {
+            float: right;
+        }
+
+        .weui-uploader__file {
+            width: 60%;
+            line-height: 80px;
+        }
+
+            .weui-uploader__file .img {
+                width: auto;
+                max-height: 80px;
+            }
+    </style>
+</head>
+<body ontouchstart>
+    <div>
+        <div class="weui-cells__title adv_0" style="padding: 5px 5px; margin: 0px; font-size: 16px;">
+            <span style="color: #3d4145;">头部广告</span><span style="color: #3d4145;" class="clicknum" id="clicknum1"></span>
+        </div>
+        <div class="weui-cells weui-cells_form adv_0" id="topadv">
+            <input type="hidden" class="ad_id" />
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <p class="weui-uploader__title">图片上传</p>
+                                <!--<div class="weui-uploader__info">0/1</div>-->
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles1">
+                                    <li class="weui-uploader__file">
+                                        <img class="img" src="" />
+                                    </li>
+                                </ul>
+                                <div class="weui-uploader__input-box weui-cell__ft">
+                                    <input id="uploaderInput1" class="weui-uploader__input" type="file" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">广告链接</div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input url" type="url" placeholder="请输入广告链接" value="http://">
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">是否显示</div>
+                    <div class="weui-cell__ft">
+                        <input class="weui-switch isshow" type="checkbox">
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">审核状态</div>
+                    <div class="weui-cell__ft">
+                        <span style="color: #f84e4e; font-size: 17px;" class="way"></span>
+                        <span style="color: #3d4145; font-size: 17px;" class="status"></span>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary bg martop15 marbom10" onclick="saveAASharetop()">保存</a>
+        </div>
+        <div class="weui-cells__title adv_1" style="padding: 5px 5px; margin: 0px; font-size: 16px;">
+            <span style="color: #3d4145;">底部广告</span><span style="color: #3d4145;" class="clicknum" id="clicknum2"></span>
+        </div>
+        <div class="weui-cells weui-cells_form adv_1" id="bottomadv">
+            <input type="hidden" class="ad_id" />
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <p class="weui-uploader__title">图片上传</p>
+                                <!--<div class="weui-uploader__info">0/1</div>-->
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles2">
+                                    <li class="weui-uploader__file">
+                                        <img class="img" src="" />
+                                    </li>
+                                </ul>
+                                <div class="weui-uploader__input-box">
+                                    <input id="uploaderInput2" class="weui-uploader__input" type="file" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">广告链接</div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <input class="weui-input url" type="url" placeholder="请输入广告链接" value="http://">
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">是否显示</div>
+                    <div class="weui-cell__ft">
+                        <input class="weui-switch isshow" type="checkbox">
+                    </div>
+                </div>
+                <div class="weui-cell weui-cell_switch">
+                    <div class="weui-cell__bd">审核状态</div>
+                    <div class="weui-cell__ft">
+                        <span style="color: #f84e4e; font-size: 17px;" class="way"></span>
+                        <span style="color: #3d4145; font-size: 17px;" class="status"></span>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary bg martop15 marbom10" onclick="saveAASharebot()">保存</a>
+        </div>
+    </div>
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script src="../js/ajaxupload.js"></script>
+    <script src="../js/xmlToJson.js"></script>
+    <script>
+        var user = comm.getStorage("user");
+        $(function () {
+            FastClick.attach(document.body);
+            if (user == null || user == "") {
+                $.modal({
+                    title: "提示",
+                    text: "登录已过期,请重新登录!",
+                    buttons: [
+                        {
+                            text: "确定", onClick: function () {
+                                go("login.html?return=myad.html");
+                            }
+                        }
+                    ]
+                });
+                return;
+            }
+
+            //获取用户广告
+            $.ajax({
+                url: comm.url + "/api/getAAShare/" + user.id,
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        $.each(d.data, function (i, e) {
+                            var form = $(".adv_" + i);
+                            if (e._img != "") {
+                                form.find(".img").attr("src", comm.url + e._img).show();
+                            }
+                            form.find(".url").val(e._url);
+                            form.find(".isshow").attr("checked", e._isshow);
+                            form.find(".ad_id").val(e._id);
+                            form.find(".clicknum").html("点击量：" + e._clicknum);
+                            statusformat(e, form)
+                            if (i == 0) {
+                                url1 = e._img;
+                                clicknum2
+                            } else {
+                                url2 = e._img;
+                            }
+                        });
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+
+
+            upImage("uploaderInput1", function (d) {
+                var form = $(".adv_" + 0);
+                form.find(".img").attr("src", comm.url + d).attr("srcdata", d).show();
+            });
+            upImage("uploaderInput2", function (d) {
+                var form = $(".adv_" + 1);
+                form.find(".img").attr("src", comm.url + d).attr("srcdata", d).show();
+            });
+        });
+
+        function statusformat(e, form) {
+            switch (e._status) {
+                case 0:
+                    form.find(".way").html("等待系统审核！");
+                    break;
+                case 1:
+                    form.find(".way").html("审核通过快去分享您的广告吧！");
+                    break;
+                case 2:
+                    form.find(".way").html("审核不通过请重新编辑您的广告信息！");
+                    if (e._introduction != "") {
+                        form.find(".way").html("审核不通过！<a onclick='msgshow(\"" + e._introduction + "\")'>查看原因</a>");
+                    }
+                    break;
+                default:
+                    return ""
+                    break;
+            }
+        }
+        function msgshow(msg) {
+            $.modal({
+                title: "审核不通过",
+                text: msg,
+                buttons: [
+                    {
+                        text: "关闭", onClick: function () {
+
+                        }
+                    }
+                ]
+            });
+        }
+
+        var url1 = "", url2 = "";
+        function saveAASharetop() {
+            var form = $(".adv_" + 0);
+            var img = form.find(".img").attr("srcdata");
+            var url = form.find(".url").val();
+            var isshow = form.find(".isshow").is(':checked');
+            var id = form.find(".ad_id").val();
+            if (img == "" || img == null || img == "images/blank1.png") {
+                $.toptip("请上传您的广告图", 'error');
+                return false;
+            }
+            if (url != "" && !IsURL(url)) {
+                $.toptip("请输入正确的http://URL地址", 'error');
+                return false;
+            }
+
+            //保存用户广告
+            $.ajax({
+                url: comm.url + "/api/saveAAShare/" + user.id + "/" + comm.getStorage("token") + "?id=" + id + "&img=" + img + "&url=" + url + "&isshow=" + isshow + "&type=" + 1,
+                type: 'post',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        form.find(".ad_id").val(d.data);
+                        $.toptip(d.msg, 'success');
+                    } else if (d.errorCode == 50) {
+                        $.modal({
+                            title: "提示",
+                            text: d.msg,
+                            buttons: [
+                              {
+                                  text: "确定", onClick: function () {
+                                      go("login.html?return=myad.html");
+                                  }
+                              }
+                            ]
+                        });
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+
+        }
+        function saveAASharebot() {
+            var form = $(".adv_" + 1);
+            var img = form.find(".img").attr("srcdata");
+            var url = form.find(".url").val();
+            var isshow = form.find(".isshow").is(':checked');
+            var id = form.find(".ad_id").val();
+            if (img == "" || img == null || img == "images/blank1.png") {
+                $.toptip("请上传您的广告图", 'error');
+                return false;
+            }
+            if (url != "" && !IsURL(url)) {
+                $.toptip("请输入正确的http://URL地址", 'error');
+                return false;
+            }
+            //保存用户广告
+            $.ajax({
+                url: comm.url + "/api/saveAAShare/" + user.id + "/" + comm.getStorage("token") + "?id=" + id + "&img=" + img + "&url=" + url + "&isshow=" + isshow + "&type=" + 2,
+                type: 'post',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        form.find(".ad_id").val(d.data);
+                        $.toptip(d.msg, 'success');
+                    } else if (d.errorCode == 50) {
+                        $.modal({
+                            title: "提示",
+                            text: d.msg,
+                            buttons: [
+                                {
+                                    text: "确定", onClick: function () {
+                                        go("login.html?return=myad.html");
+                                    }
+                                }
+                            ]
+                        });
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+        }
+
+
+        //上传图片要求格式
+        var allowfile = 'bmp,jpg,jpeg,gif,png';
+
+        //单图-图片上传
+        function upImage(id, callbakfun) {
+            var upload = new AjaxUpload(id, {
+                action: comm.url + "/api/upimg",
+                name: 'fileimg',
+                accept: 'image/*',
+                capture: '',
+                onChange: function (file, extension) {
+                },
+                onSubmit: function (file, ext) {
+                    if (!(ext && allowfile.indexOf(ext.toLowerCase()) > -1)) {
+                        $.toptip("错误：无效的文件扩展名！请上传" + allowfile + "格式文件！", 'error');
+                        return false;
+                    }
+                    $.showLoading();
+                },
+                onComplete: function (file, xml) {
+                    var json = XmlToJson.prototype.convert(xml.documentElement);
+                    var issuccess = false;
+                    var d = {};
+                    $.each(XmlToJson.prototype.convert(xml.documentElement).items, function (i, e) {
+                        if (e.xtype == "success") {
+                            d.success = e.text;
+                        }
+                        if (e.xtype == "msg") {
+                            d.msg = e.text;
+                        }
+                        if (e.xtype == "data") {
+                            d.data = e.text;
+                        }
+                    });
+                    if (d.success == "true") {
+                        callbakfun(d.data);
+                    } else {
+                        $.toptip(d.msg, 'error');
+                    }
+                    $.hideLoading();
+                }
+            });
+        }
+
+        function IsURL(str_url) {
+            var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+               + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@ 
+               + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184 
+               + "|" // 允许IP和DOMAIN（域名）
+               + "([0-9a-z_!~*'()-]+\.)*" // 域名- www. 
+               + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名 
+               + "[a-z]{2,6})" // first level domain- .com or .museum 
+               + "(:[0-9]{1,4})?" // 端口- :80 
+               + "((/?)|" // a slash isn't required if there is no file name 
+               + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+            var re = new RegExp(strRegex);
+            //re.test()
+            if (re.test(str_url)) {
+                return (true);
+            } else {
+                return (false);
+            }
+        }
+    </script>
+</body>
+</html>

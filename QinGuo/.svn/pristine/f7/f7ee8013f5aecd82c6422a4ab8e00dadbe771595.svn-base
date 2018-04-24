@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7B62C664-A3E5-468E-ADCC-E814812EA0BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QINGUO.DAL</RootNamespace>
+    <AssemblyName>QINGUO.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="QINGUO.Common">
+      <HintPath>..\..\..\..\Lib\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdActiveDAL.cs" />
+    <Compile Include="AdShare\AdActiveDAL.cs" />
+    <Compile Include="BaseDAL.cs" />
+    <Compile Include="Contract\ContractInOutDAL.cs" />
+    <Compile Include="EDynamicDAL.cs" />
+    <Compile Include="FireApp\SysQRCodeDAL.cs" />
+    <Compile Include="FireApp\SysFlowDAL.cs" />
+    <Compile Include="FireApp\SysAppointedDAL.cs" />
+    <Compile Include="FireApp\SysAppointCheckNotesDAL.cs" />
+    <Compile Include="FireApp\FireBoxDAL.cs" />
+    <Compile Include="Shop\ShopCategoryDAL.cs" />
+    <Compile Include="Shop\ShopGoodsDAL.cs" />
+    <Compile Include="OrderEvaluationDAL.cs" />
+    <Compile Include="OrderRunOrderDAL.cs" />
+    <Compile Include="OrderUserExtendedDAL.cs" />
+    <Compile Include="OrderUserMoneyRecordDAL.cs" />
+    <Compile Include="SysFileAttachDAL.cs" />
+    <Compile Include="SysModelDAL.cs" />
+    <Compile Include="SysOperateLogDAL.cs" />
+    <Compile Include="System\SysCategoryDAL.cs" />
+    <Compile Include="SysCompanyDAL.cs" />
+    <Compile Include="SysGroupDAL.cs" />
+    <Compile Include="System\SysDataBaseBackDAL.cs" />
+    <Compile Include="System\SysHatareaDAL.cs" />
+    <Compile Include="System\SysImgPicDAL.cs" />
+    <Compile Include="System\SysPushMessageDAL.cs" />
+    <Compile Include="System\SysPushUserDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\SysFeedbackDAL.cs" />
+    <Compile Include="System\SysHatcityDAL.cs" />
+    <Compile Include="System\SysHatProvinceDAL.cs" />
+    <Compile Include="System\SysMessageAuthCodeDAL.cs" />
+    <Compile Include="System\SysPushInfoDAL.cs" />
+    <Compile Include="System\SysBtnDAL.cs" />
+    <Compile Include="System\SysFunDAL.cs" />
+    <Compile Include="System\SysFunLinkBtnValueDAL.cs" />
+    <Compile Include="SysMasterDAL.cs" />
+    <Compile Include="System\SysMasterRoleDAL.cs" />
+    <Compile Include="System\SysRoleDAL.cs" />
+    <Compile Include="System\SysRoleFunDAL.cs" />
+    <Compile Include="System\SysRoleRangeDataDAL.cs" />
+    <Compile Include="System\SysRemarkSettingDAL.cs" />
+    <Compile Include="System\SysCompanyPaySetDAL.cs" />
+    <Compile Include="System\SysCompanyCognateDAL.cs" />
+    <Compile Include="System\SysCollectionDAL.cs" />
+    <Compile Include="SysUserDAL.cs" />
+    <Compile Include="SysUserFriendsDAL.cs" />
+    <Compile Include="SysDircDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspx.DapperAccessBase\QINGUO.DapperAccessBase.csproj">
+      <Project>{B436ED0F-9DEF-4720-AF30-B1C01B6FABB2}</Project>
+      <Name>QINGUO.DapperAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.DataAccessBase\QINGUO.DataAccessBase.csproj">
+      <Project>{C9047A67-4BE1-4967-A2BC-10F82A211085}</Project>
+      <Name>QINGUO.DataAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.IDAL\QINGUO.IDAL.csproj">
+      <Project>{847010A7-9EBE-4206-B75D-A8FDEEFBED4C}</Project>
+      <Name>QINGUO.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.Model\QINGUO.Model.csproj">
+      <Project>{D8D1450F-BB50-49CE-BF13-4563DF593356}</Project>
+      <Name>QINGUO.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.ViewModel\QINGUO.ViewModel.csproj">
+      <Project>{BADFF8E8-3EA2-4BAF-98F6-362F4B7410F0}</Project>
+      <Name>QINGUO.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

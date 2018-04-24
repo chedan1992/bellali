@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>完善个人信息</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+    
+    <link rel="shortcut icon" href="/logo.gif" /> 
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            height: 400px;
+        }
+
+        .my-weui-cells:after, .my-weui-cells:before {
+            border: 0px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div id="type_0" class="hide">
+        <div class="weui-cells__title">修改用户信息</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell" style="padding-top: 0px; padding-bottom: 0px;">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">头像</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <div style="width: 100%; float: right;">
+                        <img src="./images/me_head-portrait@2x.png" alt="" style="width: 37px; height:37px;  margin: 5px; display: block; border-radius: 80px; float: right;" id="headimg" onerror="this.setAttribute('src','./images/me_head-portrait@2x.png')">
+                        <input type="file" class="hide" id="fileimg" name="fileimg" accept="image/*" capture="camera" />
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">姓名</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入姓名" id="name">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">年龄</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="number" value="" placeholder="" id="age">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">性别</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="select2" id="sex">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">邮箱</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入邮箱" id="email">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">商家</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入商家名称" id="cname">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="type_1" class="hide">
+        <div class="weui-cells__title">修改密码</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">原密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="请输入原密码" id="oldpwd">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">新密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="请输入新密码" id="pwd">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">确认新密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="请再次输入新密码" id="pwd1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" class="weui-btn weui-btn_primary martop15 savebtn" style="width: 90%; background-color: #ccc;">提交</a>
+    
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script src="../js/ajaxupload.js"></script>
+    <script src="../js/xmlToJson.js"></script>
+    <script>
+        var user = comm.getStorage("user");
+        var type = getQueryString("type");//0:完善个人信息,1:修改密码
+        $(function () {
+            FastClick.attach(document.body);
+            if (user == null || user == "") {
+                $.modal({
+                    title: "提示",
+                    text: "登录已过期,请重新登录!",
+                    buttons: [
+                        {
+                            text: "确定", onClick: function () {
+                                go("login.html?return=update.html?type=" + type);
+                            }
+                        }
+                    ]
+                });
+                return;
+            }
+            $("#type_" + type).show();
+            if (type == "0") {//完善个人信息
+                /*绑定数据*/
+                $("#name").val(user.name);
+                $("#cname").val(user.cname);
+                $("#age").val(user.age);
+                $("#sex").val(user.sex);
+                if (user.headimg != null && user.headimg != "") {
+                    $("#headimg").attr("src", comm.url + user.headimg);
+                }
+                $(".savebtn").css("background-color", "#f84e4e").attr("onclick", "save()");
+            } else {
+                document.title = "修改密码";
+            }
+            //上传图片
+            upImage("headimg", function (src) {
+                $("#headimg").attr("src", comm.url + src);
+                user.headimg = comm.url + src;
+                comm.setStorage("user", user);
+                $.toptip("上传成功！", 'success');
+            });
+
+            setInterval(function () {
+                if (type == "1") {
+                    var oldpwd = $("#oldpwd").val();
+                    var pwd = $("#pwd").val();
+                    var pwd1 = $("#pwd1").val();
+                    if (oldpwd != "" && pwd != "" && pwd1 != "") {
+                        $(".savebtn").css("background-color", "#f84e4e").attr("onclick", "save()");
+                    } else {
+                        $(".savebtn").css("background-color", "#ccc").attr("onclick", "");
+                    }
+                }
+            }, 300);
+        });
+        function save() {
+            if (type == "1") {//修改密码
+                var oldpwd = $("#oldpwd").val();
+                var pwd = $("#pwd").val();
+                var pwd1 = $("#pwd1").val();
+                if (pwd != pwd1) {
+                    $.toptip("两次输入密码不一致！", 'error')
+                    return false;
+                }
+                $.ajax({
+                    url: comm.url + "/api/updateUserPwd/" + user.id + "/" + pwd + "/" + oldpwd,
+                    type: 'post',
+                    dataType: 'json',
+                    async: true,//是否异步
+                    success: function (d, status) {
+                        if (d.success) {
+                            $.toptip(d.msg, 'success');
+                            var code = $("#oldpwd").val("");
+                            var pwd = $("#pwd").val("");
+                            var pwd1 = $("#pwd1").val("");
+                        } else {
+                            $.toptip(d.msg, 'warning');
+                        }
+                    },
+                    fail: function (err, status) {
+                        $.toptip(err, 'error');
+                    }
+                });
+
+            } else if (type == "0") {
+                var name = $("#name").val();
+                var age = $("#age").val();
+                var sex = $("#sex").val();
+                var email = $("#email").val();
+                var cname = $("#cname").val();
+                $.ajax({
+                    url: comm.url + "/api/updateUser/" + user.id + "?name=" + name + "&age=" + age + "&sex=" + sex + "&email=" + email + "&cname=" + cname,
+                    type: 'post',
+                    dataType: 'json',
+                    async: true,//是否异步
+                    success: function (d, status) {
+                        if (d.success) {
+                            user.name = name;
+                            user.age = age;
+                            user.sex = sex;
+                            user.email = email;
+                            user.cname = cname;
+                            comm.setStorage("user", user);
+                            $.toptip(d.msg, 'success');
+                        } else {
+                            $.toptip(d.msg, 'warning');
+                        }
+                    },
+                    fail: function (err, status) {
+                        $.toptip(err, 'error');
+                    }
+                });
+
+            }
+        }
+
+        //上传图片要求格式
+        var allowfile = 'bmp,jpg,jpeg,gif,png';
+
+        //单图-图片上传
+        function upImage(id, callbakfun) {
+            var upload = new AjaxUpload(id, {
+                action: comm.url + "/api/uploadhimg/" + user.id,
+                name: 'fileimg',
+                accept: 'image/*',
+                capture: 'camera',
+                onChange: function (file, extension) {
+                },
+                onSubmit: function (file, ext) {
+                    if (!(ext && allowfile.indexOf(ext.toLowerCase()) > -1)) {
+                        $.toptip("错误：无效的文件扩展名！请上传" + allowfile + "格式文件！", 'error');
+                        return false;
+                    }
+                    $.showLoading();
+                },
+                onComplete: function (file, xml) {
+                    var json = XmlToJson.prototype.convert(xml.documentElement);
+                    var issuccess = false;
+                    var d = {};
+                    $.each(XmlToJson.prototype.convert(xml.documentElement).items, function (i, e) {
+                        if (e.xtype == "success") {
+                            d.success = e.text;
+                        }
+                        if (e.xtype == "msg") {
+                            d.msg = e.text;
+                        }
+                        if (e.xtype == "data") {
+                            d.data = e.text;
+                        }
+                    });
+                    if (d.success == "true") {
+                        callbakfun(d.data);
+                    } else {
+                        $.toptip(d.msg, 'error');
+                    }
+                    $.hideLoading();
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

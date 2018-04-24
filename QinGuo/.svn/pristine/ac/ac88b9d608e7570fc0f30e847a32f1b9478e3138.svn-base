@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>统计电梯故障率</title>
+    <script type="text/javascript">
+
+        function formartSequenceNumber(val, metadata, record, rowIndex, colIndex, store) {
+            var text = top.Ext.getCmp("comContent").getValue(); //输入框值
+            if (text != "") {
+                var SequenceNumber = record.data.Name;
+                var e = new RegExp(text, "g");
+                return SequenceNumber.replace(e, "<span style='color:red;'>" + text + "</span>");
+            }
+            else {
+                return val;
+            }
+        }
+
+        Ext.onReady(function () {
+            var Brand = top.Ext.getCmp('shoper').items.items[0].params.Brand;
+            //数据源
+            var url = '';
+            PageSize = 10; //重新定义页数
+
+
+            //转义列
+            var Master = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "Name", type: "string", mapping: "Name" },
+              { name: "Code", type: "string", mapping: "Code" },
+              { name: "Brand", type: "string", mapping: "Brand" },
+              { name: "BadNum", type: "string", mapping: "BadNum" },
+              { name: "CustomerName", type: "string", mapping: "CustomerName" },
+              { name: "ModelName", type: "string", mapping: "ModelName" },
+              { name: "CostMoney", type: "string", mapping: "CostMoney" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" }
+            ]);
+            //数据源
+            var store = GridStore(Master, '/Chart/SearchBrandElevatorData?BrandId=' + Brand);
+
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['电梯名称', 'Name']];
+
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'gg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: store,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                 {
+                 header: "电梯名称",
+                 dataIndex: 'Name',
+                 menuDisabled: true,
+                 width: 100,
+                 renderer: formartSequenceNumber
+             },
+            {
+                header: "电梯编号",
+                width: 80,
+                dataIndex: 'Code',
+                sortable: false,
+                menuDisabled: true
+            }, {
+                header: "电梯型号",
+                width: 70,
+                dataIndex: 'ModelName',
+                sortable: false,
+                menuDisabled: true
+            },
+               {
+                   header: "维修次数",
+                   dataIndex: 'BadNum',
+                   width: 60,
+                   align: 'center',
+                   menuDisabled: true
+               },
+               {
+                   header: "维修总金额",
+                   dataIndex: 'CostMoney',
+                   width: 80,
+                   align: 'center',
+                   menuDisabled: true
+               },
+                {
+                    header: "物业单位",
+                    dataIndex: 'CustomerName',
+                    flex: 1,
+                    sortable: false,
+                    menuDisabled: true,
+                    renderer: function (data, metadata, record, rowIndex, columnIndex, store) {
+                        if (data) {
+                            metadata.attr = 'ext:qtip="' + data + '"';
+                            return data;
+                        }
+                    }
+                }
+                ],
+                tbar: tbarTop(),
+                bbar: smallbbar(store), //分页工具条
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+            gridPanle.on("rowclick", function () {
+                //重新加载故障详细
+                var grid = top.Ext.getCmp("gg");
+                var rows = grid.getSelectionModel().getSelections();
+                if (rows.length == 1) {
+                    var Id = rows[0].get("Id");
+                    var butomgg = top.Ext.getCmp("butomgg");
+                    butomgg.getStore().proxy.conn.url = '/ETask/SearchChartData?CEId=' + Id;
+                    var filestore = butomgg.getStore();
+                    filestore.load({ params: { start: 0, limit: PageSize} });
+                }
+            });
+
+            var ETask = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "CEId", type: "string", mapping: "CEId" },
+              { name: "SysId", type: "string", mapping: "SysId" },
+              { name: "Mark", type: "string", mapping: "Mark" },
+              { name: "Contacts", type: "string", mapping: "Contacts" },
+              { name: "ContactsPhone", type: "string", mapping: "ContactsPhone" },
+              { name: "Price", type: "string", mapping: "Price" },
+              { name: "OrderType", type: "string", mapping: "OrderType" },
+              { name: "Ordercode", type: "string", mapping: "Ordercode" },
+              { name: "CauseReason", type: "string", mapping: "CauseReason" },
+              { name: "DayType", type: "string", mapping: "DayType" },
+              { name: "IsRepair", type: "bool", mapping: "IsRepair" },
+              { name: "CEName", type: "string", mapping: "CEName" },
+              { name: "SysName", type: "string", mapping: "SysName" },
+              { name: "EngineerName", type: "string", mapping: "EngineerName" },
+              { name: "NFC_Code", type: "string", mapping: "NFC_Code" },
+              { name: "OrderType", type: "string", mapping: "OrderType" },
+              { name: "GrabSingleTime", type: "datetime", mapping: "GrabSingleTime" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" },
+              { name: "Status", type: "string", mapping: "Status" }
+            ]);
+            //数据源
+            var ETaskStore = GridStore(ETask, '/ETask/SearchChartData?CEId=' + treeNodeId);
+            var butomgg = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'butomgg',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: ETaskStore,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                 {
+                 header: '类型',
+                 sortable: false,
+                 dataIndex: 'OrderType',
+                 menuDisabled: true,
+                 width: 60,
+                 renderer: formartOrderType
+             },
+                {
+                    header: "价格",
+                    width: 70,
+                    dataIndex: 'Price',
+                    sortable: false,
+                    menuDisabled: true,
+                    renderer: formartPrice
+                },
+                  {
+                      header: "物业联系人",
+                      dataIndex: 'Contacts',
+                      width: 80,
+                      sortable: false,
+                      menuDisabled: true,
+                      renderer: IsNull
+                  },
+              {
+                  header: '物业电话',
+                  sortable: false,
+                  dataIndex: 'ContactsPhone',
+                  menuDisabled: true,
+                  width: 80,
+                  renderer: IsNull
+              }
+, {
+    header: "故障描述",
+    dataIndex: 'Mark',
+    flex: 1,
+    sortable: false,
+    menuDisabled: true,
+    renderer: function (data, metadata, record, rowIndex, columnIndex, store) {
+        if (data) {
+            metadata.attr = 'ext:qtip="' + data + '"';
+            return data;
+        }
+    }
+},
+{
+    header: '抢单时间',
+    sortable: false,
+    dataIndex: 'GrabSingleTime',
+    flex:1,
+    menuDisabled: true,
+    renderer: renderCreateTime
+}
+                //,
+                //{
+                //    header: "所属公司",
+                //    width: 100,
+                //    dataIndex: 'SysName',
+                //    sortable: false,
+                //    flex: 1,
+                //    menuDisabled: true
+                //}
+
+                ],
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+
+
+            var south = new top.Ext.Panel({
+                region: 'south',
+                height: 220,
+                layout: 'fit',
+                frame: true,
+                title: '故障详细',
+                items: [
+                    butomgg
+            ]
+            });
+
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 525,
+                renderTo: 'divShop',
+                items: [gridPanle, south],
+                listeners: {
+                    afterrender: function () {
+
+                    }
+                }
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

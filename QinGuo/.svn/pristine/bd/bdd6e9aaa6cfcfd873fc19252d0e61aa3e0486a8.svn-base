@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>个人中心</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"/>
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+    
+    <link rel="shortcut icon" href="/logo.gif" /> 
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .my-weui-cells {
+            margin-top: 0px;
+        }
+
+            .my-weui-cells:after, .my-weui-cells:before {
+                border: 0px;
+            }
+
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .weui-toptips {
+            z-index: 502;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="weui-tab">
+        <div class="weui-tab__bd">
+            <div class="weui-tab__bd-item weui-tab__bd-item--active" style="padding-bottom: 60px; box-sizing: border-box;">
+                <div class="weui-cells my-weui-cells">
+                    <a class="weui-cell weui-cell_access" href="javascript:;">
+                        <div class="weui-cell__hd" onclick="go('update.html?type=0')">
+                            <img src="./images/me_head-portrait@2x.png" alt="" style="width: 90px;height: 90px; margin-right: 5px; display: block; border-radius: 80px;" id="headimg" onerror="this.setAttribute('src','./images/me_head-portrait@2x.png')">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p onclick="go('update.html?type=0')" id="loginname">昵称</p>
+                            <p onclick="go('pay.html')" id="isvip" style="margin-top:8px;"><img src="images/hy.png"  width="25" style="vertical-align:middle;"/><span style="color:#F0EBEB; vertical-align:middle;">会员</span></p>
+                        </div>
+                        <div class="weui-cell__ft" onclick="go('update.html?type=0')"></div>
+                    </a>
+                </div>
+                <div class="weui-cells">
+                    <a class="weui-cell weui-cell_access" onclick="go('collection.html')">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_13.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>我的收藏</p>
+                        </div>
+                        <div class="weui-cell__ft" id="numcollcet">0</div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" onclick="go('myad.html')">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_14.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>广告管理</p>
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                </div>
+                <div class="weui-cells">
+                    <a class="weui-cell weui-cell_access open-popup" href="javascript:;" data-target="#feedback">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_15.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>意见反馈</p>
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                    <a class="weui-cell weui-cell_access open-popup" href="javascript:;" data-target="#about">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_16.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>关于我们</p>
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" onclick="go('update.html?type=1')">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_17.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>修改密码</p>
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                    <a class="weui-cell weui-cell_access" href="javascript:;" id="loginOut">
+                        <div class="weui-cell__hd">
+                            <img src="./images/my_18.png" alt="" style="width: 40px; margin-right: 5px; display: block">
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>注销</p>
+                        </div>
+                        <div class="weui-cell__ft"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="weui-tabbar">
+            <a href="home.html" class="weui-tabbar__item">
+                <!--<span class="weui-badge" style="position: absolute; top: -.4em; right: 1em;">8</span>-->
+                <div class="weui-tabbar__icon">
+                    <img src="./images/sy1.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">首页</p>
+            </a>
+            <a href="find.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/lb.png" alt="" style="">
+                </div>
+                <p class="weui-tabbar__label">发现</p>
+            </a>
+            <a href="###" class="weui-tabbar__item  weui-bar__item--on">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/wd2.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">我</p>
+            </a>
+        </div>
+    </div>
+
+    <div id="feedback" class='weui-popup__container' style="z-index: 501;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="fullcontent">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="javascript:;" class="aback close-popup">
+                            <img src="images/fanhui.png" /><span>返回</span></a>
+                        <div class="title" style="margin-top:2px;">意见反馈</div>
+                    </div>
+                </div>
+                <div style="margin-top: 4px;">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" placeholder="请输入您的宝贵建议" rows="5" id="feedbackinfo"></textarea>
+                                <div class="weui-textarea-counter"><span id="feedbacknum">0</span>/200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary martop15 feedbackbtn" style="width: 90%; background-color: #ccc;">提交</a>
+            <a href="javascript:;" class="weui-btn weui-btn_primary close-popup martop15">返回</a>
+        </div>
+    </div>
+    <div id="about" class='weui-popup__container' style="z-index: 501;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="fullcontent">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="javascript:;" class="aback close-popup">
+                            <img src="images/fanhui.png" /><span>返回</span></a>
+                        <div class="title" style="margin-top:2px;">关于我们</div>
+                    </div>
+                </div>
+                <article class="weui-article">
+                    <section>
+                    </section>
+                </article>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary close-popup bg martop15">返回</a>
+        </div>
+    </div>
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script>
+        var user = comm.getStorage("user");
+        $(function () {
+            FastClick.attach(document.body);
+            if (user == null || user == "") {
+                $.modal({
+                    title: "提示",
+                    text: "登录已过期,请重新登录!",
+                    buttons: [
+                        {
+                            text: "确定", onClick: function () {
+                                go("login.html?return=my.html");
+                            }
+                        }
+                    ]
+                });
+                return;
+            }
+            /*绑定数据*/
+            $("#loginname").html(user.loginname);
+            $("#numcollcet").html(user.numcollcet);
+            if (user.name != null && user.name != "") {
+                $("#loginname").html(user.name);
+            }
+            if (user.headimg != null && user.headimg != "") {
+                $("#headimg").attr("src", comm.url + user.headimg);
+            }
+
+            if (user.ismember) {
+                $("#isvip").attr("onclick", "");
+                $("#isvip").find("img").attr("src", "images/hy1.png");
+                $("#isvip").find("span").css("color", "#FE943E");
+            }
+
+            //重新获取用户信息
+            $.ajax({
+                url: comm.url + "/api/getUserInfo/" + user.id,
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        comm.setStorage("user", d.data);
+                        user = d.data;
+                        $("#loginname").html(user.loginname);
+                        $("#numcollcet").html(user.numcollcet);
+                        if (user.name != null && user.name != "") {
+                            $("#loginname").html(user.name);
+                        }
+                        if (user.headimg != null && user.headimg != "") {
+                            $("#headimg").attr("src", comm.url + user.headimg);
+                        }
+                        if (user.ismember) {
+                            $("#isvip").attr("onclick", "");
+                            $("#isvip").find("img").attr("src", "images/hy1.png");
+                            $("#isvip").find("span").css("color", "#FE943E");
+                        }
+
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+
+            //关于我们
+            $.ajax({
+                url: comm.url + "/api/getRemarkSetting/2",
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        $("#about section").html(d.data._content);
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+
+
+            $(document).on("click", "#loginOut", function () {
+                $.confirm("您确定要退出登录吗？", "确认注销?", function () {
+                    $.ajax({
+                        url: comm.url + "/api/loginOut/" + user.id,
+                        type: 'post',
+                        dataType: 'json',
+                        async: true,//是否异步
+                        success: function (d, status) {
+                            if (d.success) {
+                                $.toptip(d.msg, 'success');
+                                comm.setStorage("user", "");
+                                go("login.html?");
+                            } else {
+                                $.toptip(d.msg, 'warning');
+                            }
+                        },
+                        fail: function (err, status) {
+                            $.toptip(err, 'error');
+                        }
+                    });
+                }, function () {
+                    //取消操作
+                });
+            });
+
+            setInterval(function () {
+                var feedbackinfo = $("#feedbackinfo").val();
+                $("#feedbacknum").html(feedbackinfo.length);
+                if (feedbackinfo.length > 200) {
+                    $("#feedbackinfo").val(feedbackinfo.substr(0, 200));
+                }
+                if (feedbackinfo != "") {
+                    $(".feedbackbtn").css("background-color", "#f84e4e").attr("onclick", "savefeedback()");
+                } else {
+                    $(".feedbackbtn").css("background-color", "#ccc").attr("onclick", "");
+                }
+            }, 300);
+        });
+
+        //意见反馈
+        function savefeedback() {
+            var feedbackinfo = $("#feedbackinfo").val();
+            if (feedbackinfo == "") {
+                $.toptip("请输入您的宝贵建议！", 'error')
+                return false;
+            }
+            $.ajax({
+                url: comm.url + "/api/saveFeedback/" + user.id + "/" + feedbackinfo + "/3",
+                type: 'post',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success) {
+                        $.toptip(d.msg, 'success');
+                        $("#feedbackinfo").val("");
+                    } else {
+                        $.toptip(d.msg, 'warning');
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

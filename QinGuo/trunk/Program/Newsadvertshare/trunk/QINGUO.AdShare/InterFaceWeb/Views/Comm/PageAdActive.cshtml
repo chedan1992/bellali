@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+    ModAdActive set = Model;
+}
+@using Aspx.Model;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1"
+        name="viewport">
+    <meta name="viewport" content="width=device-width" />
+    <title>@set.ActiveName</title>
+    <style type="text/css">
+        body
+        {
+            font-size: 16px;
+            line-height: 150%;
+        }
+        .content
+        {
+        }
+        .content img
+        {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="font-size: 18px;">
+            @set.ActiveName
+        </div>
+        @if (!string.IsNullOrEmpty(set.Img))
+        { 
+            <img src="@set.Img" style="max-width:100%;" />
+        }
+    </header>
+    <div class="content" style="">
+        @Html.Raw(set.Info)
+    </div>
+</body>
+</html>

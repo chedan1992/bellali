@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商品选择</title>
+     <script type="text/javascript">
+         Ext.onReady(function () {
+             //初始化
+             treeNodeId =2;
+
+             /*树形菜单*/
+             var tree = new Ext.tree.TreePanel({
+                 width: 200,
+                 layout: 'fit',
+                 id: 'tree',
+                 autoScroll: true,
+                 animate: true,
+                 enableDD: false,
+                 bodyStyle: 'padding-top:4px',
+                 lines: true, //显示树形控件的前导线
+                 containerScroll: true,
+                 loader: new Ext.tree.TreeLoader({
+                     dataUrl: '/SysDirc/GetTree'
+                 }),
+                 root: {
+                     text: '选择栏目',
+                     expanded: true,
+                     draggable: false,
+                     id: '0'//区分是否根节点
+                 },
+                 minSize: 175,
+                 maxWidth: 200,
+                 margins: '0 2 0 0',
+                 tbar: [
+                {
+                    xtype: 'tbtext',
+                    height: 21,
+                    text: ''
+                }
+            ],
+                 listeners: {
+                     afterrender: function (tree) {
+                         Ext.tree.TreePanel.prototype.afterRender.apply(this, arguments);
+                         this.getSelectionModel().select(this.getRootNode());
+                     },
+                     click: treeitemclick
+                 }
+             });
+
+             var west = new Ext.Panel({
+                 region: 'west',
+                 id: 'TreeWest',
+                 layoutConfig: {
+                     animate: true
+                 },
+                 animCollapse: true,
+                 split: true,
+                 border: false,
+                 width:180,
+                 minSize: 175,
+                 maxSize: 400,
+                 margins: '0 5 0 0',
+                 layout: 'fit',
+                 bodyStyle: 'border-left:0px;border-top:0px;border-bottom:0px;',
+                 items: tree
+             });
+
+             //转义列
+             var Active = Ext.data.Record.create([
+                  { name: "Id", type: "string", mapping: "Id" },
+              { name: "Name", type: "string", mapping: "Name" },
+              { name: "Mark", type: "string", mapping: "Mark" },
+              { name: "ReadNum", type: "int", mapping: "ReadNum" },
+              { name: "Status", type: "int", mapping: "Status" },
+              { name: "GroupId", type: "int", mapping: "GroupId" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" }
+
+            ]);
+             //数据源
+             var store = GridStore(Active, '/EDynamic/SearchData?GroupId=' + treeNodeId);
+
+             //快捷查询,如果不需要,可以不用定义
+             searchData = [['全查询', ''], ['文章标题', 'Name']];
+
+             var center = new Ext.grid.GridPanel({
+                 id: 'gg',
+                 region: 'center',
+                 layout: 'fit',
+                 store: store,
+                 stripeRows: true, //隔行颜色不同
+                 enableDragDrop: true, //禁用才能选择复选框
+                 loadMask: { msg: '数据请求中，请稍后...' },
+                 defult: {
+                     sortable: false
+                 },
+                 columns: [
+                new Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                {
+                header: "文章标题",
+                dataIndex: 'Name',
+                width:140,
+                menuDisabled: true,
+                renderer: function (data, metadata, record, rowIndex, columnIndex, store) {
+                    if (data) {
+                        metadata.attr = 'ext:qtip="' + data + '"';
+                        return data;
+                    }
+                }
+            },
+               
+                {
+                    header: "阅读量",
+                    dataIndex: 'ReadNum',
+                    width: 100,
+                    menuDisabled: true
+                },
+                 {
+                     header: "添加时间",
+                     dataIndex: 'CreateTime',
+                     width: 100,
+                     menuDisabled: true
+                 }
+                ],
+                 tbar: tbar(''),
+                 bbar: bbar(store), //分页工具条
+                 viewConfig: {
+                     forceFit: true,
+                     enableRowBody: true,
+                     scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                 },
+                 listeners: {
+                     beforerender: function () {
+                         // Ext.getCmp("tree").getRootNode();
+                     }
+                 }
+             });
+             center.store.on('beforeload', function (node) {
+                 center.getStore().proxy.conn.url = '/EDynamic/SearchData?GroupId=' + treeNodeId;
+             });
+             var viewport = new Ext.Panel({
+                 layout: 'border',
+                 border: false,
+                 height: 428,
+                 renderTo: 'divShop',
+                 items: [west, center],
+                 listeners: {
+                     afterrender: function () {
+
+                     }
+                 }
+             });
+
+         });
+
+         //切换菜单事件
+         function treeitemclick(node, e) {
+             if (node.isLeaf()) {
+                 treeNodeId = node.id;
+                 var grid = Ext.getCmp("gg");
+                 grid.getStore().reload(); 
+             }
+         }
+         
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px;width:100%;height:100%">
+    </div>
+</body>
+</html>

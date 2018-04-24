@@ -1,0 +1,244 @@
+{
+  "view/news.html": {
+    "href": "view/news.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/collimg1.png",
+      "view/images/collimg.png",
+      "js/mui.min.js",
+      "view/images/share.png"
+    ],
+    "refer": [
+      "view/news.html"
+    ],
+    "priority": 0
+  },
+  "view/register.html": {
+    "href": "view/register.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/fanhui.png"
+    ],
+    "refer": [
+      "view/login.html"
+    ],
+    "priority": 0
+  },
+  "view/forgetpwd.html": {
+    "href": "view/forgetpwd.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "view/login.html": {
+    "href": "view/login.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/account.png",
+      "view/images/lock-.png"
+    ],
+    "refer": [
+      "view/my.html",
+      "view/register.html",
+      "view/forgetpwd.html"
+    ],
+    "priority": 0
+  },
+  "view/collection.html": {
+    "href": "view/collection.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/jquery.lazyload.js",
+      "js/news.js",
+      "view/images/sw1_--wu@2x.png"
+    ],
+    "refer": [
+      "view/login.html"
+    ],
+    "priority": 0
+  },
+  "view/myad.html": {
+    "href": "view/myad.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "js/ajaxupload.js",
+      "js/xmlToJson.js",
+      "view/images/blank1.png"
+    ],
+    "refer": [
+      "view/login.html"
+    ],
+    "priority": 0
+  },
+  "view/update.html": {
+    "href": "view/update.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "js/ajaxupload.js",
+      "js/xmlToJson.js",
+      "view/images/me_head-portrait@2x.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "view/pay.html": {
+    "href": "view/pay.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/sw2_qrzf_wechat@2x.png",
+      "view/images/sw2_qrzf_alipay@2x.png"
+    ],
+    "refer": [
+      "view/login.html"
+    ],
+    "priority": 0
+  },
+  "view/my.html": {
+    "href": "view/my.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/hy1.png",
+      "view/images/sy1.png",
+      "view/images/lb.png",
+      "view/images/wd2.png",
+      "view/images/me_head-portrait@2x.png",
+      "view/images/my_13.png",
+      "view/images/my_14.png",
+      "view/images/my_15.png",
+      "view/images/my_16.png",
+      "view/images/my_17.png",
+      "view/images/my_18.png",
+      "view/images/fanhui.png",
+      "view/images/hy.png",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "view/login.html",
+      "view/home.html",
+      "view/find.html",
+      "view/collection.html",
+      "view/myad.html",
+      "view/update.html",
+      "view/pay.html"
+    ],
+    "priority": 0
+  },
+  "view/find.html": {
+    "href": "view/find.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/jquery.lazyload.js",
+      "js/news.js",
+      "view/images/sw1_--wu@2x.png",
+      "view/images/sy1.png",
+      "view/images/lb2.png",
+      "view/images/wd.png",
+      "js/mui.min.js",
+      "lib/jquery-2.1.4.js"
+    ],
+    "refer": [
+      "view/home.html",
+      "view/my.html",
+      "view/news.html"
+    ],
+    "priority": 0
+  },
+  "view/home.html": {
+    "href": "view/home.html",
+    "resources": [
+      "lib/weui.min.css",
+      "css/jquery-weui.css",
+      "view/css/style.css",
+      "lib/jquery-2.1.4.js",
+      "lib/fastclick.js",
+      "js/jquery-weui.js",
+      "js/swiper.js",
+      "js/news.js",
+      "view/images/blank.png",
+      "js/jQuery.Hz2Py-min.js",
+      "view/images/sw1_--wu@2x.png",
+      "view/images/sy.png",
+      "view/images/lb.png",
+      "view/images/wd.png",
+      "view/images/fanhui.png",
+      "view/images/line.png",
+      "view/images/addr.png",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "view/news.html",
+      "view/find.html",
+      "view/my.html"
+    ],
+    "priority": 0
+  }
+}

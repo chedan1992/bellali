@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6DF7433C-EAE9-4ADA-9C0F-64326F2B25CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QINGUO.Business</RootNamespace>
+    <AssemblyName>QINGUO.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="QINGUO.Common">
+      <HintPath>..\..\..\..\Lib\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdShare\BllAAShare.cs" />
+    <Compile Include="BllAdActive.cs" />
+    <Compile Include="BllBase.cs" />
+    <Compile Include="BllEDynamic.cs" />
+    <Compile Include="BllSysFileAttach.cs" />
+    <Compile Include="Contract\BllContractInOut.cs" />
+    <Compile Include="FireApp\BllFireBox.cs" />
+    <Compile Include="BllOrderEvaluation.cs" />
+    <Compile Include="BllOrderRunOrder.cs" />
+    <Compile Include="BllOrderUserExtended.cs" />
+    <Compile Include="BllOrderUserMoneyRecord.cs" />
+    <Compile Include="BllSysModel.cs" />
+    <Compile Include="BllSysOperateLog.cs" />
+    <Compile Include="FireApp\BllSysQRCode.cs" />
+    <Compile Include="FireApp\BllSysFlow.cs" />
+    <Compile Include="FireApp\BllSysAppointed.cs" />
+    <Compile Include="FireApp\BllSysAppointCheckNotes.cs" />
+    <Compile Include="Shop\BllShopCategory.cs" />
+    <Compile Include="Shop\BllShopGoods.cs" />
+    <Compile Include="System\BllSysCategory.cs" />
+    <Compile Include="BllStaticStr.cs" />
+    <Compile Include="BllSysGroup.cs" />
+    <Compile Include="System\BllSysCompany.cs" />
+    <Compile Include="System\BllSysDataBaseBack.cs" />
+    <Compile Include="System\BllSysFeedback.cs" />
+    <Compile Include="System\BllSysHatarea.cs" />
+    <Compile Include="System\BllSysHatcity.cs" />
+    <Compile Include="System\BllSysHatProvince.cs" />
+    <Compile Include="System\BllSysImgPic.cs" />
+    <Compile Include="System\BllSysMaster.cs" />
+    <Compile Include="System\BllSysMessageAuthCode.cs" />
+    <Compile Include="System\BllSysPushInfo.cs" />
+    <Compile Include="System\BllSysPushMessage.cs" />
+    <Compile Include="System\BllSysPushUser.cs" />
+    <Compile Include="BllSysUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\BllSysBtn.cs" />
+    <Compile Include="System\BllSysFun.cs" />
+    <Compile Include="System\BllSysFunLinkBtnValue.cs" />
+    <Compile Include="System\BllSysMasterRole.cs" />
+    <Compile Include="System\BllSysRole.cs" />
+    <Compile Include="System\BllSysRoleFun.cs" />
+    <Compile Include="System\BllSysRoleRangeData.cs" />
+    <Compile Include="MasterContext.cs" />
+    <Compile Include="System\BllSysRemarkSetting.cs" />
+    <Compile Include="System\BllSysCompanyPaySet.cs" />
+    <Compile Include="BllSysUserFriends.cs" />
+    <Compile Include="System\BllSysCompanyCognate.cs" />
+    <Compile Include="BllSysDirc.cs" />
+    <Compile Include="System\BllSysCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspx.DapperAccessBase\QINGUO.DapperAccessBase.csproj">
+      <Project>{B436ED0F-9DEF-4720-AF30-B1C01B6FABB2}</Project>
+      <Name>QINGUO.DapperAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.DataAccessBase\QINGUO.DataAccessBase.csproj">
+      <Project>{C9047A67-4BE1-4967-A2BC-10F82A211085}</Project>
+      <Name>QINGUO.DataAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.Factory\QINGUO.Factory.csproj">
+      <Project>{D9FE440C-4A6F-4AC3-A7CC-9E443E301022}</Project>
+      <Name>QINGUO.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.IDAL\QINGUO.IDAL.csproj">
+      <Project>{847010A7-9EBE-4206-B75D-A8FDEEFBED4C}</Project>
+      <Name>QINGUO.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.Model\QINGUO.Model.csproj">
+      <Project>{D8D1450F-BB50-49CE-BF13-4563DF593356}</Project>
+      <Name>QINGUO.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.ViewModel\QINGUO.ViewModel.csproj">
+      <Project>{BADFF8E8-3EA2-4BAF-98F6-362F4B7410F0}</Project>
+      <Name>QINGUO.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

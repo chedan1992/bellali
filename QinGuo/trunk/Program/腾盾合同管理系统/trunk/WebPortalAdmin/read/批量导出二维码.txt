@@ -1,0 +1,5 @@
+批量导出二维码,系统开发导出版本需要和服务器一致
+
+Microsoft Office 12.0 Object Library
+
+Microsoft Excel 12.0 Object Library

@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=59yEfHEXfi2Ofn0GTwoRVazM"></script>
+
+    <script type="text/javascript" language="javascript">
+        Ext.onReady(function () {
+            var tb = new top.Ext.Toolbar();
+            tb.add({
+                text: '当前城市',
+                tooltip: '定位我当前城市',
+                iconCls: 'GTP_location',
+                handler: GetLocation
+            });
+            tb.add('->');
+            tb.add({
+                 xtype: 'tbtext',
+                 text: '地址:'
+            });
+            var textsearch = new top.Ext.form.TextField({
+                width: 150,
+                id: 'txtsearch',
+                fieldLabel: '地址',
+                emptyText: '输入地址名称'
+            });
+            tb.add(textsearch);
+            var btn=new top.Ext.Button({
+                text: '&nbsp;&nbsp;查询',
+                width: 40,
+                handler: btnSearch
+            })
+            tb.add(btn);
+           
+            //左边区域
+            var left = new Ext.Panel({
+                layout: 'fit',
+                region: 'center',
+                border:false,
+                tbar: tb,
+                contentEl: 'allmap'
+            });
+
+            var view = new Ext.Panel({
+                renderTo: 'winBody',
+                height: 382,
+                bodyStyle: 'overflow:hidden',
+                border: false,
+                layout: 'border',
+                items: [left]
+            });
+        });
+
+        //查询
+        function btnSearch() {
+            if (Ext.getCmp("txtsearch").getValue().trim() != '') {
+                Ext.Msg.wait("地图查询中....");
+                MblogDotccMap(Ext.getCmp("txtsearch").getValue());
+            }
+        }
+
+        //我的位置
+        function GetLocation() {
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+            function myFun(result) {
+                map.clearOverlays(); //清空原来的标注
+                var cityName = result.name;
+                map.setCenter(cityName);   //关于setCenter()可参考API文档---”传送门“
+                point = new BMap.Point(result.center.lng, result.center.lat);
+                $("#x").val(point.lng);
+                $("#y").val(point.lat);
+                marker = new BMap.Marker(point, { icon: icon });
+                marker.enableDragging();    //可拖拽 
+                map.enableScrollWheelZoom(); //滑动改变大小
+                map.addOverlay(marker);
+                $("#address").val(cityName);
+//                if ($.trim(poi.city) != "") {
+//                    $("#CityName").val(poi.city);
+//                }
+//                else {
+//                    $("#CityName").val(poi.address);
+//                }
+                SetMark($("#address").val(), point);
+            }
+        }
+    </script>
+</head>
+<body>
+ <div id='winBody' style="width: 100%; height: 100%">
+    </div>
+    <input id="x" type="hidden" value="" />
+    <input id="y" type="hidden" value="" />
+    <input id="address" type="hidden" value="" />
+    <input id="CityName" type="hidden" value="" />
+    <div id="allmap" class="x-hide-display" style="width: 100%; height: 100%">
+    </div>
+    <div id="SearchDiv" class="x-hide-display" style="width: 100%; height: 100%; overflow: auto">
+    </div>
+</body>
+</html>
+<script type="text/javascript" language="javascript">
+        var map = new BMap.Map("allmap");   // 创建地图实例
+
+        map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
+        map.enableContinuousZoom();     //启用地图惯性拖拽，默认禁用
+        map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+        map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
+        map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开
+        //搜索
+        var local = new BMap.LocalSearch(map);
+        local.enableAutoViewport(); //允许自动调节窗体大小
+
+        var x = top.Ext.getCmp('BaiDuMap').items.items[0].params.x;
+        var y = top.Ext.getCmp('BaiDuMap').items.items[0].params.y;
+        var address = top.Ext.getCmp('BaiDuMap').items.items[0].params.address;
+        var CityName = top.Ext.getCmp('BaiDuMap').items.items[0].params.CityName;
+
+        var icon = new BMap.Icon('../../Resource/img/MapMark.png', new BMap.Size(20, 32),
+            { anchor: new BMap.Size(10, 30), infoWindowAnchor: new BMap.Size(10, 0) }
+        );
+
+        // 百度地图API功能
+        var point;
+        if (x == '' && y == '' || x == '0' && y == '0') {
+            point = new BMap.Point(104.067923, 30.679943); //初始化地址:成都
+            map.centerAndZoom(point, 12);
+        }
+        else {
+            point = new BMap.Point(x, y);
+            map.centerAndZoom(point, 15); //
+        }
+
+
+        var marker = new BMap.Marker(point, { icon: icon });    // 创建标注
+        marker.enableDragging();    //可拖拽
+
+        local.setSearchCompleteCallback(function (searchResult) {
+            Ext.Msg.hide();
+            if (searchResult) {
+                map.clearOverlays(); //清空原来的标注
+                var poi = searchResult.getPoi(0);
+                if (poi) {
+                    point = new BMap.Point(poi.point.lng, poi.point.lat);
+                    marker = new BMap.Marker(point, { icon: icon });
+                    map.addOverlay(marker);
+                    if ($("#address").val()) {
+                        SetMark($("#address").val(), poi.point);
+                        $("#CityName").val(searchResult.city);
+                    }
+                    else {
+                        $("#address").val(poi.address);
+                        $("#CityName").val(poi.address);
+                        SetMark(poi.address, poi.point);
+                    }
+                    $("#x").val(point.lng);
+                    $("#y").val(point.lat);
+                }
+                else {
+                    $("#x").val("");
+                    $("#y").val("");
+                    top.Ext.Msg.show({ title: "信息提示", msg: "暂无该地址信息,请重新输入", buttons: Ext.Msg.OK, icon: Ext.MessageBox.INFO });
+                    return false;
+                }
+            }
+        });
+
+        if ((x == '' && y == '' || x == '0' && y == '0') && address != '') {//只有地址,没有坐标
+            Ext.getCmp("txtsearch").setValue(address);
+        }
+
+        if ((x == '' && y == '' || x == '0' && y == '0') && address != '') {
+            Ext.Msg.wait("地图查询中....");
+            local.search(Ext.getCmp("txtsearch").getValue().trim());
+        }
+        else if ((x != '' && y != '' || x == '0' && y == '0') && address != '') {
+            SetMark(address, point);
+        }
+        else {
+            if (address == '' && (x == '' && y == '' || x == '0' && y == '0')) {
+                if (CityName) {
+                    local.search(CityName);
+                }
+                else {
+                    map.centerAndZoom("成都", 12);
+                    local.search("成都");  //执行地址定位
+                }
+            }
+            else if (address == '' && (x != '' && y != '' || x != '0' && y != '0')) {
+                var myGeo = new BMap.Geocoder();
+                myGeo.getLocation(point, function (result) {
+                    if (result) {
+                        $("#address").val(result.address);
+                        SetMark(result.address, point);
+                    }
+                });
+            }
+            else {
+                SetMark(address, point);
+            }
+        }
+
+        $("#x").val(point.lng);
+        $("#y").val(point.lat);
+        $("#address").val(address);
+        map.addOverlay(marker);              // 将标注添加到地图中
+
+        map.addEventListener("click", function (e) {
+            map.removeOverlay(marker);
+            var station = new BMap.Point(e.point.lng, e.point.lat);
+            marker = new BMap.Marker(station, { icon: icon });
+            map.addOverlay(marker);
+
+            var myGeo = new BMap.Geocoder();
+            myGeo.getLocation(station, function (result) {
+                if (result) {
+                    $("#address").val(result.address);
+                    var cityName = result.addressComponents.city;
+                    if (cityName != "") {
+                        $("#CityName").val(cityName);
+                    }
+                    SetMark(result.address, station);
+                }
+            });
+            $("#x").val(e.point.lng);
+            $("#y").val(e.point.lat);
+        });
+
+        //按钮搜索
+        function MblogDotccMap(keyword) {
+            //搜索
+            local.search(keyword);
+            local.setSearchCompleteCallback(function (searchResult) {
+                Ext.Msg.hide();
+                debugger
+                var poi = searchResult.getPoi(0);
+                if (poi) {
+                    map.clearOverlays(); //清空原来的标注
+                    point = new BMap.Point(poi.point.lng, poi.point.lat);
+                    marker = new BMap.Marker(point, { icon: icon });
+                    map.addOverlay(marker);
+
+                    $("#address").val(keyword);
+                    SetMark(keyword, poi.point);
+
+                    $("#x").val(point.lng);
+                    $("#y").val(point.lat);
+                    if ($.trim(poi.city) != "") {
+                        $("#CityName").val(poi.city);
+                    }
+                    else {
+                        $("#CityName").val(poi.address);
+                    }
+                } else {
+                    $("#x").val("");
+                    $("#y").val("");
+                    top.Ext.Msg.show({ title: "信息提示", msg: "暂无该地址信息,请重新输入", buttons: Ext.Msg.OK, icon: Ext.MessageBox.INFO });
+                    return false;
+                }
+            });
+        }
+
+        //创建自定义窗体
+        function SetMark(address, stationpoint) {
+            var infoWindow = new BMap.InfoWindow("<p style='font-size:12px;'>您选择的坐标:<br/>(" + stationpoint.lng + "," + stationpoint.lat + ")</p><p style='font-size:12px;'>地址:" + address + "</p><br/><p style='font-size:11px;color:orange'>点击地图其他位置，可更换位置。</p>");
+            // var infoWindow = new BMap.InfoWindow("地址："+address, opts);  // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, stationpoint); //开启信息窗口
+        }
+
+</script>

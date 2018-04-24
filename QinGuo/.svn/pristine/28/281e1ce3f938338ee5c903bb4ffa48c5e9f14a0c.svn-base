@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>新闻详情页</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+		<meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+		<meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+
+		<link rel="shortcut icon" href="/logo.gif" />
+		<link rel="stylesheet" href="../lib/weui.min.css">
+		<link rel="stylesheet" href="../css/jquery-weui.css">
+		<link rel="stylesheet" href="css/style.css">
+		<style>
+			.weui-form-preview:after,
+			.weui-form-preview:before {
+				border: 0px;
+			}
+			
+			.adv {
+				position: relative;
+				margin: 0 auto;
+				text-align: center;
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+			
+			.adv i {
+				position: absolute;
+				right: 10px;
+			}
+		</style>
+	</head>
+
+	<body ontouchstart>
+		<article class="weui-article borderbom">
+			<h1 id="name"></h1>
+			<!-- <h2 class="title">章标题</h2>-->
+			<section>
+				<div class="weui-form-preview">
+					<div class="weui-form-preview__bd">
+						<div class="weui-form-preview__item">
+							<label class="weui-form-preview__label" id="author"></label>
+							<span class="weui-form-preview__value" id="createTime"></span>
+						</div>
+					</div>
+					<div class="weui-form-preview__bd" style="padding-top: 0px;">
+						<div class="weui-form-preview__item">
+							<label class="weui-form-preview__label">
+                            <!--<img src="images/dianzan.png" width="25" style="vertical-align: middle; margin-right: 10px;" />-->
+                            阅读：<span style="vertical-align: middle;" id="red">0</span></label>
+							<span class="weui-form-preview__value">
+                            <img src="images/collimg.png" width="25" id="colle" onclick="collclick(this)" style="vertical-align:middle;" />
+                            <img src="images/share.png" width="33" id="share" class="hide" onclick="shareShow()" style="vertical-align:middle;"/>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div id="advtop" class="adv"></div>
+				<section id="content" style="overflow-x: hidden;">
+				</section>
+				<div id="advbottom" class="adv"></div>
+			</section>
+		</article>
+		<div class="weui-msg__extra-area" style="position: relative;">
+			<div class="weui-cells__title hide" style="padding: 5px 5px; margin: 0px; font-size: 16px;">
+				<span style="color: #3d4145;">新闻推荐</span>
+			</div>
+			<div class="content">
+			</div>
+			<div class="weui-footer">
+				<p class="weui-footer__links">
+					<a href="javascript:void(0);" class="weui-footer__link">即时分享</a>
+				</p>
+				<p class="weui-footer__text">Copyright © 2017-2022 </p>
+			</div>
+		</div>
+		<a class=" gototop ">返回顶部</a>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../lib/jquery-2.1.4.js"></script>
+		<script src="../lib/fastclick.js"></script>
+		<script src="../js/jquery-weui.js"></script>
+		<script src="../js/swiper.js"></script>
+		<script src="../js/news.js"></script>
+
+		<script>
+			var id = getQueryString("id");
+			var oid = getQueryString("oid");
+			var user = comm.getStorage("user"),
+				userid = "",
+				mynew = null;
+			$(function() {
+				FastClick.attach(document.body);
+				if(user != null && user != "") {
+					userid = user.id;
+				}
+
+				$(window).scroll(function() {
+					if($(window).scrollTop() > 400) {
+						$(".gototop").show(); //一秒渐入动画
+					} else {
+						$(".gototop").hide(); //一秒渐隐动画
+					}
+				});
+
+				$(".gototop").click(function() {
+					$('body,html').animate({
+						scrollTop: 0
+					}, 1000);
+				});
+
+				$.ajax({
+					url: comm.url + "/api/getNew/" + id + "?userid=" + userid,
+					type: 'get',
+					dataType: 'json',
+					async: false, //是否异步
+					success: function(d, status) {
+						if(d.success && d.data != null) {
+							mynew = d.data;
+							if(d.data.isCollection) { //已经收藏
+								$("#colle").attr("src", "images/collimg1.png");
+							} else {
+								$("#colle").attr("src", "images/collimg.png");
+							}
+							$("#name").html(d.data.name);
+							var ctime = new Date(d.data.createTime);
+
+							$("#createTime").html(ctime.getFullYear() + "-" + (ctime.getMonth() + 1) + "-" + ctime.getDate() + " " + ctime.getHours() + ":" + ctime.getMinutes());
+							$("#content").html(d.data.content);
+							$("#name").html(d.data.name);
+							$("#red").html(d.data.readNum);
+							if(d.data.author != "") {
+								$("#author").html(d.data.author);
+							}
+						} else {
+							$.toptip(d.msg, 'warning');
+						}
+					},
+					fail: function(err, status) {
+						$.toptip(err, 'error');
+					}
+				});
+				if(oid != "") {
+					//获取用户广告
+					$.ajax({
+						url: comm.url + "/api/getAAShare/" + oid,
+						type: 'get',
+						dataType: 'json',
+						async: true, //是否异步
+						success: function(d, status) {
+							if(d.success && d.data != null) {
+								$.each(d.data, function(i, e) {
+									if(e._status == 1) {
+										var strRegex = '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+										var url = ""
+										var re = new RegExp(strRegex);
+										if(e._url != "" && e._url != null) {
+											if(re.test(e._url)) {
+												url = e._url;
+											}
+										}
+										if(i == 0 && e._img != "" && e._isshow) {
+											$("#advtop").html("<img src='" + e._img + "' onclick='goad(\"" + e._id + "\",\"" + url + "\")'/><i class='weui-icon-cancel' onclick='removeadv(\"#advtop\")'></i>");
+										} else if(i == 1 && e._img != "" && e._isshow) {
+											$("#advbottom").html("<img src='" + e._img + "' onclick='goad(\"" + e._id + "\",\"" + url + "\")'/><i class='weui-icon-cancel' onclick='removeadv(\"#advbottom\")'></i>");
+										}
+									}
+								});
+							}
+						},
+						fail: function(err, status) {
+							$.toptip(err, 'error');
+						}
+					});
+				}
+				if(mynew) {
+					$.ajax({
+						url: comm.url + "/api/getNews?type=" + 0 + "&dircid=" + mynew.croupId + "&userid=" + userid + "&search=" + "" + "&pagesize=" + 20 + "&pageindex=" + 1,
+						type: 'get',
+						dataType: 'json',
+						async: true, //是否异步
+						success: function(d, status) {
+							if(d.success && d.data != null) {
+								if(d.data.length > 0) {
+									$(".weui-cells__title").show();
+									if(d.data.length > 10) {
+										//随机取
+										var r = Math.round(Math.random() * 100000) + "";
+										var m = r.split("");
+										for(var i = 0; i < r.length; i++) {
+											new news({
+												id: ".weui-msg__extra-area .content",
+												style: 6,
+												data: d.data[m[i]]
+											}).init();
+										}
+									} else {
+										$.each(d.data, function(i, e) {
+											if(e.id != mynew.id)
+												new news({
+													id: ".weui-msg__extra-area .content",
+													style: 6,
+													data: e
+												}).init();
+										});
+									}
+								} else {
+									$(".weui-cells__title").hide();
+								}
+							}
+						},
+						fail: function(err, status) {
+							$.toptip(err, 'error');
+						}
+					});
+				}
+			});
+
+			function collclick(a) {
+				$.ajax({
+					url: comm.url + "/api/savecollection/" + userid + "/" + id,
+					type: 'post',
+					dataType: 'json',
+					async: true, //是否异步
+					success: function(d, status) {
+						if(d.success) {
+							$.toptip(d.msg, 'success');
+							if(d.errorCode == 1) {
+								$(a).attr("src", "images/collimg1.png");
+							} else if(d.errorCode == 2) {
+								$(a).attr("src", "images/collimg.png");
+							}
+						} else {
+							$.toptip(d.msg, 'warning');
+						}
+					},
+					fail: function(err, status) {
+						$.toptip(err, 'error');
+					}
+				});
+			}
+
+			function removeadv(id) {
+				$(id).remove();
+			}
+
+			//用户广告点击量
+			function goad(id, url) {
+				$.ajax({
+					url: comm.url + "/api/clickAShare/" + id,
+					type: 'get',
+					dataType: 'json',
+					async: true, //是否异步
+					success: function(d, status) {
+						go(url);
+					},
+					fail: function(err, status) {
+						$.toptip(err, 'error');
+						go(url);
+					}
+				});
+			}
+		</script>
+
+		<script type="text/javascript">
+			var shares = null;
+			// H5 plus事件处理
+			function plusReady() {
+				$("#share").show();
+				updateSerivces();
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			/**
+			 * 更新分享服务
+			 */
+			function updateSerivces() {
+				plus.share.getServices(function(s) {
+					shares = {};
+					for(var i in s) {
+						var t = s[i];
+						shares[t.id] = t;
+					}
+				}, function(e) {
+					$.toptip('获取分享服务列表失败！'+ e.message, 'error');
+				});
+			}
+			/**
+			 * 调用系统分享
+			 */
+			function shareSystem() {
+				var msg = {
+					content: ""
+				};
+				if(pic && pic.realUrl) {
+					msg.pictures = [pic.realUrl];
+				}
+				plus.share.sendWithSystem ? plus.share.sendWithSystem(msg, function() {
+					//outLine('Success');
+					//console.log('Success');
+				}, function(e) {
+					//outLine('Failed: ' + JSON.stringify(e));
+					//console.log('Failed: ' + JSON.stringify(e));
+				}) : shareSystemNativeJS();
+			}
+
+			function shareSystemNativeJS() {
+				if(plus.os.name !== 'Android') {
+					plus.nativeUI.alert('此平台暂不支持系统分享功能!');
+					return;
+				}
+				var intent = new Intent(Intent.ACTION_SEND);
+				if(pic && pic.realUrl) {
+					var p = '';
+					p = pic.realUrl;
+					if(p.substr(0, 7) === 'file://') {
+						p = p.substr(7);
+					} else if(p.sub(0) !== '/') {
+						p = plus.io.convertLocalFileSystemURL(p);
+					}
+				}
+				var f = new File(p);
+				var uri = Uri.fromFile(f);
+				if(f.exists() && f.isFile()) {
+					console.log('image/*');
+					intent.setType('image/*');
+					intent.putExtra(Intent.EXTRA_STREAM, uri);
+				} else {
+					console.log('text/plain');
+					intent.setType('text/plain');
+				}
+				intent.putExtra(Intent.EXTRA_SUBJECT, mynew.name);
+				intent.putExtra(Intent.EXTRA_TEXT, mynew.name);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				main.startActivity(Intent.createChooser(intent, '系统分享HelloH5'));
+			}
+			/**
+			 * 分享操作
+			 * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+			 * @param {Boolean} bh 是否分享链接
+			 */
+			function shareAction(sb, bh) {
+				//outSet('分享操作：');
+				if(!sb || !sb.s) {
+					$.toptip('无效的分享服务！', 'error');
+					return;
+				}
+				var msg = {
+					extra: {
+						scene: sb.x
+					}
+				};
+				if(bh) {
+					var url=comm.url +"/webcode/view/news.html?id="+mynew.id;
+				    var user = comm.getStorage("user");
+				    if (user != null && user != "" && user.ismember) {//是会员
+				        url += "&oid=" + user.id;
+				    }
+					msg.href = url;
+					msg.title =mynew.name;
+					msg.content=mynew.name;;
+					msg.thumbs = ['_www/logo.png'];
+					msg.pictures = ['_www/logo.png'];
+					
+			        if (mynew.imageList!=null && mynew.imageList.length > 0){
+			            msg.pictures = ['_www/logo.png', comm.url + mynew.imageList[0]._picurl];
+						msg.thumbs = ['_www/logo.png', comm.url + mynew.imageList[0]._picurl];
+			        }
+				}
+				// 发送分享
+				if(sb.s.authenticated) {
+					//$.toptip('---已授权---','error');
+					shareMessage(msg, sb.s);
+				} else {
+					//outLine('---未授权---');
+					sb.s.authorize(function() {
+						shareMessage(msg, sb.s);
+					}, function(e) {
+						$.toptip('认证授权失败：' + e.code + ' - ' + e.message, 'error');
+					});
+				}
+			}
+			/**
+			 * 发送分享消息
+			 * @param {JSON} msg
+			 * @param {plus.share.ShareService} s
+			 */
+			function shareMessage(msg, s) {
+				s.send(msg, function() {
+					$.toptip('分享到"' + s.description + '"成功！', 'success');
+				}, function(e) {
+					$.toptip('分享到"' + s.description + '"失败: ' , 'error');
+				});
+			}
+			// 打开分享
+			function shareShow() {
+				var shareBts = [];
+				// 更新分享列表
+				var ss = shares['weixin'];
+				if(navigator.userAgent.indexOf('qihoo') < 0) { //在360流应用中微信不支持分享图片
+					ss && ss.nativeClient && (shareBts.push({
+							title: '微信朋友圈',
+							s: ss,
+							x: 'WXSceneTimeline'
+						}),
+						shareBts.push({
+							title: '微信好友',
+							s: ss,
+							x: 'WXSceneSession'
+						}));
+				}
+				ss = shares['sinaweibo'];
+				ss && shareBts.push({
+					title: '新浪微博',
+					s: ss
+				});
+				ss = shares['qq'];
+				ss && ss.nativeClient && shareBts.push({
+					title: 'QQ',
+					s: ss
+				});
+				// 弹出分享列表
+				shareBts.length > 0 ? plus.nativeUI.actionSheet({
+					title: '分享',
+					cancel: '取消',
+					buttons: shareBts
+				}, function(e) {
+					(e.index > 0) && shareAction(shareBts[e.index - 1], true);
+				}) : plus.nativeUI.alert('当前环境无法支持分享操作!');
+			}
+		</script>
+	</body>
+
+</html>

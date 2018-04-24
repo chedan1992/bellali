@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F8EF3FF4-BFAB-449B-AE89-791FA1BE2070}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApp</RootNamespace>
+    <AssemblyName>WebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\WebApp.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>..\..\..\..\Lib\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\..\Lib\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="QINGUO.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\QINGUO.Common\obj\Debug\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Swagger.Net">
+      <HintPath>..\packages\Swagger.Net.0.5.5\lib\net40\Swagger.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Swashbuckle.Core.5.3.2\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\SwaggerNet.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\IPuCode.cs" />
+    <Compile Include="Common\MyJson.cs" />
+    <Compile Include="Common\UCSRest\UCSRestRequest.cs" />
+    <Compile Include="Common\WeXin\comm\Config.cs" />
+    <Compile Include="Common\WeXin\comm\Data.cs" />
+    <Compile Include="Common\WeXin\comm\Exception.cs" />
+    <Compile Include="Common\WeXin\comm\HttpService.cs" />
+    <Compile Include="Common\WeXin\comm\Log.cs" />
+    <Compile Include="Common\WeXin\comm\Notify.cs" />
+    <Compile Include="Common\WeXin\paydemo\DownloadBill.cs" />
+    <Compile Include="Common\WeXin\paydemo\JsApiPay.cs" />
+    <Compile Include="Common\WeXin\paydemo\MicroPay.cs" />
+    <Compile Include="Common\WeXin\paydemo\NativeNotify.cs" />
+    <Compile Include="Common\WeXin\paydemo\NativePay.cs" />
+    <Compile Include="Common\WeXin\paydemo\OrderQuery.cs" />
+    <Compile Include="Common\WeXin\paydemo\Refund.cs" />
+    <Compile Include="Common\WeXin\paydemo\RefundQuery.cs" />
+    <Compile Include="Common\WeXin\paydemo\ResultNotify.cs" />
+    <Compile Include="Common\WeXin\comm\WxPayApi.cs" />
+    <Compile Include="Common\WeXin\paydemo\H5Pay.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ShareApiController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\App.cs" />
+    <Compile Include="Models\JsonUser.cs" />
+    <Compile Include="Swagger\CachingSwaggerProvider.cs" />
+    <Compile Include="Models\MyJsonResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Swagger\TokenAuthorizeAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Log\config\Log4NetConfig.config" />
+    <Content Include="UploadFile\HeadImg\20170825-22e76ea3-2102-40ca-847a-0e195c825ec252.png" />
+    <Content Include="UploadFile\HeadImg\20170825-351a6b05-25532-4938-9731-19a76316e52e.png" />
+    <Content Include="UploadFile\HeadImg\20170825-413546e7-254aa-459a-9936-7646919951ca.png" />
+    <Content Include="UploadFile\HeadImg\20170825-502560c20-1907-4003-8c50-b34c845b9087.png" />
+    <Content Include="UploadFile\HeadImg\20170825-5b2954c25-e80a-457c-b028-25c25022522aab3.png" />
+    <Content Include="UploadFile\HeadImg\20170825-6aa425b66-733a-4260-9293-bee22ca85b83.png" />
+    <Content Include="UploadFile\HeadImg\20170825-836774e1-a6525-431a-99e25-0252b25269e11.png" />
+    <Content Include="UploadFile\HeadImg\20170825-97c7e9825-54725-4bce-82ab-025a25957728aa.png" />
+    <Content Include="UploadFile\HeadImg\20170825-cb937b4c-98cc-49a1-8249-ca052555425531.png" />
+    <Content Include="UploadFile\HeadImg\20170825-e20e9360-e409-45be-b891-c8c0a5763b31.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-22e76ea3-2102-40ca-847a-0e195c825ec252.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-351a6b05-25532-4938-9731-19a76316e52e.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-413546e7-254aa-459a-9936-7646919951ca.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-502560c20-1907-4003-8c50-b34c845b9087.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-5b2954c25-e80a-457c-b028-25c25022522aab3.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-6aa425b66-733a-4260-9293-bee22ca85b83.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-836774e1-a6525-431a-99e25-0252b25269e11.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-97c7e9825-54725-4bce-82ab-025a25957728aa.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-cb937b4c-98cc-49a1-8249-ca052555425531.png" />
+    <Content Include="UploadFile\HeadImg\BigImg\20170825-e20e9360-e409-45be-b891-c8c0a5763b31.png" />
+    <Content Include="UploadFile\News\2017\09\20170907-013372b8-2114-4069-be6b-0437cc183137.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-31234aa4-b4b6-45e8-bc15-962aac577892.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-57916321-ea65-4ab6-9674-e7031e61c829.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-58927bb7-abb4-420b-9ce0-e99e450ca582.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-5b8022eb-17c9-4768-8825-9a700be0e642.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-63e7ee16-9939-4597-a78a-e95ae6072986.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-64237642-29c5-4988-9071-38bcca234879.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-6b479690-e027-4c95-9e65-9c670401c907.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-70694533-b4c4-45a7-bc28-747127113014.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-70e03e14-ca06-4826-9685-6a596c42654c.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-784c2793-76e4-4805-84c4-82096be4a052.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-7a29c2a8-21a1-419c-94ba-278191eb7421.png" />
+    <Content Include="UploadFile\News\2017\09\20170907-7a977a06-7b02-46b9-bab6-b63abc5076e6.jpg" />
+    <Content Include="UploadFile\News\2017\09\20170907-c37ae071-e7a4-4503-9743-0098c6415ee4.png" />
+    <Content Include="UploadFile\UpImg\20170828-12287e468-2391-4286b-a84a-b7762807443328.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-15b9b15c-4b72-4153-95286-ec4289e3462853.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-1743b650-a624-4c31-95b7-971b4c7c93528.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-2a962420-922a-4a81-a2e9-82b78e0328a09.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-48a70161-07a8-4377-b2b9-408307c422848.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-905616284-077e-47a0-970e-4606b1cc4390.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-a228567e4-451a-44b6-a013-0e287266865283.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-bcb1c309-c151-4bbb-a130-33c7c4b7b2812.jpg" />
+    <Content Include="UploadFile\UpImg\20170828-c83858028-8205-4699-b078-3404c9282a2892.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-12287e468-2391-4286b-a84a-b7762807443328.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-15b9b15c-4b72-4153-95286-ec4289e3462853.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-1743b650-a624-4c31-95b7-971b4c7c93528.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-2a962420-922a-4a81-a2e9-82b78e0328a09.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-48a70161-07a8-4377-b2b9-408307c422848.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-905616284-077e-47a0-970e-4606b1cc4390.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-a228567e4-451a-44b6-a013-0e287266865283.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-bcb1c309-c151-4bbb-a130-33c7c4b7b2812.jpg" />
+    <Content Include="UploadFile\UpImg\BigImg\20170828-c83858028-8205-4699-b078-3404c9282a2892.jpg" />
+    <Content Include="Webcode\css\jquery-weui.css" />
+    <Content Include="Webcode\css\jquery-weui.min.css" />
+    <Content Include="Webcode\demos\action-sheet.html" />
+    <Content Include="Webcode\demos\article.html" />
+    <Content Include="Webcode\demos\badge.html" />
+    <Content Include="Webcode\demos\buttons.html" />
+    <Content Include="Webcode\demos\calendar.html" />
+    <Content Include="Webcode\demos\cell.html" />
+    <Content Include="Webcode\demos\city-picker.html" />
+    <Content Include="Webcode\demos\cols.html" />
+    <Content Include="Webcode\demos\contacts.html" />
+    <Content Include="Webcode\demos\css\demos.css" />
+    <Content Include="Webcode\demos\datetime-picker.html" />
+    <Content Include="Webcode\demos\dialog.html" />
+    <Content Include="Webcode\demos\fanhui.png" />
+    <Content Include="Webcode\demos\flex.html" />
+    <Content Include="Webcode\demos\footer.html" />
+    <Content Include="Webcode\demos\form.html" />
+    <Content Include="Webcode\demos\gallery.html" />
+    <Content Include="Webcode\demos\gesture.html" />
+    <Content Include="Webcode\demos\grid.html" />
+    <Content Include="Webcode\demos\icons.html" />
+    <Content Include="Webcode\demos\images\icon_nav_actionSheet.png" />
+    <Content Include="Webcode\demos\images\icon_nav_article.png" />
+    <Content Include="Webcode\demos\images\icon_nav_button.png" />
+    <Content Include="Webcode\demos\images\icon_nav_calendar.png" />
+    <Content Include="Webcode\demos\images\icon_nav_cell.png" />
+    <Content Include="Webcode\demos\images\icon_nav_city.png" />
+    <Content Include="Webcode\demos\images\icon_nav_datetime.png" />
+    <Content Include="Webcode\demos\images\icon_nav_dialog.png" />
+    <Content Include="Webcode\demos\images\icon_nav_icons.png" />
+    <Content Include="Webcode\demos\images\icon_nav_msg.png" />
+    <Content Include="Webcode\demos\images\icon_nav_new.png" />
+    <Content Include="Webcode\demos\images\icon_nav_noti.png" />
+    <Content Include="Webcode\demos\images\icon_nav_panel.png" />
+    <Content Include="Webcode\demos\images\icon_nav_photo.png" />
+    <Content Include="Webcode\demos\images\icon_nav_picker.png" />
+    <Content Include="Webcode\demos\images\icon_nav_progress.png" />
+    <Content Include="Webcode\demos\images\icon_nav_ptr.png" />
+    <Content Include="Webcode\demos\images\icon_nav_search_bar.png" />
+    <Content Include="Webcode\demos\images\icon_nav_select.png" />
+    <Content Include="Webcode\demos\images\icon_nav_swiper.png" />
+    <Content Include="Webcode\demos\images\icon_nav_tab.png" />
+    <Content Include="Webcode\demos\images\icon_nav_toast.png" />
+    <Content Include="Webcode\demos\images\icon_nav_up.png" />
+    <Content Include="Webcode\demos\images\pic_160.png" />
+    <Content Include="Webcode\demos\images\pic_article.png" />
+    <Content Include="Webcode\demos\images\present.png" />
+    <Content Include="Webcode\demos\images\swiper-1.jpg" />
+    <Content Include="Webcode\demos\images\swiper-2.jpg" />
+    <Content Include="Webcode\demos\images\swiper-3.jpg" />
+    <Content Include="Webcode\demos\images\swiper-4.jpg" />
+    <Content Include="Webcode\demos\images\vcode.jpg" />
+    <Content Include="Webcode\demos\index.html" />
+    <Content Include="Webcode\demos\infinite-with-navbar.html" />
+    <Content Include="Webcode\demos\infinite.html" />
+    <Content Include="Webcode\demos\loadmore.html" />
+    <Content Include="Webcode\demos\msg.html" />
+    <Content Include="Webcode\demos\navbar.html" />
+    <Content Include="Webcode\demos\noti.html" />
+    <Content Include="Webcode\demos\panel.html" />
+    <Content Include="Webcode\demos\photo-browser.html" />
+    <Content Include="Webcode\demos\picker.html" />
+    <Content Include="Webcode\demos\popup.html" />
+    <Content Include="Webcode\demos\preview.html" />
+    <Content Include="Webcode\demos\progress.html" />
+    <Content Include="Webcode\demos\ptr-with-infinite.html" />
+    <Content Include="Webcode\demos\ptr.html" />
+    <Content Include="Webcode\demos\pull-to-refresh-with-navbar.html" />
+    <Content Include="Webcode\demos\searchbar.html" />
+    <Content Include="Webcode\demos\select-test.html" />
+    <Content Include="Webcode\demos\select.html" />
+    <Content Include="Webcode\demos\slider.html" />
+    <Content Include="Webcode\demos\swiper.html" />
+    <Content Include="Webcode\demos\tabbar.html" />
+    <Content Include="Webcode\demos\toast.html" />
+    <Content Include="Webcode\demos\toptip.html" />
+    <Content Include="Webcode\demos\uploader.html" />
+    <Content Include="Webcode\js\ajaxupload.js" />
+    <Content Include="Webcode\js\city-picker.js" />
+    <Content Include="Webcode\js\city-picker.min.js" />
+    <Content Include="Webcode\js\jquery.lazyload.js" />
+    <Content Include="Webcode\js\jquery-weui.js" />
+    <Content Include="Webcode\js\jquery-weui.min.js" />
+    <Content Include="Webcode\view\css\nativeShare.css" />
+    <Content Include="Webcode\js\nativeShare.js" />
+    <Content Include="Webcode\js\news.js" />
+    <Content Include="Webcode\js\swiper.js" />
+    <Content Include="Webcode\js\swiper.min.js" />
+    <Content Include="Webcode\js\xmlToJson.js" />
+    <Content Include="Webcode\lib\fastclick.js" />
+    <Content Include="Webcode\lib\jquery-2.1.4.js" />
+    <Content Include="Webcode\js\jQuery.Hz2Py-min.js" />
+    <Content Include="Webcode\lib\weui.css" />
+    <Content Include="Webcode\lib\weui.min.css" />
+    <Content Include="Webcode\lib\zepto.js" />
+    <Content Include="Webcode\view\images\blank.png" />
+    <Content Include="Webcode\view\images\blank1.png" />
+    <Content Include="Webcode\view\images\icon\more.png" />
+    <Content Include="Webcode\view\images\icon\qq.png" />
+    <Content Include="Webcode\view\images\icon\qqzone.png" />
+    <Content Include="Webcode\view\images\icon\weibo.png" />
+    <Content Include="Webcode\view\images\icon\weixin.png" />
+    <Content Include="Webcode\view\images\icon\weixin_friend.png" />
+    <Content Include="Webcode\view\myad.html" />
+    <Content Include="Webcode\view\sort.html" />
+    <Content Include="Webmain\css\bootstrap.css" />
+    <Content Include="Webmain\css\jquery.fancybox.css" />
+    <Content Include="Webmain\css\owl.carousel.css" />
+    <Content Include="Webmain\css\owl.transitions.css" />
+    <Content Include="Webmain\css\style.css" />
+    <Content Include="Webmain\icons\font-awesome\css\font-awesome.css" />
+    <Content Include="Webmain\icons\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Webmain\icons\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Webmain\icons\rondo\rondo.svg" />
+    <Content Include="Webmain\icons\rondo\style.css" />
+    <Content Include="Webmain\img\header\banner-1.png" />
+    <Content Include="Webmain\img\header\banner-2.jpg" />
+    <Content Include="Webmain\img\header\banner-3.png" />
+    <Content Include="Webmain\img\kefu.jpg" />
+    <Content Include="Webmain\img\weixinCode.png" />
+    <Content Include="Webmain\img\about.jpg" />
+    <Content Include="Webmain\img\avatar\ad-type1.png" />
+    <Content Include="Webmain\img\avatar\ad-type2.png" />
+    <Content Include="Webmain\img\avatar\ad-type3.png" />
+    <Content Include="Webmain\img\avatar\ad-type4.png" />
+    <Content Include="Webmain\img\avatar\icon-1.png" />
+    <Content Include="Webmain\img\avatar\icon-4.png" />
+    <Content Include="Webmain\img\avatar\icon-5.png" />
+    <Content Include="Webmain\img\avatar\icon-6.png" />
+    <Content Include="Webmain\img\avatar\icon-7.png" />
+    <Content Include="Webmain\img\avatar\icon-8.png" />
+    <Content Include="Webmain\img\blog\blog-1.jpg" />
+    <Content Include="Webmain\img\blog\blog-2.jpg" />
+    <Content Include="Webmain\img\clients\client-1.png" />
+    <Content Include="Webmain\img\clients\client-2.png" />
+    <Content Include="Webmain\img\clients\client-3.png" />
+    <Content Include="Webmain\img\clients\client-4.png" />
+    <Content Include="Webmain\img\clients\client-5.png" />
+    <Content Include="Webmain\img\clients\client-6.png" />
+    <Content Include="Webmain\img\fancybox\blank.gif" />
+    <Content Include="Webmain\img\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Webmain\img\fancybox\fancybox_loading.gif" />
+    <Content Include="Webmain\img\fancybox\fancybox_overlay.png" />
+    <Content Include="Webmain\img\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Webmain\img\fancybox\fancybox_sprite.png" />
+    <Content Include="Webmain\img\logo.png" />
+    <Content Include="Webmain\index.html" />
+    <Content Include="Webmain\js\bootstrap.min.js" />
+    <Content Include="Webmain\js\custom.js" />
+    <Content Include="Webmain\js\jquery-1.10.2.min.js" />
+    <Content Include="Webmain\js\jquery.easing.1.3.js" />
+    <Content Include="Webmain\js\jquery.fancybox.pack.js" />
+    <Content Include="Webmain\js\jquery.mixitup.min.js" />
+    <Content Include="Webmain\js\jquery.smooth-scroll.min.js" />
+    <Content Include="Webmain\js\modernizr.js" />
+    <Content Include="Webmain\js\owl.carousel.min.js" />
+    <Content Include="Webcode\view\collection.html" />
+    <Content Include="Webcode\view\css\style.css" />
+    <Content Include="Webcode\view\home.html" />
+    <Content Include="Webcode\view\images\account.png" />
+    <Content Include="Webcode\view\images\addr.png" />
+    <Content Include="Webcode\view\images\collimg1.png" />
+    <Content Include="Webcode\view\images\dianzan.png" />
+    <Content Include="Webcode\view\images\dianzan1.png" />
+    <Content Include="Webcode\view\images\fanhui.png" />
+    <Content Include="Webcode\view\images\hy.png" />
+    <Content Include="Webcode\view\images\hy1.png" />
+    <Content Include="Webcode\view\images\icon_nav_actionSheet.png" />
+    <Content Include="Webcode\view\images\icon_nav_article.png" />
+    <Content Include="Webcode\view\images\icon_nav_button.png" />
+    <Content Include="Webcode\view\images\icon_nav_calendar.png" />
+    <Content Include="Webcode\view\images\icon_nav_cell.png" />
+    <Content Include="Webcode\view\images\icon_nav_city.png" />
+    <Content Include="Webcode\view\images\icon_nav_datetime.png" />
+    <Content Include="Webcode\view\images\icon_nav_dialog.png" />
+    <Content Include="Webcode\view\images\icon_nav_icons.png" />
+    <Content Include="Webcode\view\images\icon_nav_msg.png" />
+    <Content Include="Webcode\view\images\icon_nav_new.png" />
+    <Content Include="Webcode\view\images\icon_nav_noti.png" />
+    <Content Include="Webcode\view\images\icon_nav_panel.png" />
+    <Content Include="Webcode\view\images\icon_nav_photo.png" />
+    <Content Include="Webcode\view\images\icon_nav_picker.png" />
+    <Content Include="Webcode\view\images\icon_nav_progress.png" />
+    <Content Include="Webcode\view\images\icon_nav_ptr.png" />
+    <Content Include="Webcode\view\images\icon_nav_search_bar.png" />
+    <Content Include="Webcode\view\images\icon_nav_select.png" />
+    <Content Include="Webcode\view\images\icon_nav_swiper.png" />
+    <Content Include="Webcode\view\images\icon_nav_tab.png" />
+    <Content Include="Webcode\view\images\icon_nav_toast.png" />
+    <Content Include="Webcode\view\images\icon_nav_up.png" />
+    <Content Include="Webcode\view\images\lb.png" />
+    <Content Include="Webcode\view\images\lb2.png" />
+    <Content Include="Webcode\view\images\lock-.png" />
+    <Content Include="Webcode\view\images\me_head-portrait%402x.png" />
+    <Content Include="Webcode\view\images\my_13.png" />
+    <Content Include="Webcode\view\images\my_14.png" />
+    <Content Include="Webcode\view\images\my_15.png" />
+    <Content Include="Webcode\view\images\my_16.png" />
+    <Content Include="Webcode\view\images\my_17.png" />
+    <Content Include="Webcode\view\images\my_18.png" />
+    <Content Include="Webcode\view\images\pic_160.png" />
+    <Content Include="Webcode\view\images\pic_article.png" />
+    <Content Include="Webcode\view\images\present.png" />
+    <Content Include="Webcode\view\images\sw1_--wu%402x.png" />
+    <Content Include="Webcode\view\images\sw2_qrzf_alipay%402x.png" />
+    <Content Include="Webcode\view\images\sw2_qrzf_wechat%402x.png" />
+    <Content Include="Webcode\view\images\swiper-1.jpg" />
+    <Content Include="Webcode\view\images\swiper-2.jpg" />
+    <Content Include="Webcode\view\images\swiper-3.jpg" />
+    <Content Include="Webcode\view\images\swiper-4.jpg" />
+    <Content Include="Webcode\view\images\sy.png" />
+    <Content Include="Webcode\view\images\sy1.png" />
+    <Content Include="Webcode\view\images\vcode.jpg" />
+    <Content Include="Webcode\view\images\wd.png" />
+    <Content Include="Webcode\view\images\wd2.png" />
+    <Content Include="Webcode\view\images\collimg.png" />
+    <Content Include="Webcode\view\login.html" />
+    <Content Include="Webcode\view\my.html" />
+    <Content Include="Webcode\view\news.html" />
+    <Content Include="Webcode\view\update.html" />
+    <Content Include="Webcode\view\register.html" />
+    <Content Include="Webcode\view\forgetpwd.html" />
+    <Content Include="Webcode\view\pay.html" />
+    <Content Include="Webcode\view\find.html" />
+    <Content Include="Webcode\view\file.html" />
+    <Content Include="Webcode\view\msg.html" />
+    <Content Include="xindu\css\jquery-weui.css" />
+    <Content Include="xindu\css\jquery-weui.min.css" />
+    <Content Include="xindu\css\swiper.css" />
+    <Content Include="xindu\css\mui.css" />
+    <Content Include="xindu\css\mui.min.css" />
+    <Content Include="xindu\js\ajaxupload.js" />
+    <Content Include="xindu\js\city-picker.js" />
+    <Content Include="xindu\js\city-picker.min.js" />
+    <Content Include="xindu\js\jquery-weui.js" />
+    <Content Include="xindu\js\jquery-weui.min.js" />
+    <Content Include="xindu\js\jQuery.Hz2Py-min.js" />
+    <Content Include="xindu\js\jquery.lazyload.js" />
+    <Content Include="xindu\js\mui.js" />
+    <Content Include="xindu\js\mui.min.js" />
+    <Content Include="xindu\js\nativeShare.js" />
+    <Content Include="xindu\js\app.js" />
+    <Content Include="xindu\js\swiper.min.js" />
+    <Content Include="xindu\js\xmlToJson.js" />
+    <Content Include="xindu\lib\fastclick.js" />
+    <Content Include="xindu\lib\jquery-2.1.4.js" />
+    <Content Include="xindu\lib\weui.css" />
+    <Content Include="xindu\lib\weui.min.css" />
+    <Content Include="xindu\lib\zepto.js" />
+    <Content Include="xindu\unpackage\res\icons\100x100.png" />
+    <Content Include="xindu\unpackage\res\icons\114x114.png" />
+    <Content Include="xindu\unpackage\res\icons\120x120.png" />
+    <Content Include="xindu\unpackage\res\icons\144x144.png" />
+    <Content Include="xindu\unpackage\res\icons\152x152.png" />
+    <Content Include="xindu\unpackage\res\icons\180x180.png" />
+    <Content Include="xindu\unpackage\res\icons\192x192.png" />
+    <Content Include="xindu\unpackage\res\icons\256x256.png" />
+    <Content Include="xindu\unpackage\res\icons\29x29.png" />
+    <Content Include="xindu\unpackage\res\icons\40x40.png" />
+    <Content Include="xindu\unpackage\res\icons\48x48.png" />
+    <Content Include="xindu\unpackage\res\icons\50x50.png" />
+    <Content Include="xindu\unpackage\res\icons\57x57.png" />
+    <Content Include="xindu\unpackage\res\icons\58x58.png" />
+    <Content Include="xindu\unpackage\res\icons\72x72.png" />
+    <Content Include="xindu\unpackage\res\icons\76x76.png" />
+    <Content Include="xindu\unpackage\res\icons\80x80.png" />
+    <Content Include="xindu\unpackage\res\icons\87x87.png" />
+    <Content Include="xindu\unpackage\res\icons\96x96.png" />
+    <Content Include="xindu\view\feedbackinfo.html" />
+    <Content Include="xindu\view\list2.html" />
+    <Content Include="xindu\view\list3.html" />
+    <Content Include="xindu\view\list1.html" />
+    <Content Include="xindu\view\css\nativeShare.css" />
+    <Content Include="xindu\view\css\style.css" />
+    <Content Include="xindu\view\home.html" />
+    <Content Include="xindu\view\images\account.png" />
+    <Content Include="xindu\view\images\addr.png" />
+    <Content Include="xindu\view\images\blank.png" />
+    <Content Include="xindu\view\images\blank1.png" />
+    <Content Include="xindu\view\images\collimg.png" />
+    <Content Include="xindu\view\images\collimg1.png" />
+    <Content Include="xindu\view\images\dianzan.png" />
+    <Content Include="xindu\view\images\dianzan1.png" />
+    <Content Include="xindu\view\images\fanhui.png" />
+    <Content Include="xindu\view\images\hy.png" />
+    <Content Include="xindu\view\images\hy1.png" />
+    <Content Include="xindu\view\images\icon\more.png" />
+    <Content Include="xindu\view\images\icon\qq.png" />
+    <Content Include="xindu\view\images\icon\qqzone.png" />
+    <Content Include="xindu\view\images\icon\weibo.png" />
+    <Content Include="xindu\view\images\icon\weixin.png" />
+    <Content Include="xindu\view\images\icon\weixin_friend.png" />
+    <Content Include="xindu\view\images\icon_nav_actionSheet.png" />
+    <Content Include="xindu\view\images\icon_nav_article.png" />
+    <Content Include="xindu\view\images\icon_nav_button.png" />
+    <Content Include="xindu\view\images\icon_nav_calendar.png" />
+    <Content Include="xindu\view\images\icon_nav_cell.png" />
+    <Content Include="xindu\view\images\icon_nav_city.png" />
+    <Content Include="xindu\view\images\icon_nav_datetime.png" />
+    <Content Include="xindu\view\images\icon_nav_dialog.png" />
+    <Content Include="xindu\view\images\icon_nav_icons.png" />
+    <Content Include="xindu\view\images\icon_nav_msg.png" />
+    <Content Include="xindu\view\images\icon_nav_new.png" />
+    <Content Include="xindu\view\images\icon_nav_noti.png" />
+    <Content Include="xindu\view\images\icon_nav_panel.png" />
+    <Content Include="xindu\view\images\icon_nav_photo.png" />
+    <Content Include="xindu\view\images\icon_nav_picker.png" />
+    <Content Include="xindu\view\images\icon_nav_progress.png" />
+    <Content Include="xindu\view\images\icon_nav_ptr.png" />
+    <Content Include="xindu\view\images\icon_nav_search_bar.png" />
+    <Content Include="xindu\view\images\icon_nav_select.png" />
+    <Content Include="xindu\view\images\icon_nav_swiper.png" />
+    <Content Include="xindu\view\images\icon_nav_tab.png" />
+    <Content Include="xindu\view\images\icon_nav_toast.png" />
+    <Content Include="xindu\view\images\icon_nav_up.png" />
+    <Content Include="xindu\view\images\lb.png" />
+    <Content Include="xindu\view\images\lb2.png" />
+    <Content Include="xindu\view\images\line.png" />
+    <Content Include="xindu\view\images\lock-.png" />
+    <Content Include="xindu\view\images\me_head-portrait%402x.png" />
+    <Content Include="xindu\view\images\my_13.png" />
+    <Content Include="xindu\view\images\my_14.png" />
+    <Content Include="xindu\view\images\my_15.png" />
+    <Content Include="xindu\view\images\my_16.png" />
+    <Content Include="xindu\view\images\my_17.png" />
+    <Content Include="xindu\view\images\my_18.png" />
+    <Content Include="xindu\view\images\pic_160.png" />
+    <Content Include="xindu\view\images\pic_article.png" />
+    <Content Include="xindu\view\images\present.png" />
+    <Content Include="xindu\view\images\share.png" />
+    <Content Include="xindu\view\images\sw1_--wu%402x.png" />
+    <Content Include="xindu\view\images\sw2_qrzf_alipay%402x.png" />
+    <Content Include="xindu\view\images\sw2_qrzf_wechat%402x.png" />
+    <Content Include="xindu\view\images\swiper-1.jpg" />
+    <Content Include="xindu\view\images\swiper-2.jpg" />
+    <Content Include="xindu\view\images\swiper-3.jpg" />
+    <Content Include="xindu\view\images\swiper-4.jpg" />
+    <Content Include="xindu\view\images\sy.png" />
+    <Content Include="xindu\view\images\sy1.png" />
+    <Content Include="xindu\view\images\vcode.jpg" />
+    <Content Include="xindu\view\images\wd.png" />
+    <Content Include="xindu\view\images\wd2.png" />
+    <Content Include="xindu\view\img\17.png" />
+    <Content Include="xindu\view\img\4.png" />
+    <Content Include="xindu\view\news.html" />
+    <Content Include="xindu\view\register.html" />
+    <None Include="Properties\PublishProfiles\j.pubxml" />
+    <Content Include="SwaggerUI\css\screen.css" />
+    <Content Include="SwaggerUI\images\pet_store_api.png" />
+    <Content Include="SwaggerUI\images\wordnik_api.png" />
+    <Content Include="SwaggerUI\index.html" />
+    <Content Include="SwaggerUI\lib\backbone-min.js" />
+    <Content Include="SwaggerUI\lib\handlebars.runtime-1.0.0.beta.6.js" />
+    <Content Include="SwaggerUI\lib\jquery.ba-bbq.min.js" />
+    <Content Include="SwaggerUI\lib\jquery.min.js" />
+    <Content Include="SwaggerUI\lib\jquery.slideto.min.js" />
+    <Content Include="SwaggerUI\lib\jquery.wiggle.min.js" />
+    <Content Include="SwaggerUI\lib\swagger.js" />
+    <EmbeddedResource Include="SwaggerUI\lib\swagger_lang.js" />
+    <Content Include="SwaggerUI\lib\underscore-min.js" />
+    <Content Include="SwaggerUI\swagger-ui.js" />
+    <Content Include="SwaggerUI\swagger-ui.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Webmain\icons\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Webmain\icons\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Webmain\icons\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Webmain\icons\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Webmain\icons\rondo\rondo.ttf" />
+    <Content Include="Webmain\icons\rondo\rondo.woff" />
+    <Content Include="Webmain\icons\rondo\rondod41d.eot" />
+    <Content Include="xindu\.project" />
+    <Content Include="xindu\fonts\mui.ttf" />
+    <Content Include="xindu\manifest.json" />
+    <Content Include="xindu\unpackage\.confirmed_dependencies" />
+    <Content Include="xindu\unpackage\.confusion" />
+    <Content Include="xindu\unpackage\.dependencies" />
+    <Content Include="xindu\unpackage\release\H595391B5_1016170457.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1016171619.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1017084214.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1017084554.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1017091526.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1017152319.apk" />
+    <Content Include="xindu\unpackage\release\H595391B5_1018152441.apk" />
+    <None Include="Properties\PublishProfiles\web.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspx.Business\QINGUO.BLL.csproj">
+      <Project>{6df7433c-eae9-4ada-9c0f-64326f2b25cf}</Project>
+      <Name>QINGUO.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.DapperAccessBase\QINGUO.DapperAccessBase.csproj">
+      <Project>{b436ed0f-9def-4720-af30-b1c01b6fabb2}</Project>
+      <Name>QINGUO.DapperAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.DataAccessBase\QINGUO.DataAccessBase.csproj">
+      <Project>{c9047a67-4be1-4967-a2bc-10f82a211085}</Project>
+      <Name>QINGUO.DataAccessBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aspx.DataAccess\QINGUO.DAL.csproj">
+      <Project>{7b62c664-a3e5-468e-adcc-e814812ea0bd}</Project>
+      <Name>QINGUO.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.Model\QINGUO.Model.csproj">
+      <Project>{d8d1450f-bb50-49ce-bf13-4563df593356}</Project>
+      <Name>QINGUO.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QINGUO.ViewModel\QINGUO.ViewModel.csproj">
+      <Project>{badff8e8-3ea2-4baf-98f6-362f4b7410f0}</Project>
+      <Name>QINGUO.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>28129</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:28130/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

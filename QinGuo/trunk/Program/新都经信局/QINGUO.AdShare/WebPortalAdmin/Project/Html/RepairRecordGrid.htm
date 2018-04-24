@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>设备巡检记录</title>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var CEId = top.Ext.getCmp('shoper').items.items[0].params.CEId;
+            //数据源
+            var url = '';
+            PageSize = 15; //重新定义页数
+            //转义列
+            var Master = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "Responsible", type: "string", mapping: "Responsible" },
+              { name: "Img", type: "string", mapping: "Img" },
+              { name: "Mark", type: "string", mapping: "Mark" },
+              { name: "CreateTime", type: "string", mapping: "CreateTime" },
+              { name: "Status", type: "string", mapping: "Status" }
+            ]);
+            //数据源
+            var store = GridStore(Master, '/SysAppointed/SearchAppointCheckNotes?CEId=' + CEId);
+
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['巡检人', 'Responsible'], ['备注', 'Mark']];
+
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'topgg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: store,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                   {
+                   header: "",
+                   dataIndex: 'Id',
+                   width:35,
+                   sortable: false,
+                   menuDisabled: true,
+                   renderer: function (value, meta, record, rowIdx, colIdx, store) {
+                       var content = '<a href="#" style="vertical-align: middle;cursor:pointer" onclick="LookDeitl()"><img style="vertical-align: middle; width:18px; height:18px;border:0" class="GTP_view"  src="../../Content/Extjs/resources/images/default/s.gif"/>查看</a>';
+                       return content;
+                   }
+               },
+                    {
+                    header: "巡检人",
+                    dataIndex: 'Responsible',
+                    width:80,
+                    sortable: false,
+                    menuDisabled: true
+                },
+                 {
+                     header: '状态',
+                     sortable: false,
+                     dataIndex: 'Status',
+                     menuDisabled: true,
+                     width: 60,
+                     renderer: function (val, metadata, record, rowIdx, colIdx, store) {
+                         if (val == -1) {
+                             return "<span style='color:red'>已过期</span>";
+                         }
+                         else if (val == 0)
+                             return "<span style='color:green'>设备正常</span>";
+                         else if (val == 1) {
+                             return "<span style='color:orange'>设备异常</span>";
+                         }
+                     }
+                 },
+                 {
+                     header: '备注',
+                     sortable: false,
+                     dataIndex: 'Mark',
+                     menuDisabled: true,
+                     width: 100
+                 },
+                {
+                    header: "巡检时间",
+                    width:150,
+                    dataIndex: 'CreateTime',
+                    sortable: false,
+                    menuDisabled: true
+                }
+
+                ],
+                tbar: tbarTop(),
+                bbar: bbarTop(store), //分页工具条
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 475,
+                renderTo: 'divShopone',
+                items: [gridPanle],
+                listeners: {
+                    afterrender: function () {
+
+                    }
+                }
+            });
+
+
+        });
+
+        //查看详细
+        function LookDeitl() {
+        debugger
+            var grid = Ext.getCmp("gg");
+            //得到选后的数据   
+            var rows = grid.getSelectionModel().getSelections();
+            if (rows.length == 1) {
+                var key = rows[0].get("Id");
+                var win = CreateFromWindow("详细", key);
+                var Img = rows[0].get("Img");
+                if (Img != "") {
+                    Img = Img.split(',');
+                    var img = "";
+                    for (var i = 0; i < Img.length; i++) {
+                        if (Img[i] != "") {
+                            var ID = "Img" + i + "";
+                            img += '<div style="position:absoulute;float:left;"><a id=' + ID + ' title="" href="' + Img[i] + '" target="_blank"><img style="top:-5px;z-index:1; padding-left:3px;" src="' + Img[i] + '" width="80" height="80""/></a></div>';
+                        }
+                    }
+                    top.Ext.getCmp("Plzz").html = img;
+                }
+                else {
+                    top.Ext.getCmp("Plzz").html = "<span style='color:silver;margin-top:10px;'>(未传照片)</span>";
+                }
+                var form = top.Ext.getCmp('formPanel');
+                top.Ext.getCmp("formPanel").form.loadRecord(rows[0]); //再加载数据   
+                form.doLayout();
+                win.show();
+
+//                var Img = rows[0].get("Img");
+//                if (Img != "") {
+//                    Img = Img.split(',');
+//                    var img = "";
+//                    for (var i = 0; i < Img.length; i++) {
+//                        if (Img[i] != "") {
+//                            var ID = "Img" + i + "";
+//                            $("#" + ID + "").imgbox();
+//                        }
+//                    }
+//                }
+
+            }
+            else {
+                MessageInfo("请选中一条记录！", "statusing");
+            }
+        }
+
+        //创建表单弹框
+        function CreateFromWindow(title, key) {
+            //表单
+            var form = new top.Ext.FormPanel({
+                id: "formPanel",
+                labelAlign: 'right',
+                frame: true,
+                labelWidth: 80,
+                bodyStyle: 'padding:5px 5px 0',
+                width: 650,
+                autoScroll: true,
+                items: [
+            {
+                xtype: "fieldset",
+                autoHeight: true,
+                title: "巡检照片信息",
+                layout: 'column',
+                items: [
+                    {
+                        columnWidth: 1,
+                        layout: 'form',
+                        items: [
+                            {
+                                name: 'Plzz',
+                                id: 'Plzz',
+                                fieldLabel: '照片',
+                                style: 'padding-bottom:5px;',
+                                xtype: 'panel',
+                                html: ''
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+            });
+
+            //弹出窗体
+            var win = new top.Ext.Window({
+                id: "jiucuo",
+                title: title,
+                shadow: false,
+                stateful: false,
+                width: 650,
+                height:345,
+                minHeight: 300,
+                modal: true,
+                layout: 'fit',
+                border: false,
+                closeAction: 'close',
+                items: form,
+                buttons: [
+                    {
+                        text: '取消',
+                        iconCls: 'GTP_cancel',
+                        handler: function () {
+                            top.Ext.getCmp("jiucuo").close(); //直接销毁
+                        }
+                    }
+       ]
+            });
+            return win;
+        }
+    </script>
+</head>
+<body>
+    <div id="divShopone" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

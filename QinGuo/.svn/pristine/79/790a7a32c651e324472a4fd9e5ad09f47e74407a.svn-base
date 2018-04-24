@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+    ModSysRemarkSetting set = Model;
+    if (set==null)
+    {
+        set = new ModSysRemarkSetting();
+    }
+}
+@using Aspx.Model;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" name="viewport">
+    <meta name="viewport" content="width=device-width" />
+    <title>@set.Title</title>
+    <style type="text/css">
+        body
+        {
+            font-size:16px;
+            line-height: 150%;
+        }
+        .content
+        {
+        }
+        .content img
+        {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        @Html.Raw(set.Content)
+    </div>
+</body>
+</html>

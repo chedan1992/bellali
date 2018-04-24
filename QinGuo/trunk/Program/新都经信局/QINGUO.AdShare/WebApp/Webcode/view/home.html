@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>即刻分享</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="keywords" content="青果科技,青果工作室,青果联盟,qingguo软件" />
+    <meta name="description" content="企考通,企事业单位考试系统,在线网络考试系统,自我评测系统,青果科技,移动互联建设专家,专注企事业单位信息化系统服务建设,提供企业网站建设,网站建设服务,信息化系统建设,APP移动终端开发,微信手机端服务.选择我们,为您提供优质的服务." />
+    <link rel="shortcut icon" href="/logo.gif" />
+    <link rel="stylesheet" href="../lib/weui.min.css">
+    <link rel="stylesheet" href="../css/jquery-weui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .weui-search-bar:after, .weui-search-bar:before {
+            height: 0px;
+        }
+    </style>
+</head>
+<body ontouchstart>
+    <div class="weui-tab">
+        <div class="weui-navbar">
+
+            <div class="topnav" style="position: relative; width: 100%;">
+                <div class="nav">
+                </div>
+                <a href="javascript:;" class="weui-tabbar__item open-popup" style="position: absolute; right: 0px; top: 0px; width: 10%; text-align: center;" data-target="#full">
+                    <p class="weui-tabbar__label" style="font-size: 26px; line-height: 30px; color: #f84e4e; background: url(images/line.png); background-repeat: no-repeat; background-position: left center; background-size: 2px 30px;">+</p>
+                </a>
+            </div>
+        </div>
+        <div class="weui-tab__bd">
+            <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active weui-pull-to-refresh" style="width: 100%; top: 44px; overflow-x: hidden;">
+                <div class="weui-pull-to-refresh__layer">
+                    <div class='weui-pull-to-refresh__arrow'></div>
+                    <div class='weui-pull-to-refresh__preloader'></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新</div>
+                </div>
+                <div style="text-align: center;">
+                    <input id="cname_" type="hidden" />
+                    <iframe id="weather" scrolling="no" height="60" frameborder="0" style="margin: 0 auto; display: none;" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=7&icon=1&py=chengdu"></iframe>
+                </div>
+                <div class="content">
+                </div>
+                <div class="weui-loadmore hide">
+                    <i class="weui-loading"></i>
+                    <span class="weui-loadmore__tips">正在加载</span>
+                </div>
+            </div>
+            <div id="tab2" class="weui-tab__bd-item">
+                <h1>页面二</h1>
+            </div>
+        </div>
+        <div class="weui-tabbar">
+            <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+                <!--<span class="weui-badge" style="position: absolute; top: -.4em; right: 1em;">8</span>-->
+                <div class="weui-tabbar__icon">
+                    <img src="./images/sy.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">首页</p>
+            </a>
+            <a href="find.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/lb.png" alt="" style="">
+                </div>
+                <p class="weui-tabbar__label">发现</p>
+            </a>
+            <a href="my.html" class="weui-tabbar__item">
+                <div class="weui-tabbar__icon">
+                    <img src="./images/wd.png" alt="">
+                </div>
+                <p class="weui-tabbar__label">我</p>
+            </a>
+        </div>
+    </div>
+    <div id="full" class='weui-popup__container' style="z-index: 501;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="fullcontent">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="javascript:;" class="aback close-popup">
+                            <img src="images/fanhui.png" /><span>返回</span>
+                        </a>
+                        <div class="title">频道推荐</div>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary close-popup bg martop15" style="width: 90%;">关闭</a>
+        </div>
+    </div>
+
+    <div id="addr" class='weui-popup__container' style="z-index: 501;">
+        <div class="weui-popup__overlay"></div>
+        <div class="weui-popup__modal">
+            <div class="fullcontent">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <a href="javascript:;" class="aback close-popup">
+                            <img src="images/fanhui.png" /><span>返回</span>
+                        </a>
+                        <div class="title">选择地区</div>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary close-popup bg martop15" style="width: 90%;">返回</a>
+        </div>
+    </div>
+
+
+    <script src="../js/mui.min.js"></script>
+    <script src="../lib/jquery-2.1.4.js"></script>
+    <script src="../lib/fastclick.js"></script>
+    <script src="../js/jquery-weui.js"></script>
+    <script src="../js/swiper.js"></script>
+    <script src="../js/news.js"></script>
+    <script src="../js/jQuery.Hz2Py-min.js"></script>
+    <script src="http://api.map.baidu.com/api?ak=PE9r4AGiT5N01yhf9mnIhLQ4R3fgqaQH&v=2.0&services=false"></script>
+    <script>
+        var user = comm.getStorage("user");
+        var pagesize = 10, pageindex = 1, type = 0, dircid, userid = "", id = "tab1";
+        $(function () {
+            FastClick.attach(document.body);
+            if (user != null && user != "") {
+                userid = user.id;
+            }
+            $("#tab1").height(comm.h - 41);
+
+            $("#tab1").attr("pageindex", pageindex).attr("loading", "false").pullToRefresh().on("pull-to-refresh", function () {
+                var _this = this;
+                setTimeout(function () {
+                    pageindex = 1;
+                    $(_this).attr("pageindex", pageindex);
+                    $("#tab1 .content").html("");
+                    page(1, $("#cityname").html(), userid, "", pagesize, pageindex, "tab1");
+                    $(_this).pullToRefreshDone();
+                }, 1000);
+            });
+            $("#tab1").infinite().on("infinite", function () {
+                if ($("#tab1").attr("loading") == "true") return;
+                $("#tab1").attr("loading", "true");
+                var _id = $(this).attr("thisid");
+                var _this = this;
+                $(this).find(".weui-loadmore").html('<i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span>').show();
+                setTimeout(function () {
+                    var _pageindex = parseInt($(_this).attr("pageindex"));
+                    _pageindex++;
+                    $(_this).attr("pageindex", _pageindex);
+                    page(1, $("#cityname").html(), userid, "", pagesize, _pageindex, "tab1");
+                }, 1000);
+            });
+
+            var dirc = [];
+            $.showLoading();
+            //请求分类
+            $.ajax({
+                url: comm.url + "/api/getdirc",
+                type: 'get',
+                dataType: 'json',
+                async: false,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        dirc = d.data;
+                        var html = '<div class="weui-flex">';
+                        $.each(d.data, function (i, e) {
+
+                            $(".topnav .nav").append('<a href="javascript:;" id="_nav_m' + e._id + '" class="weui-tabbar__item" onclick="dircclick(\'' + e._id + '\')">\
+                                                        <p class="weui-tabbar__label">' + e._name + '</p>\
+                                                     </a>');
+
+                            html += '<div class="weui-flex__item">\
+                                                                <div class="placeholder" onclick="dircclick(\'' + e._id + '\')">' + e._name + '</div>\
+                                                            </div>';
+                            console.log("(i + 1) % 3 =" + (i + 1) % 3);
+                            if (i != 0 && (i + 1) % 3 == 0) {
+                                console.log(i);
+                                html += '</div>';
+                                html += '<div class="weui-flex">';
+                            }
+
+                            $(".weui-tab__bd").append('<div id="' + e._id + '" class="weui-tab__bd-item weui-pull-to-refresh" style="width: 100%; top: 44px; overflow-x: hidden;">\
+                                                        <div class="weui-pull-to-refresh__layer">\
+                                                            <div class="weui-pull-to-refresh__arrow"></div>\
+                                                            <div class="weui-pull-to-refresh__preloader"></div>\
+                                                            <div class="down">下拉刷新</div>\
+                                                            <div class="up">释放刷新</div>\
+                                                            <div class="refresh">正在刷新</div>\
+                                                        </div>\
+                                                        <div class="content">\
+                                                        </div>\
+                                                        <div class="weui-loadmore hide">\
+                                                            <i class="weui-loading"></i>\
+                                                            <span class="weui-loadmore__tips">正在加载</span>\
+                                                        </div>\
+                                                    </div>');
+
+
+                            $("#" + e._id).attr("pageindex", pageindex).attr("loading", "false").attr("thisid", e._id).height(comm.h - 41);
+                            $("#" + e._id).pullToRefresh().on("pull-to-refresh", function () {
+                                var _this = this;
+                                setTimeout(function () {
+                                    var _id = $(_this).attr("thisid");
+                                    $(_this).attr("pageindex", pageindex);
+                                    $("#" + _id + " .content").html("");
+                                    page(0, _id, userid, "", pagesize, pageindex, _id);
+                                    $(_this).pullToRefreshDone();
+                                }, 1000);
+                            });
+                            $("#" + e._id).infinite().on("infinite", function () {
+                                var _this = this;
+                                var _id = $(this).attr("thisid");
+                                if ($("#" + _id + "").attr("loading") == "true") return;
+                                $("#" + _id + "").attr("loading", "true");
+                                $(this).find(".weui-loadmore").html('<i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span>').show();
+                                setTimeout(function () {
+                                    var _pageindex = parseInt($(_this).attr("pageindex"));
+                                    _pageindex++;
+                                    $(_this).attr("pageindex", _pageindex);
+                                    page(0, _id, userid, "", pagesize, _pageindex, _id);
+                                }, 1000);
+                            });
+                        });
+                        html += '</div>';
+                        $("#full .fullcontent").append(html);
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                }
+            });
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                var point = new BMap.Point(lon, lat);  // 创建坐标点
+                // 根据坐标得到地址描述
+                var myGeo = new BMap.Geocoder();
+                myGeo.getLocation(point, function (result) {
+                    var cityname = result.addressComponents.city;
+                    if (cityname != "") {
+                        cityname = cityname.replace("市", "");
+
+                        var ischecked = true;
+                        //weather(cityname);
+                        //请求地区
+                        $.ajax({
+                            url: comm.url + "/api/getcity",
+                            type: 'get',
+                            dataType: 'json',
+                            async: true,//是否异步
+                            success: function (d, status) {
+                                if (d.success && d.data != null) {
+                                    $.each(d.data, function (i, e) {
+                                        $("#addr .fullcontent").append('<div class="weui-cells__title">' + e._name + '</div>');
+                                        var html = '<div class="weui-cells weui-cells_radio">';
+                                        $.each(e._city, function (j, c) {
+                                            checked = "";
+                                            if (ischecked && c._name.indexOf(cityname) >= 0) {
+                                                checked = "checked";
+                                                ischecked = false;
+
+                                                $(".topnav .nav").prepend(' <a href="javascript:;" class="weui-tabbar__item weui-bar__item--on" id="cityname_a" style="margin-left:30px;position:relative;z-index:1;">\
+                                                    <p class="weui-tabbar__label" id="cityname" onclick="cityclick(\'' + cityname + '\')">' + cityname + '</p>\
+                                                </a>');
+                                                $(".topnav .nav").prepend(' <a href="javascript:;" data-target="#addr" class="weui-tabbar__item open-popup"  style="width: 26px; background-color: #fff;height:31px;position: absolute; top:2px;left:0px; margin:0px;z-index:10;">\
+                                                    <img class="weui-tabbar__label" src="images/addr.png" style="width:26px;height:26px;"/>\
+                                                </a>');
+                                                //开通该城市
+                                                page(1, cityname, userid, "", pagesize, pageindex, "tab1");
+
+                                            }
+                                            html += '<label class="weui-cell weui-check__label" for="x' + c._id + '" onclick="cityclicked(\'' + c._name + '\')">\
+                                          <div class="weui-cell__bd">\
+                                            <p>&nbsp;&nbsp;' + c._name + '</p>\
+                                          </div>\
+                                          <div class="weui-cell__ft">\
+                                            <input type="radio" class="weui-check" name="radio" id="x' + c._id + '" value="' + c._name + '" ' + checked + '>\
+                                            <span class="weui-icon-checked"></span>\
+                                          </div>\
+                                        </label>';
+                                        });
+                                        html += '</div>';
+                                        $("#addr .fullcontent").append(html);
+                                    });
+                                } else {
+                                    //判断是否开通该城市
+                                    if (ischecked && dirc != null && dirc.length > 0) {
+                                        dircclick(dirc[0]._id);
+                                    }
+                                }
+                                setTimeout(function () { $.hideLoading(); }, 1000);
+                            },
+                            fail: function (err, status) {
+                                $.toptip(err, 'error');
+                                //判断是否开通该城市
+                                if (ischecked && dirc != null && dirc.length > 0) {
+                                    dircclick(dirc[0]._id);
+                                }
+                                setTimeout(function () { $.hideLoading(); }, 1000);
+                            }
+                        });
+                    }
+                });
+            }, function (error) {
+                if (dirc != null && dirc.length > 0) {
+                    dircclick(dirc[0]._id);
+                }
+                setTimeout(function () { $.hideLoading(); }, 1000);
+            }, {
+                    enableHighAccuracy: true,// 指示浏览器获取高精度的位置，默认为false
+                    timeout: 3000// 指定获取地理位置的超时时间，默认不限时，单位为毫秒
+                });
+        });
+
+        //请求新闻
+        function page(type, dircid, userid, search, pagesize, pageindex, id) {
+            $.ajax({
+                url: comm.url + "/api/getNews?type=" + type + "&dircid=" + dircid + "&userid=" + userid + "&search=" + search + "&pagesize=" + pagesize + "&pageindex=" + pageindex,
+                type: 'get',
+                dataType: 'json',
+                async: true,//是否异步
+                success: function (d, status) {
+                    if (d.success && d.data != null) {
+                        if (pageindex == 1 && d.data.length == 0) {
+                            $("#" + id + " .content").html("<div style='text-align: center; color:#ccc;margin-top:10px;'><img src='images/sw1_--wu@2x.png' /><p>空空的,什么也没有！！</p></div>");
+                            $("#" + id + "").find(".weui-loadmore").hide();
+                            $("#" + id + "").attr("loading", "true");
+                        } else if (d.data.length == 0) {
+                            $("#" + id + "").find(".weui-loadmore").html('<span class="weui-loadmore__tips">已经加载完了</span>').show();
+                            $("#" + id + "").attr("loading", "true");
+                        } else {
+                            $.each(d.data, function (i, e) {
+                                new news({
+                                    id: "#" + id + " .content",
+                                    style: e.template,
+                                    data: e
+                                }).init();
+                            });
+
+                            $("#" + id + "").find(".weui-loadmore").hide();
+                            $("#" + id + "").attr("loading", "false");
+                        }
+                    } else {
+                        $("#" + id + "").attr("loading", "false");
+                    }
+                },
+                fail: function (err, status) {
+                    $.toptip(err, 'error');
+                    $("#" + id + "").find(".weui-loadmore").hide();
+                    $("#" + id + "").attr("loading", "false");
+                }
+            });
+        }
+        function cityclick(name) {
+            id = 'tab1';
+            $(".weui-tab__bd>.weui-tab__bd-item").hide();
+            $(".weui-tab__bd").find("#" + id).show();
+            if ($("#" + id).attr("isshow") != "true") {
+                $("#tab1 .content").html("");
+                $("#" + id).attr("isshow", "true");
+                page(1, name, userid, "", pagesize, pageindex, 'tab1');
+            }
+            $("#cityname").html(name.replace("市", "")).attr("onclick", "cityclick('" + name + "')");
+            $("#addr").removeClass("weui-popup__container--visible").hide();
+            $(".topnav .nav a").removeClass("weui-bar__item--on");
+            $(".topnav .nav #cityname_a").addClass("weui-bar__item--on");
+            //weather(name.replace("市", ""));
+        }
+        function cityclicked(name) {
+            if (name.indexOf($("#cname_").val()) < 0) {
+                $("#tab1").attr("isshow", "false");
+                cityclick(name);
+            }
+        }
+
+        function dircclick(id) {
+            $(".weui-tab__bd>.weui-tab__bd-item").hide();
+            $(".weui-tab__bd").find("#" + id).show();
+            if ($("#" + id).attr("isshow") != "true") {
+                $("#" + id + " .content").html("");
+                $("#" + id).attr("isshow", "true");
+                page(0, id, userid, "", pagesize, pageindex, id);
+            }
+            $("#full").removeClass("weui-popup__container--visible").hide();
+            $(".topnav .nav a").removeClass("weui-bar__item--on");
+            $(".topnav .nav #_nav_m" + id).addClass("weui-bar__item--on");
+            $("#weather").hide();
+        }
+        ///获取天气
+        function weather(city) {
+            $("#cname_").val(city);
+            $("#weather").attr("src", "http://i.tianqi.com/index.php?c=code&id=7&icon=1&py=" + $("#cname_").toPinyin().toLowerCase().replace(/\s+/g, "")).show();
+        }
+
+    </script>
+</body>
+</html>

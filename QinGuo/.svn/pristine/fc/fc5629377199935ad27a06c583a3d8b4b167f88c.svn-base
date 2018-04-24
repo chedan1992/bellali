@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>责任人选择</title>
+ <script type="text/javascript">
+     Ext.onReady(function () {
+         //初始化
+         treeNodeId =-1;
+         //转义列
+         //转义列
+         var Master = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "LoginName", type: "string", mapping: "LoginName" },
+              { name: "UserName", type: "string", mapping: "UserName" },
+              { name: "Sex", type: "int", mapping: "Sex" },
+              { name: "Pwd", type: "string", mapping: "Pwd" },
+              { name: "Email", type: "string", mapping: "Email" },
+              { name: "Phone", type: "string", mapping: "Phone" },
+              { name: "Status", type: "int", mapping: "Status" },
+              { name: "IsMain", type: "bool", mapping: "IsMain" },
+              { name: "HeadImg", type: "string", mapping: "HeadImg" },
+              { name: "CardNum", type: "string", mapping: "CardNum" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" },
+              { name: "CreaterName", type: "string", mapping: "CreaterName" },
+              { name: "RoleName", type: "string", mapping: "RoleName" }
+
+         ]);
+         //数据源
+         var store = GridStore(Master, '/UserStaff/SearchData?OrganizaId=-1');
+       
+
+         /*树形菜单*/
+         var tree = new Ext.tree.TreePanel({
+             id: 'tr',
+             layout: 'fit',
+             layoutConfig: {
+                 animate: true
+             },
+             autoScroll: true,
+             title: '组织架构',
+             animate: true, //动画效果  
+             rootVisible: true, //根节点是否可见  
+             lines: true, //显示树形控件的前导线
+             containerScroll: true,
+             border: false,
+             bodyStyle: 'padding-top:5px',
+             loader: new Ext.tree.TreeLoader({
+                 dataUrl: '/Organizational/SearchPostData'
+             }),
+             root: {
+                 nodeType: 'async',
+                 text: '组织架构',
+                 iconCls: 'GTP_org',
+                 draggable: false,
+                 id: 'top'//区分是否根节点
+             },
+             listeners: {
+                 click: treeitemclick
+             }
+         });
+         tree.expandAll();
+         var west = new Ext.Panel({
+             region: 'west',
+             id: 'TreeWest',
+             layoutConfig: {
+                 animate: true
+             },
+             split: true,
+             width: 150,
+             margins: '0 5 0 0',
+             layout: 'fit',
+             bodyStyle: 'border-left:0px;border-top:0px;',
+             items: tree
+         });
+
+         //快捷查询,如果不需要,可以不用定义
+         TopsearchDate = [['全查询', ''], ['用户名称', 'UserName'], ['登录账号', 'LoginName']];
+
+
+         var center = new Ext.grid.GridPanel({
+             id: 'gg',
+             region: 'center',
+             layout: 'fit',
+             store: store,
+             stripeRows: true, //隔行颜色不同
+             loadMask: { msg: '数据请求中，请稍后...' },
+             defult: {
+                 sortable: false
+             },
+             columns: [
+                 new Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                 {
+                 header: "用户名称",
+                 dataIndex: 'UserName',
+                 menuDisabled: true,
+                 flex: 2
+             }, {
+                 header: "登录账号",
+                 dataIndex: 'LoginName',
+                 flex: 4,
+                 menuDisabled: true
+             }, {
+                 header: "性别",
+                 dataIndex: 'Sex',
+                 align: 'center',
+                 width: 70,
+                 renderer: formartSex,
+                 menuDisabled: true
+             },
+
+                {
+                    header: "状态",
+                    dataIndex: 'Status',
+                    align: 'center',
+                    width: 70,
+                    renderer: formartEnableOrDisable,
+                    menuDisabled: true
+                }
+
+                ],
+                tbar: tbarTop(),
+                bbar: bbarTop(store), //分页工具条
+             viewConfig: {
+                 forceFit: true,
+                 enableRowBody: true,
+                 scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+             },
+             listeners: {
+                 beforerender: function () {
+                 }
+             }
+         });
+
+         // 响应加载前事件，传递node参数 
+         center.store.on('beforeload', function (node) {
+             center.getStore().proxy.conn.url = '/UserStaff/SearchData?OrganizaId=' + treeNodeId;
+         });
+
+         var viewport = new Ext.Panel({
+             layout: 'border',
+             border: false,
+             height: 428,
+             renderTo: 'divShop',
+             items: [west, center],
+             listeners: {
+                 afterrender: function () {
+
+                 }
+             }
+         });
+     });
+
+     //点击组织架构
+     function treeitemclick(node, e) {
+         treeNodeId = node.attributes.id;
+         top.Ext.getCmp("gg").getStore().reload();
+     }
+     
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

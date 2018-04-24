@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <!--作业调度任务列表-->
+  <TaskList>
+    <!--任务项  任务名称:新闻过期   是否打印:true false   是否启用:true false   -->
+    <TaksItem name="新闻自动过期服务" Print="true" isEnabled="true">
+      <Jobs>
+        <Job idValue="job1"></Job>
+      </Jobs>
+    </TaksItem>
+  </TaskList>
+  <!--工作组  注:工作组Name不能重复,Group不能重复-->
+  <Jobs>
+    <!--工作组-->
+    <Job id="job1" type="QINGUO.QuartService.Expired">
+      <!--工作组名称-->
+      <Name value="job1"></Name>
+      <!--工作组组名-->
+      <Group value="group1"></Group>
+      <!--可以设置多个触发器-->
+      <Triggers>
+        <!--当前触发器的ID-->
+        <Trigger idValue="trigger1"></Trigger>
+      </Triggers>
+    </Job>
+  </Jobs>
+
+  <!--触发器-->
+  <Triggers>
+    <!--触发器  注:触发器Name不能重复,Group不能重复,一个触发器只能属于一个工作组-->
+    <Trigger id="trigger1">
+      <!--触发器名字-->
+      <Name value="trigger1"></Name>
+      <!--当前组-->
+      <Group value="group1"></Group>
+      <!--触发时间只有一个  TriggerTimeType>子节点名称 groupValue-->
+      <Time TriggerTimeType="EveryMinutes" GroupValue="Group2"></Time>
+    </Trigger>
+  </Triggers>
+
+  <!--选择触发器时间-->
+  <TriggerTime>
+    <!--每天-->
+    <EveryDay>
+      <Group1>
+        <!--时-->
+        <Hours>21</Hours>
+        <!--分-->
+        <Minutes>50</Minutes>
+      </Group1>
+      <Group2>
+        <!--时-->
+        <Hours>00</Hours>
+        <!--分-->
+        <Minutes>05</Minutes>
+      </Group2>
+    </EveryDay>
+    <!--每月-->
+    <EveryMonth>
+      <Group1>
+        <!--哪一天[1-31]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>8</Hours>
+        <!--分-->
+        <Minutes>0</Minutes>
+      </Group1>
+      <Group2>
+        <!--哪一天[1-31]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>9</Hours>
+        <!--分-->
+        <Minutes>0</Minutes>
+      </Group2>
+      <Group3>
+        <!--哪一天[1-31]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>10</Hours>
+        <!--分-->
+        <Minutes>0</Minutes>
+      </Group3>
+
+    </EveryMonth>
+    <!--每周-->
+    <EveryWeekly>
+
+      <Group1>
+        <!--哪一天[0:星期天  1:星期一 2:星期二 3:星期三 4:星期四 5:星期五 6:星期六]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>12</Hours>
+        <!--分-->
+        <Minutes>10</Minutes>
+      </Group1>
+      <Group2>
+        <!--哪一天[0:星期天  1:星期一 2:星期二 3:星期三 4:星期四 5:星期五 6:星期六]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>12</Hours>
+        <!--分-->
+        <Minutes>10</Minutes>
+      </Group2>
+      <Group3>
+        <!--哪一天[0:星期天  1:星期一 2:星期二 3:星期三 4:星期四 5:星期五 6:星期六]-->
+        <Day>2</Day>
+        <!--时-->
+        <Hours>12</Hours>
+        <!--分-->
+        <Minutes>10</Minutes>
+      </Group3>
+
+    </EveryWeekly>
+    <!--时-->
+    <EveryHours>
+
+      <Group1>
+        <!--间隔小时数-->
+        <Value>1</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group1>
+
+      <Group2>
+        <!--间隔小时数-->
+        <Value>3</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group2>
+
+      <Group3>
+        <!--间隔小时数-->
+        <Value>4</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group3>
+
+    </EveryHours>
+    <!--分-->
+    <EveryMinutes>
+      <Group1>
+        <!--间隔分钟数-->
+        <Value>30</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group1>
+      <Group2>
+        <!--间隔分钟数-->
+        <Value>5</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group2>
+      <Group3>
+        <!--间隔分钟数-->
+        <Value>2</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group3>
+
+    </EveryMinutes>
+    <!--秒-->
+    <EverySeconds>
+      <Group1>
+        <!--间隔秒数-->
+        <Value>1</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group1>
+      <Group2>
+        <!--间隔秒数-->
+        <Value>5</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group2>
+      <Group3>
+        <!--间隔秒数-->
+        <Value>15</Value>
+        <RepeatCount>max</RepeatCount>
+      </Group3>
+    </EverySeconds>
+  </TriggerTime>
+</root>

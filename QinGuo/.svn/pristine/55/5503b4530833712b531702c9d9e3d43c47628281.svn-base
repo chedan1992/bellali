@@ -1,0 +1,20 @@
+﻿
+@{
+    Layout = null;
+    ModAdActive set = Model;
+}
+@using Aspx.Model;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@set.ActiveName</title>
+</head>
+<body>
+    <div>
+        @Html.Raw(set.Info)
+    </div>
+</body>
+</html>
