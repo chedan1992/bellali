@@ -1,0 +1,6 @@
+﻿ /*设置grid头部系统提示信息*/
+.grid_msg{height:27px; background-color:#ffebcd;font-size:12px;}
+.grid_msg_text{display:inline;padding-top:5px;padding-bottom:5px; margin-left:25px; float:left;color:red}
+.grid_msg_btn{display:inline; float:right;margin-right:50px;padding-top:5px;padding-bottom:5px}
+.grid_msg_btn a:link{text-decoration:none; color:#0656aa }
+.grid_msg_btn a:hover{color:silver }

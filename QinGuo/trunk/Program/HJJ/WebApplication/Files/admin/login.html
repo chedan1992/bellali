@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>书房管理系统</title>
+    <link rel="stylesheet" href="inc/layui/css/layui.css">
+    <link rel="stylesheet" href="css/comm.css">
+</head>
+
+<body style="background-color: #f5f5f5;">
+    <fieldset class="layui-elem-field" style="width: 380px; margin:0 auto; margin-top: 10%; box-shadow: 0 0 10px #d9edf7;">
+        <legend>
+            登录
+        </legend>
+        <div class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    账号
+                </label>
+                <div class="layui-input-inline">
+                    <input value="" maxlength="11" type="text" name="loginname" required lay-verify="required" placeholder="请输入账号" autocomplete="off"
+                        class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    密码
+                </label>
+                <div class="layui-input-inline">
+                    <input value="" type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="login">
+                        立即提交
+                    </button>
+                    <button onclick="reset()" type="reset" class="layui-btn layui-btn-primary">
+                        重置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <script type="text/javascript" src="inc/g.js"></script>
+    <script type="text/javascript" src="inc/layui/layui.js"></script>
+    <script type="text/javascript">
+        
+        
+
+        function pageload() {
+            //监听提交
+            Comm.form.on('submit(login)', function (data) {
+                //这里可以发起ajax请求进行登录验证
+                AJAX.POST("/api/book/login", data.field, function (d) {
+                    if (d.code == 1) {
+                        Comm.db("_token", d.data.id)
+                        Comm.db('userinfo',d.data)
+                        Comm.go('index.html')
+                    } else {
+                        layer.msg(d.msg, { icon: 5 })
+                    }
+                })
+            });
+
+            //修正登录框margin
+            var fieldset = layui.jquery("fieldset").eq(0);
+            fieldset.css("margin-top", (layui.jquery(window).height() - fieldset.height()) * 0.3 + "px");
+        }
+        function reset() {
+            $("input").val('');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商家选择</title>
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            //数据源
+            var IsActive = top.Ext.getCmp('shoper').items.items[0].params.IsActive;
+            var Active = top.Ext.getCmp('shoper').items.items[0].params.Active;
+            var url = '';
+            if (IsActive) {
+                url = '&Active=' + Active;
+            }
+
+            PageSize = 15; //重新定义页数
+            //转义列
+            var company = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "Name", type: "string", mapping: "Name" },
+              { name: "Phone", type: "string", mapping: "Phone" },
+              { name: "Address", type: "string", mapping: "Address" }
+            ]);
+            //数据源
+            var store = GridStore(company, '/Outlet/SeldctSearchData?' + url);
+
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['商家名称', 'Name'], ['地址', 'Address'], ['联系电话', 'Phone']];
+
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'gg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: store,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                {
+                header: "商家名称",
+                dataIndex: 'Name',
+                flex: 3,
+                menuDisabled: true
+            }, {
+                header: "地址",
+                dataIndex: 'Address',
+                flex: 2,
+                menuDisabled: true
+            }, {
+                header: "联系电话",
+                dataIndex: 'Phone',
+                flex: 3,
+                menuDisabled: true
+            }
+                ],
+            tbar: tbarTop(),
+            bbar: bbarTop(store), //分页工具条
+            viewConfig: {
+                forceFit: true,
+                enableRowBody: true,
+                scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+            }
+        });
+        var viewport = new Ext.Panel({
+            layout: 'border',
+            border: false,
+            height: 428,
+            renderTo: 'divShop',
+            items: [gridPanle],
+            listeners: {
+                afterrender: function () {
+
+                }
+            }
+        });
+
+
+    });
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

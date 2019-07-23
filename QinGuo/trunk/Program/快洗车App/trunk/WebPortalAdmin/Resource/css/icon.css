@@ -1,0 +1,758 @@
+﻿/*通用的系统按钮图标图片*/
+.required{padding:1px;color:red;margin-top:2px;vertical-align: middle;}
+.qian{
+	background: url(icons/qian.png)  no-repeat!important;
+}
+
+/*系统图片*/
+.icon-nav {
+	background: url(icons/nav.png)  no-repeat!important;
+}
+.icon-tree {
+	background: url(icons/tree.png) no-repeat !important;
+}
+.icon-activity {
+	background: url(icons/activity.png) no-repeat !important;
+}
+.icon-hr {
+	background: url(icons/hr.png) no-repeat !important;
+}
+.icon-system {
+	background: url(icons/system.png) no-repeat !important;
+}
+.iconuser 
+{
+    background: url(icons/man.png) no-repeat !important;
+}
+.icon-file {
+	background: url(icons/download-file.png) !important;
+}
+
+.icon-add {
+	background: url(icons/add.png) no-repeat !important;
+}
+.icon-del {
+	background: url(icons/delete.png) no-repeat !important;
+}
+
+.icon-add-p {
+	background: url(icons/add_p.png) no-repeat !important;
+}
+.icon-del-p {
+	background: url(icons/delete_p.png) no-repeat !important;
+}
+
+.icon-edit {
+	background: url(icons/edit.png)  no-repeat !important;
+}
+
+.icon-refresh {
+	background: url(icons/refresh.gif) no-repeat !important;
+}
+
+.icon-grid-list {
+	background:url(icons/grid_list.png) no-repeat !important;
+}
+
+.icon-search-form{
+	background: url(icons/search_form.png) no-repeat !important;
+}
+.icon-form{
+	background: url(icons/form.png) no-repeat !important;
+}
+.icon-search {
+	background: url(icons/search.png) no-repeat !important;
+}
+.icon-save {
+	background: url(icons/save.png) no-repeat !important;
+}
+.icon-reset{
+	background:url(icons/reset.png) no-repeat !important;
+}
+.icon-chart {
+	background: url(icons/chart.gif) no-repeat !important;
+}
+
+.icon-upload {
+	background: url(icons/adminFile/upload-file.png) no-repeat !important;
+}
+
+.icon-unupload {
+	background: url(icons/del-file.png) no-repeat !important;
+}
+
+.icon-download {
+	background: url(icons/download-file.png) no-repeat !important;
+}
+
+.icon-word {
+	background: url(icons/word.png) no-repeat !important;
+}
+
+.icon-pdf {
+	background: url(icons/pdf.png) no-repeat !important;
+}
+
+.icon-excel {
+	background: url(icons/excel.png) no-repeat !important;
+}
+.icon-info {
+	background: url(icons/info.gif) no-repeat !important;
+}
+.icon-logout {
+	background: url(icons/logout.png) no-repeat !important;
+}
+.icon-style {
+	background: url(icons/style.png) no-repeat !important;
+}
+.icon-person-info {
+	background: url(icons/person_info.png) no-repeat !important;
+}
+.icon-person-info-edit{
+	background: url(icons/person_info_edit.png) no-repeat !important;
+}
+.icon-key-edit{
+	background: url(icons/key_edit.png) no-repeat !important;
+}
+.icon-version{
+	background: url(icons/version.png) no-repeat !important;
+}
+.icon-docs{
+	background: url(icons/docs.gif) no-repeat !important;
+}
+.icon-help{
+	background: url(icons/help.png) no-repeat !important;
+}
+.icon-layout{
+	background: url(icons/layout.png) no-repeat !important;
+}
+.icon-grant{
+	background: url(icons/grant.png) no-repeat !important;
+}
+
+.icon-collapse-all{
+	background: url(icons/collapse-all.gif) no-repeat !important;
+}
+
+.icon-expand-all{
+	background: url(icons/expand-all.gif) no-repeat !important;
+}
+
+.icon-load-r{
+	background: url(icons/load_r.png) no-repeat !important;
+}
+
+.icon-yes{
+	background: url(icons/yes.png) no-repeat !important;
+}
+
+.icon-no{
+	background: url(icons/no.png) no-repeat !important;
+}
+
+.icon-ok{
+	background: url(icons/ok.png) no-repeat !important;
+}
+
+.icon-cancel{
+	background: url(icons/cancel.png) no-repeat !important;
+}
+.icon-tip{
+	background: url(icons/tip.png) no-repeat !important;
+}
+
+.icon-logout{
+	background: url(icons/logout.png) no-repeat !important;
+}
+.icon-sys-config{
+	background: url(icons/sys_config.png) no-repeat !important;
+}
+.icon-status-away{
+	background: url(icons/status_away.png) no-repeat !important;
+}
+.icon-status-busy{
+	background: url(icons/status_busy.png) no-repeat !important;
+}
+.icon-status-offline{
+	background: url(icons/status_offline.png) no-repeat !important;
+}
+.icon-status-online{
+	background: url(icons/status_online.png) no-repeat !important;
+}
+.icon-user-info{
+	background: url(icons/user_info.png) no-repeat !important;
+}
+.icon-email{
+	background: url(icons/email.png) no-repeat !important;
+}
+.icon-email-list{
+	background: url(icons/email_list.png) no-repeat !important;
+}
+.icon-im{
+	background: url(icons/im.png) no-repeat !important;
+}
+.icon-note{
+	background: url(icons/note.png) no-repeat !important;
+}
+.icon-link{
+	background: url(icons/link.png) no-repeat !important;
+}
+.icon-notice{
+	background: url(icons/notice.png) no-repeat !important;
+}
+.icon-news{
+	background: url(icons/news.png) no-repeat !important;
+}
+.icon-user-set{
+	background: url(icons/user_set.png) no-repeat !important;
+}
+.icon-accordion{
+	background: url(icons/accordion.gif) no-repeat !important;
+}
+
+.icon-workflow{
+	background: url(icons/workflow.png) no-repeat !important;
+}
+.x-message-box .icon-saving {
+    background:transparent url(icons/download.gif)  !important;
+    height:46px;
+}
+.icon-blank{
+	background:url('icons/blank.gif')  no-repeat  !important;
+}
+.icon-add{
+	background:url('icons/add.gif')  no-repeat  !important;
+}
+.icon-edit{
+	background:url('icons/pencil.png')  no-repeat  !important;
+}
+.icon-remove{
+	background:url('icons/delete.gif')  no-repeat  !important;
+}
+.icon-save{
+	background:url('icons/filesave.png')  no-repeat  !important;
+}
+.icon-cut{
+	background:url('icons/cut.png')  no-repeat  !important;
+}
+.icon-no{
+	background:url('icons/no.png')  no-repeat  !important;
+}
+.icon-reload{
+	background:url('icons/reload2.png')  no-repeat  !important;
+}
+.icon-reload2{
+	background:url('icons/reload.png')  no-repeat  !important;
+}
+.icon-search{
+	background:url('icons/search.png')  no-repeat  !important;
+}
+.icon-print{
+	background:url('icons/print.png')  no-repeat  !important;
+}
+.icon-help{
+	background:url('icons/help.png')  no-repeat  !important;
+}
+.icon-undo{
+	background:url('icons/undo.png')  no-repeat  !important;
+}
+.icon-redo{
+	background:url('icons/redo.png')  no-repeat  !important;
+}
+.icon-back{
+	background:url('icons/back.png')  no-repeat  !important;
+}
+.icon-sum{
+	background:url('icons/sum.png')  no-repeat  !important;
+}
+.icon-tip{
+	background:url('icons/tip.png')  no-repeat  !important;
+}
+.icon-mini-add{
+	background:url('icons/mini_add.png')  no-repeat  !important;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png')  no-repeat  !important;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png')  no-repeat  !important;
+}
+.icon-key{
+	background:url('icons/key.gif')  no-repeat  !important;
+}
+.icon-out{
+	background:url('icons/close.gif')  no-repeat  !important;
+}
+.icon-jia{
+	background:url('icons/edit_add.png')  no-repeat  !important;
+}
+.icon-jian{
+	background:url('icons/edit_remove.png')  no-repeat  !important;
+}
+.icon-user{
+	background:url('icons/user_suit.gif')  no-repeat  !important;
+}
+.icon-file_add{
+	background:url('icons/file_add.gif')  no-repeat  !important;
+}
+.icon-file_remove{
+	background:url('icons/file_remove.gif')  no-repeat  !important;
+}
+.icon-home{
+	background:url('icons/home.png')  no-repeat  !important;
+}
+.icon-close{background: url(icons/close.png) no-repeat !important;}
+
+.image_add{background: url(icons/image_add.png) no-repeat !important;}
+
+
+
+/*工具栏*/
+
+/*主页*/
+.GTP_home{background:url('icons/toolbar/GTP_home.png') no-repeat !important;}
+/*链接*/
+.GTP_link{background:url('icons/toolbar/GTP_link.png')  no-repeat  !important;}
+/*收藏/关注*/
+.GTP_favorites{background:url('icons/toolbar/GTP_favorites.png')  no-repeat  !important;}
+/*网络*/
+.GTP_network{background:url('icons/toolbar/GTP_network.png')  no-repeat  !important;}
+/*文件*/
+.GTP_file{background:url('icons/toolbar/GTP_file.png')  no-repeat  !important;}
+/*复制*/
+.GTP_copy{background:url('icons/toolbar/GTP_copy.png')  no-repeat  !important;}
+/*粘贴*/
+.GTP_paste{background:url('icons/toolbar/GTP_paste.png')  no-repeat  !important;}
+/*剪切*/
+.GTP_cut{background:url('icons/toolbar/GTP_cut.png')  no-repeat  !important;}
+/*指针*/
+.GTP_pointer{background:url('icons/toolbar/GTP_pointer.png')  no-repeat  !important;}
+/*选择*/
+.GTP_select{background:url('icons/toolbar/GTP_select.png')  no-repeat  !important;}
+/*提示*/
+.GTP_prompt{background:url('icons/toolbar/GTP_prompt.png')  no-repeat  !important;}
+/*退出*/
+.GTP_quit{background:url('icons/toolbar/GTP_quit.png')  no-repeat  !important;}
+/*保存/暂存*/
+.GTP_save{background:url('icons/toolbar/GTP_save.png')  no-repeat  !important;}
+/*打印*/
+.GTP_print{background:url('icons/toolbar/GTP_print.png')  no-repeat  !important;}
+/*打印设置*/
+.GTP_pagesetup{background:url('icons/toolbar/GTP_pagesetup.png')  no-repeat  !important;}
+/*设置*/
+.GTP_settings{background:url('icons/toolbar/GTP_settings.png')  no-repeat  !important;}
+/*刷新*/
+.GTP_refresh{background:url('icons/toolbar/GTP_refresh.png')  no-repeat  !important;}
+/*密码修改*/
+.GTP_setpassword{background:url('icons/toolbar/GTP_setpassword.png')  no-repeat  !important;}
+/*新建*/
+.GTP_new{background:url('icons/toolbar/GTP_new.png')  no-repeat  !important;}
+/*添加*/
+.GTP_add{background:url('icons/toolbar/GTP_add.png')  no-repeat  !important;}
+/*删除*/
+.GTP_delete{background:url('icons/toolbar/GTP_delete.png')  no-repeat  !important;}
+/*垃圾筒*/
+.GTP_bin{background:url('icons/toolbar/GTP_bin.png')  no-repeat  !important;}
+/*提交/确定*/
+.GTP_submit{background:url('icons/toolbar/GTP_submit.png')  no-repeat  !important;}
+/*取消*/
+.GTP_cancel{background:url('icons/toolbar/GTP_cancel.png')  no-repeat  !important;}
+/*搜索*/
+.GTP_search{background:url('icons/toolbar/GTP_search.png')  no-repeat  !important;}
+/*查找*/
+.GTP_query{background:url('icons/toolbar/GTP_query.png')  no-repeat  !important;}
+/*查看*/
+.GTP_view{background:url('icons/toolbar/GTP_view.png')  no-repeat  !important;}
+/*编辑/修改*/
+.GTP_edit{background:url('icons/toolbar/GTP_edit.png')  no-repeat  !important;}
+/*导入*/
+.GTP_import{background:url('icons/toolbar/GTP_import.png')  no-repeat  !important;}
+/*导出*/
+.GTP_export{background:url('icons/toolbar/GTP_export.png')  no-repeat  !important;}
+/*批量导入*/
+.GTP_batchimport{background:url('icons/toolbar/GTP_batchimport.png')  no-repeat  !important;}
+/*批量导出*/
+.GTP_batchexport{background:url('icons/toolbar/GTP_batchexport.png')  no-repeat  !important;}
+/*转移*/
+.GTP_transfer{background:url('icons/toolbar/GTP_transfer.png')  no-repeat  !important;}
+/*清除*/
+.GTP_clear{background:url('icons/toolbar/GTP_clear.png')  no-repeat  !important;}
+/*添加子任务*/
+.GTP_addchild{background:url('icons/toolbar/GTP_addchild.png')  no-repeat  !important;}
+/*升级*/
+.GTP_upgrade{background:url('icons/toolbar/GTP_upgrade.png')  no-repeat  !important;}
+/*降级*/
+.GTP_degrade{background:url('icons/toolbar/GTP_degrade.png')  no-repeat  !important;}
+/*上移*/
+.GTP_up{background:url('icons/toolbar/GTP_up.png')  no-repeat  !important;}
+/*下移*/
+.GTP_down{background:url('icons/toolbar/GTP_down.png')  no-repeat  !important;}
+/*上移不可用*/
+.GTP_up_no{background:url('icons/toolbar/GTP_up_no.png')  no-repeat  !important;}
+/*下移不可用*/
+.GTP_down_no{background:url('icons/toolbar/GTP_down_no.png')  no-repeat  !important;}
+/*在上一行添加*/
+.GTP_addpreviousline{background:url('icons/toolbar/GTP_addpreviousline.png')  no-repeat  !important;}
+/*在下一行添加*/
+.GTP_addnextline{background:url('icons/toolbar/GTP_addnextline.png')  no-repeat  !important;}
+/*图片*/
+.GTP_picture{background:url('icons/toolbar/GTP_picture.png')  no-repeat  !important;}
+/*流程图*/
+.GTP_flowchart{background:url('icons/toolbar/GTP_flowchart.png')  no-repeat  !important;}
+/*报表*/
+.GTP_report{background:url('icons/toolbar/GTP_report.png')  no-repeat  !important;}
+/*柱图*/
+.GTP_barchart{background:url('icons/toolbar/GTP_barchart.png')  no-repeat  !important;}
+/*饼图*/
+
+.GTP_piechart{background:url('icons/toolbar/GTP_piechart.png')  no-repeat  !important;}
+.GTP_runchart{background:url('icons/toolbar/GTP_runchart.png')  no-repeat  !important;}
+.GTP_show{background:url('icons/toolbar/GTP_show.png')  no-repeat  !important;}
+.GTP_preview{background:url('icons/toolbar/GTP_preview.png')  no-repeat  !important;}
+.GTP_date{background:url('icons/toolbar/GTP_date.png')  no-repeat  !important;}
+.GTP_day{background:url('icons/toolbar/GTP_day.png')  no-repeat  !important;}
+.GTP_week{background:url('icons/toolbar/GTP_week.png')  no-repeat  !important;}
+.GTP_moon{background:url('icons/toolbar/GTP_moon.png')  no-repeat  !important;}
+.GTP_year{background:url('icons/toolbar/GTP_year.png')  no-repeat  !important;}
+.GTP_Datecustom{background:url('icons/toolbar/GTP_Datecustom.png')  no-repeat  !important;}
+.GTP_newest{background:url('icons/toolbar/GTP_newest.png')  no-repeat  !important;}
+.GTP_volume{background:url('icons/toolbar/GTP_volume.png')  no-repeat  !important;}
+.GTP_volumeup{background:url('icons/toolbar/GTP_volumeup.png')  no-repeat  !important;}
+.GTP_volumelow{background:url('icons/toolbar/GTP_volumelow.png')  no-repeat  !important;}
+.GTP_table{background:url('icons/toolbar/GTP_table.png')  no-repeat  !important;}
+.GTP_reading{background:url('icons/toolbar/GTP_reading.png')  no-repeat  !important;}
+.GTP_inserttext{background:url('icons/toolbar/GTP_inserttext.png')  no-repeat  !important;}
+.GTP_deletetext{background:url('icons/toolbar/GTP_deletetext.png')  no-repeat  !important;}
+.GTP_previous{background:url('icons/toolbar/GTP_previous.png')  no-repeat  !important;}
+.GTP_next{background:url('icons/toolbar/GTP_next.png')  no-repeat  !important;}
+.GTP_first{background:url('icons/toolbar/GTP_first.png')  no-repeat  !important;}
+.GTP_last{background:url('icons/toolbar/GTP_last.png')  no-repeat  !important;}
+.GTP_turnothers{background:url('icons/toolbar/GTP_turnothers.png')  no-repeat  !important;}
+.GTP_changespeople{background:url('icons/toolbar/GTP_changespeople.png')  no-repeat  !important;}
+.GTP_back{background:url('icons/toolbar/GTP_back.png')  no-repeat  !important;}
+.GTP_progress{background:url('icons/toolbar/GTP_progress.png')  no-repeat  !important;}
+.GTP_mail{background:url('icons/toolbar/GTP_mail.png')  no-repeat  !important;}
+.GTP_mailopen{background:url('icons/toolbar/GTP_mailopen.png')  no-repeat  !important;}
+.GTP_mailwrite{background:url('icons/toolbar/GTP_mailwrite.png')  no-repeat  !important;}
+.GTP_mailreceive{background:url('icons/toolbar/GTP_mailreceive.png')  no-repeat  !important;}
+.GTP_outbox{background:url('icons/toolbar/GTP_outbox.png')  no-repeat  !important;}
+.GTP_Inbox{background:url('icons/toolbar/GTP_Inbox.png')  no-repeat  !important;}
+.GTP_draftbox{background:url('icons/toolbar/GTP_draftbox.png')  no-repeat  !important;}
+.GTP_accessory{background:url('icons/toolbar/GTP_accessory.png')  no-repeat  !important;}
+.GTP_note{background:url('icons/toolbar/GTP_note.png')  no-repeat  !important;}
+.GTP_comment{background:url('icons/toolbar/GTP_comment.png')  no-repeat  !important;}
+.GTP_discuss{background:url('icons/toolbar/GTP_discuss.png')  no-repeat  !important;}
+.GTP_grade{background:url('icons/toolbar/GTP_grade.png')  no-repeat  !important;}
+.GTP_instruction{background:url('icons/toolbar/GTP_instruction.png')  no-repeat  !important;}
+.GTP_post{background:url('icons/toolbar/GTP_post.png')  no-repeat  !important;}
+.GTP_reply{background:url('icons/toolbar/GTP_reply.png')  no-repeat  !important;}
+.GTP_unlock{background:url('icons/toolbar/GTP_unlock.png')  no-repeat  !important;}
+.GTP_lock{background:url('icons/toolbar/GTP_lock.png')  no-repeat  !important;}
+.GTP_top{background:url('icons/toolbar/GTP_top.png')  no-repeat  !important;}
+.GTP_removetop{background:url('icons/toolbar/GTP_removetop.png')  no-repeat  !important;}
+.GTP_disable{background:url('icons/toolbar/GTP_disable.png')  no-repeat  !important;}
+.GTP_abrogate{background:url('icons/toolbar/GTP_abrogate.png')  no-repeat  !important;}
+.GTP_enabled{background:url('icons/toolbar/GTP_enabled.png')  no-repeat  !important;}
+.GTP_blockup{background:url('icons/toolbar/GTP_blockup.png')  no-repeat  !important;}
+.GTP_vote{background:url('icons/toolbar/GTP_vote.png')  no-repeat  !important;}
+.GTP_ascend{background:url('icons/toolbar/GTP_ascend.png')  no-repeat  !important;}
+.GTP_descend{background:url('icons/toolbar/GTP_descend.png')  no-repeat  !important;}
+.GTP_renew{background:url('icons/toolbar/GTP_renew.png')  no-repeat  !important;}
+.GTP_revocation{background:url('icons/toolbar/GTP_revocation.png')  no-repeat  !important;}
+.GTP_feed{background:url('icons/toolbar/GTP_feed.png')  no-repeat  !important;}
+.GTP_recommend{background:url('icons/toolbar/GTP_recommend.png')  no-repeat  !important;}
+.GTP_bind{background:url('icons/toolbar/GTP_bind.png')  no-repeat  !important;}
+.GTP_ask{background:url('icons/toolbar/GTP_ask.png')  no-repeat  !important;}
+.GTP_answer{background:url('icons/toolbar/GTP_answer.png')  no-repeat  !important;}
+.GTP_fileopen{background:url('icons/toolbar/GTP_fileopen.png')  no-repeat  !important;}
+.GTP_filenew{background:url('icons/toolbar/GTP_filenew.png')  no-repeat  !important;}
+.GTP_filewait{background:url('icons/toolbar/GTP_filewait.png')  no-repeat  !important;}
+.GTP_fileget{background:url('icons/toolbar/GTP_fileget.png')  no-repeat  !important;}
+.GTP_fileout{background:url('icons/toolbar/GTP_fileout.png')  no-repeat  !important;}
+.GTP_filesend{background:url('icons/toolbar/GTP_filesend.png')  no-repeat  !important;}
+.GTP_upload{background:url('icons/toolbar/GTP_upload.png')  no-repeat  !important;}
+.GTP_download{background:url('icons/toolbar/GTP_download.png')  no-repeat  !important;}
+.GTP_borrow{background:url('icons/toolbar/GTP_borrow.png')  no-repeat  !important;}
+.GTP_return{background:url('icons/toolbar/GTP_return.png')  no-repeat  !important;}
+.GTP_renewal{background:url('icons/toolbar/GTP_renewal.png')  no-repeat  !important;}
+.GTP_instructions{background:url('icons/toolbar/GTP_instructions.png')  no-repeat  !important;}
+.GTP_batchshall{background:url('icons/toolbar/GTP_batchshall.png')  no-repeat  !important;}
+.GTP_contact{background:url('icons/toolbar/GTP_contact.png')  no-repeat  !important;}
+.GTP_end{background:url('icons/toolbar/GTP_end.png')  no-repeat  !important;}
+.GTP_history{background:url('icons/toolbar/GTP_history.png')  no-repeat  !important;}
+.GTP_contract{background:url('icons/toolbar/GTP_contract.png')  no-repeat  !important;}
+.GTP_sales{background:url('icons/toolbar/GTP_sales.png')  no-repeat  !important;}
+.GTP_synergy{background:url('icons/toolbar/GTP_synergy.png')  no-repeat  !important;}
+.GTP_relay{background:url('icons/toolbar/GTP_relay.png')  no-repeat  !important;}
+.GTP_audit{background:url('icons/toolbar/GTP_audit.png')  no-repeat  !important;}
+.GTP_redrushed{background:url('icons/toolbar/GTP_redrushed.png')  no-repeat  !important;}
+.GTP_submenu{background:url('icons/toolbar/GTP_submenu.png')  no-repeat  !important;}
+.GTP_price{background:url('icons/toolbar/GTP_price.png')  no-repeat  !important;}
+.GTP_subagent{background:url('icons/toolbar/GTP_subagent.png')  no-repeat  !important;}
+.GTP_track{background:url('icons/toolbar/GTP_track.png')  no-repeat  !important;}
+.GTP_combine{background:url('icons/toolbar/GTP_combine.png')  no-repeat  !important;}
+.GTP_remove{background:url('icons/toolbar/GTP_remove.png')  no-repeat  !important;}
+.GTP_fill{background:url('icons/toolbar/GTP_fill.png')  no-repeat  !important;}
+.GTP_addperson{background:url('icons/toolbar/GTP_addperson.png')  no-repeat  !important;}
+.GTP_accountingdate{background:url('icons/toolbar/GTP_accountingdate.png')  no-repeat  !important;}
+.GTP_initialize{background:url('icons/toolbar/GTP_initialize.png')  no-repeat  !important;}
+.GTP_importwage{background:url('icons/toolbar/GTP_importwage.png')  no-repeat  !important;}
+.GTP_count{background:url('icons/toolbar/GTP_count.png')  no-repeat  !important;}
+.GTP_money{background:url('icons/toolbar/GTP_money.png')  no-repeat  !important;}
+.GTP_indices{background:url('icons/toolbar/GTP_indices.png')  no-repeat  !important;}
+.GTP_alert{background:url('icons/toolbar/GTP_alert.png')  no-repeat  !important;}
+.GTP_notice{background:url('icons/toolbar/GTP_notice.png')  no-repeat  !important;}
+.GTP_loop{background:url('icons/toolbar/GTP_loop.png')  no-repeat  !important;}
+.GTP_color{background:url('icons/toolbar/GTP_color.png')  no-repeat  !important;}
+.GTP_mphone{background:url('icons/toolbar/GTP_mphone.png')  no-repeat  !important;}
+.GTP_message{background:url('icons/toolbar/GTP_message.png')  no-repeat  !important;}
+.GTP_safe{background:url('icons/toolbar/GTP_safe.png')  no-repeat  !important;}
+.GTP_start{background:url('icons/toolbar/GTP_start.png')  no-repeat  !important;}
+.GTP_Pause{background:url('icons/toolbar/GTP_Pause.png')  no-repeat  !important;}
+.GTP_wait{background:url('icons/toolbar/GTP_wait.png')  no-repeat  !important;}
+.GTP_stop{background:url('icons/toolbar/GTP_stop.png')  no-repeat  !important;}
+.GTP_connectflow{background:url('icons/toolbar/GTP_connectflow.png')  no-repeat  !important;}
+.GTP_officialform{background:url('icons/toolbar/GTP_officialform.png')  no-repeat  !important;}
+.GTP_formsign{background:url('icons/toolbar/GTP_formsign.png')  no-repeat  !important;}
+.GTP_textformat{background:url('icons/toolbar/GTP_textformat.png')  no-repeat  !important;}
+.GTP_textedit{background:url('icons/toolbar/GTP_textedit.png')  no-repeat  !important;}
+.GTP_redprint{background:url('icons/toolbar/GTP_redprint.png')  no-repeat  !important;}
+.GTP_redprintedit{background:url('icons/toolbar/GTP_redprintedit.png')  no-repeat  !important;}
+.GTP_redprintnew{background:url('icons/toolbar/GTP_redprintnew.png')  no-repeat  !important;}
+.GTP_closedown{background:url('icons/toolbar/GTP_closedown.png')  no-repeat  !important;}
+.GTP_setagent{background:url('icons/toolbar/GTP_setagent.png')  no-repeat  !important;}
+.GTP_cancelagent{background:url('icons/toolbar/GTP_cancelagent.png')  no-repeat  !important;}
+.GTP_withdraw{background:url('icons/toolbar/GTP_withdraw.png')  no-repeat  !important;}
+.GTP_read{background:url('icons/toolbar/GTP_read.png')  no-repeat  !important;}
+.GTP_minussign{background:url('icons/toolbar/GTP_minussign.png')  no-repeat  !important;}
+.GTP_signature{background:url('icons/toolbar/GTP_signature.png')  no-repeat  !important;}
+.GTP_turnnotice{background:url('icons/toolbar/GTP_turnnotice.png')  no-repeat  !important;}
+.GTP_deptfiled{background:url('icons/toolbar/GTP_deptfiled.png')  no-repeat  !important;}
+.GTP_multilevelsign{background:url('icons/toolbar/GTP_multilevelsign.png')  no-repeat  !important;}
+.GTP_formredprint{background:url('icons/toolbar/GTP_formredprint.png')  no-repeat  !important;}
+.GTP_topdf{background:url('icons/toolbar/GTP_topdf.png')  no-repeat  !important;}
+.GTP_accessoryedit{background:url('icons/toolbar/GTP_accessoryedit.png')  no-repeat  !important;}
+.GTP_formedit{background:url('icons/toolbar/GTP_formedit.png')  no-repeat  !important;}
+.GTP_approvalnoedit{background:url('icons/toolbar/GTP_approvalnoedit.png')  no-repeat  !important;}
+.GTP_notify{background:url('icons/toolbar/GTP_notify.png')  no-repeat  !important;}
+.GTP_opnewwindow{background:url('icons/toolbar/GTP_opnewwindow.png')  no-repeat  !important;}
+.GTP_opnwsmall{background:url('icons/toolbar/GTP_opnwsmall.png')  no-repeat  !important;}
+.GTP_share{background:url('icons/toolbar/GTP_share.png')  no-repeat  !important;}
+.GTP_move{background:url('icons/toolbar/GTP_move.png')  no-repeat  !important;}
+.GTP_revise{background:url('icons/toolbar/GTP_revise.png')  no-repeat  !important;}
+.GTP_versionmanagement{background:url('icons/toolbar/GTP_versionmanagement.png')  no-repeat  !important;}
+.GTP_rename{background:url('icons/toolbar/GTP_rename.png')  no-repeat  !important;}
+.GTP_attribute{background:url('icons/toolbar/GTP_attribute.png')  no-repeat  !important;}
+.GTP_accredit{background:url('icons/toolbar/GTP_accredit.png')  no-repeat  !important;}
+.GTP_packagedownload{background:url('icons/toolbar/GTP_packagedownload.png')  no-repeat  !important;}
+.GTP_creatfolder{background:url('icons/toolbar/GTP_creatfolder.png')  no-repeat  !important;}
+.GTP_filed{background:url('icons/toolbar/GTP_filed.png')  no-repeat  !important;}
+.GTP_remarks{background:url('icons/toolbar/GTP_remarks.png')  no-repeat  !important;}
+.GTP_overtime{background:url('icons/toolbar/GTP_overtime.png')  no-repeat  !important;}
+.GTP_empty{background:url('icons/toolbar/GTP_empty.png')  no-repeat  !important;}
+.GTP_ratify{background:url('icons/toolbar/GTP_ratify.png')  no-repeat  !important;}
+.GTP_refuse{background:url('icons/toolbar/GTP_refuse.png')  no-repeat  !important;}
+.GTP_hasten{background:url('icons/toolbar/GTP_hasten.png')  no-repeat  !important;}
+.GTP_friend{background:url('icons/toolbar/GTP_friend.png')  no-repeat  !important;}
+.GTP_defriend{background:url('icons/toolbar/GTP_defriend.png')  no-repeat  !important;}
+.GTP_repost{background:url('icons/toolbar/GTP_repost.png')  no-repeat  !important;}
+.GTP_oshr{background:url('icons/toolbar/GTP_oshr.png')  no-repeat  !important;}
+.GTP_support{background:url('icons/toolbar/GTP_support.png')  no-repeat  !important;}
+.GTP_against{background:url('icons/toolbar/GTP_against.png')  no-repeat  !important;}
+.GTP_release{background:url('icons/toolbar/GTP_release.png')  no-repeat  !important;}
+.GTP_sort{background:url('icons/toolbar/GTP_sort.png')  no-repeat  !important;}
+.GTP_sortsave{background:url('icons/toolbar/GTP_sortsave.png')  no-repeat  !important;}
+.GTP_goback{background:url('icons/toolbar/GTP_goback.png')  no-repeat  !important;}
+.GTP_adoption{background:url('icons/toolbar/GTP_adoption.png')  no-repeat  !important;}
+.GTP_rate{background:url('icons/toolbar/GTP_rate.png')  no-repeat  !important;}
+.GTP_goparent{background:url('icons/toolbar/GTP_goparent.png')  no-repeat  !important;}
+.GTP_detail{background:url('icons/toolbar/GTP_detail.png')  no-repeat  !important;}
+.GTP_sharedwithme{background:url('icons/toolbar/GTP_sharedwithme.png')  no-repeat  !important;}
+.GTP_sharing{background:url('icons/toolbar/GTP_sharing.png')  no-repeat  !important;}
+.GTP_adjustment{background:url('icons/toolbar/GTP_adjustment.png')  no-repeat  !important;}
+.GTP_revadjustment{background:url('icons/toolbar/GTP_revadjustment.png')  no-repeat  !important;}
+.GTP_mtprange{background:url('icons/toolbar/GTP_mtprange.png')  no-repeat  !important;}
+.GTP_bmsorof{background:url('icons/toolbar/GTP_bmsorof.png')  no-repeat  !important;}
+.GTP_accept{background:url('icons/toolbar/GTP_accept.png')  no-repeat  !important;}
+.GTP_pend{background:url('icons/toolbar/GTP_pend.png')  no-repeat  !important;}
+.GTP_decline{background:url('icons/toolbar/GTP_decline.png')  no-repeat  !important;}
+.GTP_eraser{background:url('icons/toolbar/GTP_eraser.png')  no-repeat  !important;}
+.GTP_signstart{background:url('icons/toolbar/GTP_signstart.png')  no-repeat  !important;}
+.GTP_signend{background:url('icons/toolbar/GTP_signend.png')  no-repeat  !important;}
+.GTP_passstamp{background:url('icons/toolbar/GTP_passstamp.png')  no-repeat  !important;}
+.GTP_saveas{background:url('icons/toolbar/GTP_saveas.png')  no-repeat  !important;}
+.GTP_cipherprint{background:url('icons/toolbar/GTP_cipherprint.png')  no-repeat  !important;}
+.GTP_distribute{background:url('icons/toolbar/GTP_distribute.png')  no-repeat  !important;}
+.GTP_draftpaper{background:url('icons/toolbar/GTP_draftpaper.png')  no-repeat  !important;}
+.GTP_opinions{background:url('icons/toolbar/GTP_opinions.png')  no-repeat  !important;}
+.GTP_menu{background:url('icons/toolbar/GTP_menu.png')  no-repeat  !important;}
+.GTP_menunull{background:url('icons/toolbar/GTP_menunull.png')  no-repeat  !important;}
+.GTP_menunw{background:url('icons/toolbar/GTP_menunw.png')  no-repeat  !important;}
+.GTP_page{background:url('icons/toolbar/GTP_page.png')  no-repeat  !important;}
+.GTP_header{background:url('icons/toolbar/GTP_header.png')  no-repeat  !important;}
+.GTP_allunfold{background:url('icons/toolbar/GTP_allunfold.png')  no-repeat  !important;}
+.GTP_allfold{background:url('icons/toolbar/GTP_allfold.png')  no-repeat  !important;}
+.GTP_deskset{background:url('icons/toolbar/GTP_deskset.png')  no-repeat  !important;}
+.GTP_frameselect{background:url('icons/toolbar/GTP_frameselect.png')  no-repeat  !important;}
+.GTP_userhelp{background:url('icons/toolbar/GTP_userhelp.png')  no-repeat  !important;}
+.GTP_service{background:url('icons/toolbar/GTP_service.png')  no-repeat  !important;}
+.GTP_reproblem{background:url('icons/toolbar/GTP_reproblem.png')  no-repeat  !important;}
+.GTP_enable_permission{background:url('icons/toolbar/GTP_enable_permission.png')  no-repeat  !important;}
+.GTP_disable_permission{background:url('icons/toolbar/GTP_disable_permission.png')  no-repeat  !important;}
+.GTP_catalog{background:url('icons/toolbar/GTP_catalog.png')  no-repeat  !important;}
+.GTP_statistics{background:url('icons/toolbar/GTP_statistics.png')  no-repeat  !important;}
+.GTP_filelately{background:url('icons/toolbar/GTP_filelately.png')  no-repeat  !important;}
+.GTP_batchaccredit{background:url('icons/toolbar/GTP_batchaccredit.png')  no-repeat  !important;}
+.GTP_printview{background:url('icons/toolbar/GTP_printview.png')  no-repeat  !important;}
+.GTP_template{background:url('icons/toolbar/GTP_template.png')  no-repeat  !important;}
+.GTP_prorecords{background:url('icons/toolbar/GTP_prorecords.png')  no-repeat  !important;}
+.GTP_logs{background:url('icons/toolbar/GTP_logs.png')  no-repeat  !important;}
+.GTP_tonews{background:url('icons/toolbar/GTP_tonews.png')  no-repeat  !important;}
+.GTP_tnotation{background:url('icons/toolbar/GTP_tnotation.png')  no-repeat  !important;}
+.GTP_hwannotation{background:url('icons/toolbar/GTP_hwannotation.png')  no-repeat  !important;}
+.GTP_referee{background:url('icons/toolbar/GTP_referee.png')  no-repeat  !important;}
+.GTP_overseeset{background:url('icons/toolbar/GTP_overseeset.png')  no-repeat  !important;}
+.GTP_rowinsert{background:url('icons/toolbar/GTP_rowinsert.png')  no-repeat  !important;}
+.GTP_rowdelete{background:url('icons/toolbar/GTP_rowdelete.png')  no-repeat  !important;}
+.GTP_signnameadd{background:url('icons/toolbar/GTP_signnameadd.png')  no-repeat  !important;}
+.GTP_signnamedel{background:url('icons/toolbar/GTP_signnamedel.png')  no-repeat  !important;}
+.GTP_signin{background:url('icons/toolbar/GTP_signin.png')  no-repeat  !important;}
+.GTP_signfloat{background:url('icons/toolbar/GTP_signfloat.png')  no-repeat  !important;}
+.GTP_defult{background:url('icons/toolbar/GTP_defult.png')  no-repeat  !important;}
+.GTP_useadvice{background:url('icons/toolbar/GTP_useadvice.png')  no-repeat  !important;}
+.GTP_extoggle{background:url('icons/toolbar/GTP_extoggle.png')  no-repeat  !important;}
+.GTP_toggle{background:url('icons/toolbar/GTP_toggle.png')  no-repeat  !important;}
+.GTP_extogglesmall{background:url('icons/toolbar/GTP_extogglesmall.png')  no-repeat  !important;}
+.GTP_togglesmall{background:url('icons/toolbar/GTP_togglesmall.png')  no-repeat  !important;}
+.GTP_summary{background:url('icons/toolbar/GTP_summary.png')  no-repeat  !important;}
+.GTP_summaryedit{background:url('icons/toolbar/GTP_summaryedit.png')  no-repeat  !important;}
+.GTP_summaryview{background:url('icons/toolbar/GTP_summaryview.png')  no-repeat  !important;}
+.GTP_location{background:url('icons/toolbar/GTP_location.png')  no-repeat  !important;}
+.GTP_stoptask{background:url('icons/toolbar/GTP_stoptask.png')  no-repeat  !important;}
+.GTP_marksshow{background:url('icons/toolbar/GTP_marksshow.png')  no-repeat  !important;}
+.GTP_markshide{background:url('icons/toolbar/GTP_markshide.png')  no-repeat  !important;}
+.GTP_shareadd{background:url('icons/toolbar/GTP_shareadd.png')  no-repeat  !important;}
+.GTP_sharedel{background:url('icons/toolbar/GTP_sharedel.png')  no-repeat  !important;}
+.GTP_seadd{background:url('icons/toolbar/GTP_seadd.png')  no-repeat  !important;}
+.GTP_seaddall{background:url('icons/toolbar/GTP_seaddall.png')  no-repeat  !important;}
+.GTP_sedel{background:url('icons/toolbar/GTP_sedel.png')  no-repeat  !important;}
+.GTP_sedelall{background:url('icons/toolbar/GTP_sedelall.png')  no-repeat  !important;}
+.GTP_seup{background:url('icons/toolbar/GTP_seup.png')  no-repeat  !important;}
+.GTP_seuptop{background:url('icons/toolbar/GTP_seuptop.png')  no-repeat  !important;}
+.GTP_sedown{background:url('icons/toolbar/GTP_sedown.png')  no-repeat  !important;}
+.GTP_sedownbot{background:url('icons/toolbar/GTP_sedownbot.png')  no-repeat  !important;}
+.GTP_deptadd{background:url('icons/toolbar/GTP_deptadd.png')  no-repeat  !important;}
+.GTP_postadd{background:url('icons/toolbar/GTP_postadd.png')  no-repeat  !important;}
+.GTP_roleadd{background:url('icons/toolbar/GTP_roleadd.png')  no-repeat  !important;}
+.GTP_giveup{background:url('icons/toolbar/GTP_giveup.png')  no-repeat  !important;}
+.GTP_filter{background:url('icons/toolbar/GTP_filter.png')  no-repeat  !important;}
+.GTP_minus{background:url('icons/toolbar/GTP_minus.png')  no-repeat  !important;}
+.GTP_form{background:url('icons/toolbar/GTP_form.png')  no-repeat  !important;}
+.GTP_formnew{background:url('icons/toolbar/GTP_formnew.png')  no-repeat  !important;}
+.GTP_filecabinet{background:url('icons/toolbar/GTP_filecabinet.png')  no-repeat  !important;}
+.GTP_accessorypaper{background:url('icons/toolbar/GTP_accessorypaper.png')  no-repeat  !important;}
+.GTP_trustpass{background:url('icons/toolbar/GTP_trustpass.png')  no-repeat  !important;}
+.GTP_trustaccept{background:url('icons/toolbar/GTP_trustaccept.png')  no-repeat  !important;}
+.GTP_trustadd{background:url('icons/toolbar/GTP_trustadd.png')  no-repeat  !important;}
+.GTP_trustminus{background:url('icons/toolbar/GTP_trustminus.png')  no-repeat  !important;}
+.GTP_mydesk{background:url('icons/toolbar/GTP_mydesk.png')  no-repeat  !important;}
+.GTP_retime{background:url('icons/toolbar/GTP_retime.png')  no-repeat  !important;}
+.GTP_maildraft{background:url('icons/toolbar/GTP_maildraft.png')  no-repeat  !important;}
+.GTP_mailreply{background:url('icons/toolbar/GTP_mailreply.png')  no-repeat  !important;}
+.GTP_mailforward{background:url('icons/toolbar/GTP_mailforward.png')  no-repeat  !important;}
+.GTP_mailreceipt{background:url('icons/toolbar/GTP_mailreceipt.png')  no-repeat  !important;}
+.GTP_mailok{background:url('icons/toolbar/GTP_mailok.png')  no-repeat  !important;}
+.GTP_mailerror{background:url('icons/toolbar/GTP_mailerror.png')  no-repeat  !important;}
+.GTP_mailsend{background:url('icons/toolbar/GTP_mailsend.png')  no-repeat  !important;}
+.GTP_mailreplyall{background:url('icons/toolbar/GTP_mailreplyall.png')  no-repeat  !important;}
+.GTP_mailwithdraw{background:url('icons/toolbar/GTP_mailwithdraw.png')  no-repeat  !important;}
+.GTP_null{background:url('icons/toolbar/GTP_null.png')  no-repeat  !important;}
+.GTP_msend{background:url('icons/toolbar/GTP_msend.png')  no-repeat  !important;}
+.GTP_msendagain{background:url('icons/toolbar/GTP_msendagain.png')  no-repeat  !important;}
+.GTP_msendcancel{background:url('icons/toolbar/GTP_msendcancel.png')  no-repeat  !important;}
+
+
+
+/*状态*/
+.GTP_awaiting{background:url('icons/status/GTP_awaiting.png')  no-repeat  !important;}
+
+
+/*工作流*/
+.GTP_sendback{background:url('icons/workflow/GTP_sendback.png')  no-repeat  !important;}
+.GTP_tasksended{background:url('icons/workflow/GTP_tasksended.png')  no-repeat  !important;}
+.GTP_taskoversee{background:url('icons/workflow/GTP_taskoversee.png')  no-repeat  !important;}
+.GTP_processed{background:url('icons/workflow/GTP_processed.png')  no-repeat  !important;}
+.GTP_class{background:url('icons/workflow/GTP_class.png')  no-repeat  !important;}
+.GTP_todo{background:url('icons/workflow/GTP_todo.png')  no-repeat  !important;}
+.GTP_hadread{background:url('icons/workflow/GTP_hadread.png')  no-repeat  !important;}
+.GTP_toread{background:url('icons/workflow/GTP_toread.png')  no-repeat  !important;}
+.GTP_agency{background:url('icons/workflow/GTP_agency.png')  no-repeat  !important;}
+.GTP_intransit{background:url('icons/workflow/GTP_intransit.png')  no-repeat  !important;}
+.GTP_open{background:url('icons/workflow/GTP_open.png')  no-repeat  !important;}
+/*单色*/
+.GTP_soltick12{background:url('icons/solidcolor/GTP_soltick12.png')  no-repeat  !important;}
+.GTP_sollist12{background:url('icons/solidcolor/GTP_sollist12.png')  no-repeat  !important;}
+.GTP_sollist{background:url('icons/solidcolor/GTP_sollist.png')  no-repeat  !important;}
+ .GTP_solcard {background:url('icons/solidcolor/GTP_solcard.png')  no-repeat  !important;}
+ .GTP_solcard{background:url('icons/solidcolor/GTP_solcard.png')  no-repeat  !important;}
+/*树结构*/
+.GTP_folder{background:url('icons/tree/GTP_folder.png')  no-repeat  !important;}
+.GTP_folderopen{background:url('icons/tree/GTP_folderopen.png')  no-repeat  !important;}
+.GTP_file{background:url('icons/tree/GTP_file.png')  no-repeat  !important;}
+.GTP_person{background:url('icons/tree/GTP_person.png')  no-repeat  !important;}
+.GTP_man{background:url('icons/tree/GTP_man.png')  no-repeat  !important;}
+.GTP_women{background:url('icons/tree/GTP_women.png')  no-repeat  !important;}
+.GTP_management{background:url('icons/tree/GTP_management.png')  no-repeat  !important;}
+.GTP_expert{background:url('icons/tree/GTP_expert.png')  no-repeat  !important;}
+.GTP_database{background:url('icons/tree/GTP_database.png')  no-repeat  !important;}
+.GTP_datatable{background:url('icons/tree/GTP_datatable.png')  no-repeat  !important;}
+.GTP_post{background:url('icons/tree/GTP_post.png')  no-repeat  !important;}
+.GTP_post_new{background:url('icons/tree/GTP_post_new.png')  no-repeat  !important;}
+.GTP_org{background:url('icons/tree/GTP_org.png')  no-repeat  !important;}
+.GTP_dept_root{background:url('icons/tree/GTP_dept_root.png')  no-repeat  !important;}
+.GTP_dept{background:url('icons/tree/GTP_dept.png')  no-repeat  !important;}
+.GTP_dept_root_new{background:url('icons/tree/GTP_dept_root_new.png')  no-repeat  !important;}
+.GTP_dept_new{background:url('icons/tree/GTP_dept_new.png')  no-repeat  !important;}
+.GTP_user_male{background:url('icons/tree/GTP_user_male.png')  no-repeat  !important;}
+.GTP_user_female{background:url('icons/tree/GTP_user_female.png')  no-repeat  !important;}
+.GTP_male_pt{background:url('icons/tree/GTP_male_pt.png')  no-repeat  !important;}
+.GTP_female_pt{background:url('icons/tree/GTP_female_pt.png')  no-repeat  !important;}
+.GTP_male_ld{background:url('icons/tree/GTP_male_ld.png')  no-repeat  !important;}
+.GTP_male_ld_pt{background:url('icons/tree/GTP_male_ld_pt.png')  no-repeat  !important;}
+.GTP_female_ld{background:url('icons/tree/GTP_female_ld.png')  no-repeat  !important;}
+.GTP_role_group{background:url('icons/tree/GTP_role_group.png')  no-repeat  !important;}
+.GTP_role_root{background:url('icons/tree/GTP_role_root.png')  no-repeat  !important;}
+.GTP_role{background:url('icons/tree/GTP_role.png')  no-repeat  !important;}
+.GTP_dept_root_net{background:url('icons/tree/GTP_dept_root_net.png')  no-repeat  !important;}
+.GTP_dept_net{background:url('icons/tree/GTP_dept_net.png')  no-repeat  !important;}
+.GTP_user_male_net{background:url('icons/tree/GTP_user_male_net.png')  no-repeat  !important;}
+.GTP_user_female_net{background:url('icons/tree/GTP_user_female_net.png')  no-repeat  !important;}
+.GTP_male_pt_net{background:url('icons/tree/GTP_male_pt_net.png')  no-repeat  !important;}
+.GTP_female_pt_net{background:url('icons/tree/GTP_female_pt_net.png')  no-repeat  !important;}
+.GTP_male_ld_net{background:url('icons/tree/GTP_male_ld_net.png')  no-repeat  !important;}
+.GTP_male_ld_pt_net{background:url('icons/tree/GTP_male_ld_pt_net.png')  no-repeat  !important;}
+.GTP_female_ld_net{background:url('icons/tree/GTP_female_ld_net.png')  no-repeat  !important;}
+.GTP_female_ld_pt{background:url('icons/tree/GTP_female_ld_pt.png')  no-repeat  !important;}
+.GTP_post_net{background:url('icons/tree/GTP_post_net.png')  no-repeat  !important;}
+.GTP_role_group{background:url('icons/tree/GTP_role_group.png')  no-repeat  !important;}
+.GTP_sys_net{background:url('icons/tree/GTP_sys_net.png')  no-repeat  !important;}
+.GTP_dummy{background:url('icons/tree/GTP_dummy.png')  no-repeat  !important;}
+.GTP_dummy_net{background:url('icons/tree/GTP_dummy_net.png')  no-repeat  !important;}
+.GTP_unknowperson{background:url('icons/tree/GTP_unknowperson.png')  no-repeat  !important;}
+
+
+/*状态*/
+.GTP_sending{background:url('icons/status/GTP_sending.png')  no-repeat  !important;}
+.GTP_senderror{background:url('icons/status/GTP_senderror.png')  no-repeat  !important;}
+
+/*权限*/
+.GTP_function{background:url('icons/auth/GTP_function.png')  no-repeat  !important;}
+.GTP_module{background:url('icons/auth/GTP_module.png')  no-repeat  !important;}
+.GTP_entity{background:url('icons/auth/GTP_entity.png')  no-repeat  !important;}
+.GTP_dim{background:url('icons/auth/GTP_dim.png')  no-repeat  !important;}
+.GTP_fnlabel{background:url('icons/auth/GTP_fnlabel.png')  no-repeat  !important;}
+.GTP_restemplate{background:url('icons/auth/GTP_restemplate.png')  no-repeat  !important;}
+/*等级*/
+.GTP_lv1{background:url('icons/level/GTP_lv1.png')  no-repeat  !important;}
+.GTP_lv0{background:url('icons/level/GTP_lv0.png')  no-repeat  !important;}
+

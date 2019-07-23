@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商品选择</title>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            //转义列
+            var Active = Ext.data.Record.create([
+                    { name: "Id", type: "string", mapping: "Id" },
+                    { name: "LoginName", type: "string", mapping: "LoginName" },
+                    { name: "Sex", type: "string", mapping: "Sex" },
+                    { name: "UserName", type: "string", mapping: "UserName" },
+                    { name: "PassScore", type: "string", mapping: "PassScore" },
+                    { name: "ScoreTotal", type: "string", mapping: "ScoreTotal" },
+                    { name: "UseTime", type: "datetime", mapping: "UseTime" },
+                    { name: "IsMarking", type: "bool", mapping: "IsMarking" },
+                    { name: "AllGrade", type: "int", mapping: "AllGrade" },
+                    { name: "CreateTime", type: "datetime", mapping: "CreateTime" }
+            ]);
+            //数据源
+            var PapersId = top.Ext.getCmp('WinMasterList').items.items[0].params.PapersId;
+            //数据源
+            var store = GridStore(Active, '/BsManageScore/SearchResultData?PapersId=' + PapersId);
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['登录帐号', 'LoginName'], ['用户名', 'UserName'], ['分数', 'AllGrade'], ['考试时间', 'CreateTime']];
+            var center = new Ext.grid.GridPanel({
+                id: 'gg',
+                region: 'center',
+                layout: 'fit',
+                store: store,
+                border: false,
+                stripeRows: true, //隔行颜色不同
+                loadMask: { msg: '数据请求中，请稍后...' },
+                defult: {
+                    sortable: true
+                },
+                columns: [
+                 new Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+              {
+              header: "登录帐号",
+              dataIndex: 'LoginName',
+              width: 100,
+              menuDisabled: true
+          },
+                 {
+                     header: "用户名",
+                     dataIndex: 'UserName',
+                     width: 100,
+                     menuDisabled: true
+                 },
+                {
+                    header: "性别",
+                    dataIndex: 'Sex',
+                    width: 80,
+                    menuDisabled: true,
+                    renderer: formartSex
+                },
+                 {
+                     header: "试卷总分",
+                     dataIndex: 'ScoreTotal',
+                     width:80,
+                     menuDisabled: true
+                 },
+                 {
+                     header: "及格分数",
+                     dataIndex: 'PassScore',
+                     width: 80,
+                     menuDisabled: true
+                 },
+                 {
+                     header: "实际得分",
+                     dataIndex: 'AllGrade',
+                     width: 80,
+                     menuDisabled: true,
+                     renderer: renderAllGrade
+                 },
+                  {
+                      header: "状态",
+                      dataIndex: 'IsMarking',
+                      width: 80,
+                      menuDisabled: true,
+                      renderer: renderStatus
+                  },
+                {
+                    header: "考试时间",
+                    dataIndex: 'CreateTime',
+                    width: 140,
+                    menuDisabled: true
+                }
+                ],
+                tbar: tbarTop(),
+                bbar: bbar(store), //分页工具条
+                bbar: bbarTop(store), //分页工具条
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                },
+                listeners: {
+                    beforerender: function () {
+                    }
+                }
+            });
+
+
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 388,
+                renderTo: 'divShop',
+                items: [center],
+                listeners: {
+                    afterrender: function () {
+
+                    }
+                }
+            });
+
+            //渲染状态
+            function renderStatus(value, metadata, record, rowIdx, colIdx, store) {
+                if (value) {
+                    var PassScore = record.data.PassScore;
+                    var AllGrade = record.data.AllGrade;
+                    if (PassScore > AllGrade) {
+                        return "<span style='color:red'>不及格</span>";
+                    }
+                    else {
+                        return "<span style='color:Green'>及格</span>";
+                    }
+                }
+                else {
+                    return "未提交";
+                }
+            }
+
+            //渲染分数
+            function renderAllGrade(value, metadata, record, rowIdx, colIdx, store) {
+                var IsMarking = record.data.IsMarking;
+                if (IsMarking) {
+                    var PassScore = record.data.PassScore;
+                    var AllGrade = record.data.AllGrade;
+                    if (PassScore > AllGrade) {
+                        return "<span style='color:red'>" + value + "</span>";
+                    }
+                    else {
+                        return "<span style='color:Green'>" + value + "</span>";
+                    }
+                }
+                else {
+                    return "0";
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

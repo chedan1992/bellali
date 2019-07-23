@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>书籍详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .main img {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+    </header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="lh20 pad10">
+                <span class="f16">{{name}}</span>
+            </div>
+            <div class="pad10">
+                <span class="f12 color999">作者：{{author}}</span>
+                <span class="f12 color999 fr">上新时间：{{formatDate(createTime)}}</span>
+            </div>
+            <div class="main pad10">{{content}}</div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130"/>
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">公司:</span>
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+    <footer class="shared"></footer>
+
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        id: Comm.query('id'),
+        init: function () {
+            AJAX.GET('/api/book/GetBook/' + model.id, {}, function (d) {
+                if (d.code == 1) {
+                    d.data.base = config.basedata;
+                    $("section").html(template('mainTpl', d.data))
+                }
+            })
+        }
+    }
+</script>
+
+</html>

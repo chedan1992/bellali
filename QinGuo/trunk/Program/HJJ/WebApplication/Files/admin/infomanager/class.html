@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>班级信息</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="name" id="name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="phone" id="phone" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+     <!--       <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-block">
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="star" laydate id="star" autocomplete="off">
+                        </div>
+                        <div class="layui-col-xs1">&nbsp;</div>
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="star" laydate id="star" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="layui-col-xs2">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" onclick="opendialog('新增班级')">新增</button>
+            <button class="layui-btn" onclick="opendialog('编辑班级')">编辑</button>
+            <button class="layui-btn layui-btn-danger hide" onclick="del()">删除</button>
+            <button class="layui-btn layui-btn-primary" id="btnfile">导入</button>
+            <a style="color:#1E9FFF;" href="http://m.gzygxy.com/admin_html/templ/bj_tpl.xlsx">下载模板</a>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+
+<script type="text/html" id="formTpl">
+    <div id="form" class="layui-form" style="margin-top: 20px;margin-right:30px;">
+        <input type="hidden" id="classesId" name="classesId"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+                <select  {{!d.isadd?'disabled':''}} name="studentYear" id="studentYear" lay-verify="required" lay-filter="studentYear">
+                    <option value="">选择年级</option>
+                    {{# if(u.schoolType&1){ }}
+                        <option value="1">一年级</option>
+                        <option value="2">二年级</option>
+                        <option value="3">三年级</option>
+                        <option value="4">四年级</option>
+                        <option value="5">五年级</option>
+                        <option value="6">六年级</option>
+                    {{# } }}
+                    {{# if(u.schoolType&2){ }}
+                    <option value="7">初一</option>
+                    <option value="8">初二</option>
+                    <option value="9">初三</option>
+                    {{# } }}
+                    {{# if(u.schoolType&4){ }}
+                    <option value="10">高一</option>
+                    <option value="11">高二</option>
+                    <option value="12">高三</option>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                    {{# } }}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+                {{# if(!d.isadd) { }}
+                <select {{!d.isadd?'disabled':''}} name="number" id="number" lay-verify="required" lay-filter="number">
+                    <option value="">选择班级</option>
+                </select>
+                {{# } else { }}
+                <input text="number" name="number" id="number" lay-verify="number" autocomplete="off" placeholder="请输入班级"
+                       class="layui-input"/>
+                {{# } }}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">班主任姓名</label>
+            <div class="layui-input-block">
+                <select name="header" id="header" lay-verify="required" lay-filter="header" lay-search=""></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">班主任电话</label>
+            <div class="layui-input-block">
+                <input name="phone" disabled id="phone" lay-verify="phone" autocomplete="off" placeholder="请输入班主任电话"
+                       class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级总数</label>
+            <div class="layui-input-block">
+                <input name="allCount" id="allCount" lay-verify="number" autocomplete="off" placeholder="请输入班级总数" class="layui-input" value="60"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">已注册人数</label>
+            <div class="layui-input-block">
+                <input value="{{d.isadd?0:''}}" name="nowCount" disabled id="nowCount" lay-verify="number" autocomplete="off" placeholder="已注册人数" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="layer.closeAll()">关闭</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+    var u = Comm.db("user"), bjlist = [], headerlist = [];
+
+    //小窗口编辑
+    function opendialog(title) {
+        var d = { isadd: true };
+        var url = '/school/classse/add';
+        if (title == "编辑班级") {
+            d = Comm.table.checkStatus('table');//获取选中的数据
+            if (d.data.length != 1) {
+                Comm.msg("请选择一条数据", 5)
+                return;
+            }
+            d = d.data[0]
+            d.isadd = false;
+            url = '/school/classse/updateHeadAndAllCount';
+        }
+        console.log(d);
+        Comm.laytpl($("#formTpl").html()).render(d, function (html) {
+            layer.open({
+                type: 1,
+                title: title,
+                area: ['600px', '460px'],
+                maxmin: true,
+                content: html,
+                success: function (layero) {
+                    //查询班主任电话
+                    getHeaderByName(d);
+
+                    var m = Comm.getGradeByStudentYearAndTime(d.studentYear);
+                    if (m && m.length > 0) {
+                        d.studentYear = m[0].nj;
+                        getBJByNj(d.studentYear, d.number)
+                    }
+                    Comm.SetData(d, 'form')
+                    Comm.form.render();
+
+                    //验证必填项
+                    Comm.form.verify();
+
+                    //监听老师下拉事件
+                    Comm.form.on('select(header)', function (data) {
+                        $("#form #phone").val(headerlist[$(this).index()].phone)
+                    });
+
+                    //监听年级下拉事件
+                    Comm.form.on('select(studentYear)', function (data) {
+                        if (data.value != "" && !d.isadd) {
+                            getBJByNj(data.value)
+                        }
+                    });
+
+
+                    Comm.form.on('select(number)', function (data) {
+                        if (data.value != "") {
+                            var i = $(this).index();
+                            Comm.SetData(bjlist[i - 1], 'form')
+                        }
+                    });
+                    //提交表单
+                    Comm.form.on('submit(sub)', function (data) {
+                        data.field.type = 0;
+
+                        if (data.field.allCount <= 0) {
+                            Comm.msg('班级总数必须大于0');
+                            return
+                        }
+
+                        AJAX.POST(url, data.field, function (d) {
+                            if (d.code == 1) {
+                                layer.closeAll();
+                                layer.msg("保存成功!", { icon: 1 })
+                                //执行重载
+                                reload()
+                            } else {
+                                layer.msg(d.msg, { icon: 5 })
+                            }
+                        })
+                    });
+                }
+            });
+        })
+    }
+
+    function getBJByNj(grade, number) {
+        AJAX.GET('/school/classse/getBySchoolAndGrade?grade=' + grade, function (d) {
+            if (d.code == 1) {
+                bjlist = d.data;
+                $("#number").html('<option value="">选择班级</option>')
+                for (var i = 0; i < d.data.length; i++) {
+                    var e = d.data[i];
+                    if (number == e.number) {
+                        $("#number").append('<option selected value="' + e.number + '">' + e.number + '班</option>');
+                    } else {
+                        $("#number").append('<option value="' + e.number + '">' + e.number + '班</option>');
+                    }
+                }
+                Comm.form.render('select');
+            }
+        })
+    }
+
+    //查询班主任电话
+    function getHeaderByName(a) {
+        AJAX.GET('/school/teacher/getHeaderByName?name=', function (d) {
+            if (d.code == 1) {
+                headerlist = d.data;
+                for (var i = 0; i < d.data.length; i++) {
+                    var e = d.data[i];
+                    if (i == 0) {
+                        $("#form #phone").val(e.phone)
+                    }
+                    if (e.customerName == a.teacher) {
+                        $("#header").append('<option selected value="' + e.customerId + '">' + e.customerName + '</option>');
+                        $("#form #phone").val(a.phone)
+                    } else {
+                        $("#header").append('<option value="' + e.customerId + '">' + e.customerName + '</option>');
+                    }
+                }
+                Comm.form.render('select');
+            }
+        })
+    }
+
+    //删除
+    function del() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择删除数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].wxuserid)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("请写入删除接口", { ids: ids.join(',') }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg(d.msg, 5)
+                }
+            })
+        });
+    }
+
+    //导出
+    function out() {
+        Comm.confirm('确定导出', function () {
+            //刷新列表
+            Comm.table.reload('table');
+            Comm.alert("执行导出完成")
+        });
+    }
+
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+
+    function pageload() {
+
+        Comm.upload.render({
+            elem: '#btnfile',
+            field: 'file',
+            accept: 'file',
+            multiple: false,//多图
+            number: 2,
+            url: config.ossroot,
+            before: function (obj) {
+                //上传loading
+                layer.load();
+            },
+            done: function (d) {
+                layer.closeAll('loading'); //关闭loading
+                var that = this;
+                Comm.confirm('确定导入', function () {
+                    AJAX.POST("/school/classse/upload", { key: that.data.key }, function (d) {
+                        if (d.code == 1) {
+                            //刷新列表
+                            Comm.table.reload('table');
+                            Comm.msg(d.msg, 1)
+                        } else {
+                            Comm.msg('导入失败', 5)
+                        }
+                    })
+                })
+            },
+            error: function () {
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/school/classse/getBySchool',//列表请求接口
+            where: {//接口参数
+                phone: ''
+            },
+            cols: [[
+                { checkbox: true },
+                {
+                    field: 'studentYear', title: '年级', renderData: function (d, v) {
+                        var m = Comm.getGradeByStudentYearAndTime(v);
+                        return Comm.nclass(m[0].nj);
+                    }
+                },
+                {
+                    field: 'number', title: '班级', renderData: function (d, v) {
+                        return v + "班";
+                    }
+                },
+                { field: 'teacher', title: '班主任姓名', },
+                { field: 'phone', title: '班主任电话', },
+                { field: 'allCount', title: '班级总人数', },
+                { field: 'nowCount', title: '注册人数', },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+    }
+</script>
+
+</html>

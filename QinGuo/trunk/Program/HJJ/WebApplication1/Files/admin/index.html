@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>管理系统</title>
+    <link rel="stylesheet" href="inc/layui/css/layui.css">
+    <link rel="stylesheet" href="css/comm.css">
+    <style type="text/css">
+        .layui-tab-content {
+            background-color: #F5F5F5;
+        }
+    </style>
+</head>
+
+<body class="layui-layout-body" style="padding: 0;">
+    <!-- 布局容器 -->
+    <div class="layui-layout layui-layout-admin">
+        <!-- 头部 -->
+        <div class="layui-header">
+            <div class="layui-main">
+                <!-- logo -->
+                <a href="/manage/index.html" style="color: #c2c2c2; font-size: 18px; line-height: 60px;">管理系统</a>
+                <!-- 水平导航 -->
+                <ul class="layui-nav" style="position: absolute; top: 0; right: 0; background: none;">
+                    <li style="display: inline-block;line-height: 60px;color: rgba(255,255,255,.7);vertical-align: middle;" id="school"></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            个人信息
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd style="display: none">
+                                <a href="javascript:;">
+                                    个人信息
+                                </a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" id="uppwd">
+                                    修改密码
+                                </a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" onclick="outlogin()">
+                                    退出登录
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 侧边栏 -->
+        <div class="layui-side layui-bg-black" style="background-color: 3F4652;">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="left-nav" style="border-radius: 0;"></ul>
+            </div>
+        </div>
+        <!-- 主体 -->
+        <div class="layui-body">
+            <!-- 顶部切换卡 -->
+            <div class="layui-tab layui-tab-brief" lay-filter="top-tab" lay-allowclose="true" style="margin: 0;">
+                <ul class="layui-tab-title"></ul>
+                <div class="layui-tab-content">
+                </div>
+            </div>
+        </div>
+        <!-- 底部 -->
+        <div class="layui-footer" style="text-align: center; line-height: 44px;">
+            Copyright &copy; 2019 Powered by bellali.cn
+        </div>
+    </div>
+
+</body>
+<script type="text/html" id="formTpl">
+    <div id="form" class="layui-form" style="margin-top: 20px;margin-right:20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input value="" type="text" name="oldPassword" lay-verify="required" id="oldPassword" autocomplete="off"
+                       placeholder="请输入原密码" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input value="" type="text" name="password" lay-verify="required" id="password" autocomplete="off"
+                       placeholder="请输入新密码" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="layer.closeAll()">关闭</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="upimgTpl">
+    <div style="text-align:center; width:100px;height:140px;display:inline-block;">
+        <img onclick="Comm.showimg(this)" style="margin:0 10px 10px 0;" width="100" height="100" data="{{d.key}}"
+             src="{{Comm.OSS.getImgUrl(d.key)}}" class="layui-upload-img">
+        <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="$(this).parent().remove()">删除</button>
+    </div>
+</script>
+
+<script type="text/javascript" src="inc/layui/layui.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript">
+
+    var cms = null;
+
+    var user = Comm.db('userinfo')
+    function pageload() {
+        var _token = Comm.db("_token");
+        if (_token == "") {
+            Comm.go('login.html')
+        }
+        $("#school").html("欢迎您：" + user.nickName)
+        /**
+         * 初始化整个cms骨架
+         */
+        layui.use(['cms', 'laytpl', 'form',], function () {
+            cms = layui.cms('left-nav', 'top-tab');
+
+            var menu = [];
+            /*AJAX.GET("/admin/menu/query", function (d) {
+                if (d.code == 1) {
+                    user.role.menuId = user.role.menuId.split(',');
+                    if (user.role.menuId && user.role.menuId.length > 0) {
+                        for (var i = 0; i < user.role.menuId.length; i++) {
+                            for (var j = 0; j < d.data.length; j++) {
+                                if (user.role.menuId[i] == d.data[j].menuId) {
+                                    var e = d.data[j];
+                                    menu.push({ id: e.menuId, pid: e.pid, node: e.menuName, url: e.url, icon: e.icon })
+                                }
+                            }
+                        }
+                    }
+                }
+                initmenu()
+            });*/
+
+            menu.push({ id: -1, pid: 0, node: '主页', url: 'main.html', icon: '' })
+
+            menu.push({ id: 9, pid: 0, node: '活动管理', url: 'active/activelist.html', icon: '' })
+            menu.push({ id: 12, pid: 0, node: '价格管理', url: 'active/catorylist.html', icon: '' })
+            menu.push({ id: 10, pid: 0, node: '活动订单', url: 'active/order.html', icon: '' })
+            menu.push({ id: 11, pid: 0, node: '校区管理', url: 'active/schoollist.html', icon: '' })
+            //menu.push({ id: 12, pid: 0, node: '用户管理', url: 'user/userlist.html', icon: '' })
+            initmenu()
+
+            function initmenu() {
+                cms.addNav(menu, 0, 'id', 'pid', 'node', 'url');
+                cms.bind(60 + 41 + 20 + 44); //头部高度 + 顶部切换卡标题高度 + 顶部切换卡内容padding + 底部高度
+                cms.clickLI(0);
+            }
+
+            $("#uppwd").click(function () {
+                Comm.laytpl($("#formTpl").html()).render({}, function (html) {
+                    //多窗口模式，层叠置顶
+                    Comm.layer.open({
+                        type: 1,
+                        title: '修改密码',
+                        area: ['320px', '240px'],
+                        shade: 0.3,
+                        //maxmin: true,
+                        content: html,
+                        zIndex: layer.zIndex,  //重点1
+                        success: function (layero) {
+                            //验证必填项
+                            Comm.form.verify();
+                            //监听指定开关
+                            Comm.form.on('submit(sub)', function (data) {
+                                AJAX.POST('/api/customer/updatePassword', data.field, function (d) {
+                                    if (d.code == 1) {
+                                        Comm.layer.closeAll();
+                                        Comm.layer.msg("保存成功!", { icon: 1 })
+                                        //执行重载
+                                    } else {
+                                        Comm.layer.msg("保存失败!", { icon: 5 })
+                                    }
+                                })
+                            });
+                        },
+                    });
+                })
+            })
+
+            $("#bank").click(function () {
+                parent.cms.addtab('绑定银行卡', 'bank.html', 'bank')
+            })
+        });
+    }
+
+    function outlogin() {
+        Comm.confirm("确定退出登录", function () {
+            Comm.db("_token", null)
+            Comm.db("user", null)
+            Comm.go('login.html')
+        })
+    }
+
+
+    /*
+    var str = "<> < abc <img src='www.jb51.net/images/em-1.gif' emdata='[em-1]' /> 2 <img src='www.jb51.net/images/em-2.gif' emdata='[em-2]' />   > < < >"
+
+    //转义表情
+    var imgReg = /<img.*?(?:>|\/>)/gi;
+    var srcReg = /emdata=[\'\"]?([^\'\"]*)[\'\"]?/i;
+    var arr = str.match(imgReg);
+    for (var i = 0; i < arr.length; i++) {
+        var src = arr[i].match(srcReg);
+        if (src[1]) {
+            console.log('已匹配的图片地址' + (i + 1) + '：' + src[1]);
+            str = str.replace(src.input, src[1]);
+        }
+    }
+    var lt = /</g;//转义<
+    var gt = />/g;//转义>
+
+    var result = str.replace(lt, "&lt;").replace(gt, "&gt;");
+    console.log(result);
+    */
+
+</script>
+
+</html>

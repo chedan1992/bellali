@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>商品订单详情</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="form" class="layui-form" style="margin-top: 20px;width: 80%;">
+        <script type="text/html" id="formTpl">
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单状态</label>
+                <div class="layui-input-inline" style="color: #5FB878;line-height: 38px;">
+                    {{# if(d.orderState==1){ }}
+                    <span style="font-size: 20px">待付款</span>
+                    {{# }else if(d.orderState==2){ }}
+                    <span style="font-size: 20px">待发货</span>
+                    {{# }else if(d.orderState==3){ }}
+                    <span style="font-size: 20px">待收货</span>
+                    {{# }else if(d.orderState==4){ }}
+                    <span style="font-size: 20px">完成</span>
+                    {{# }else if(d.orderState==10){ }}
+                    <span style="font-size: 20px">已取消</span>
+                    {{# } }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <label class="layui-form-label">订单编号</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{d.orderNumber}}
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">总数量</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{d.count}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{# if(d.batch!="0"){ }}
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <label class="layui-form-label">统购信息</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            批次号：{{d.batch}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{# } }}
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">下单时间</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{Comm.format(d.addTime,'yyyy-mm-dd')}}
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">订单总价</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                                {{Comm.price(d.orderTotalMoney)}}元
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">订单运费</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{Comm.price(d.freight)}}元
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">支付金额</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{Comm.price(d.orderTotalMoney)}}元
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">收货人</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{d.uname}}
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">联系方式</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{d.uphone}}
+                        </div>
+                    </div>
+                    <div class="layui-col-xs6">
+                        <label class="layui-form-label">收货地址</label>
+                        <div class="layui-input-block" style="line-height: 20px;padding-top: 9px;">
+                            {{Area.getFullName(d.uareaId)}} {{d.uaddr}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">供应商</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            ABC供应商
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">联系方式</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            15625546591
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{# if(d.orderState==3){ }}
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">物流信息</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            已发货
+                        </div>
+                    </div>
+                    <div class="layui-col-xs3">
+                        <label class="layui-form-label">物流编号</label>
+                        <div class="layui-input-block" style="line-height: 38px;">
+                            {{d.logisticsNumber}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{# } }}
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品明细</label>
+                <div class="layui-input-block">
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>商品名称</th>
+                                <th>规格</th>
+                                <th>数量</th>
+                                <th>价格</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{# layui.each(d.skus,function(i,v){ }}
+                                <tr>
+                                    <td>{{v.goodsName}}</td>
+                                    <td>{{v.skuName}}</td>
+                                    <td>{{v.goodsCount}}</td>
+                                    <td>{{Comm.price(v.goodsPrice)}}元</td>
+                                </tr>
+                           {{#  }) }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </script>
+
+    </div>
+</body>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript" src="../inc/area.js"></script>
+<script type="text/javascript">
+    var id = Comm.query('id');
+    function pageload() {
+        Area.init();
+        AJAX.GET('/api/normalOrder/orderById?orderId=' + id, function (d) {
+            if (d.code == 1) {
+                d.data.count = 0;
+                for (var i = 0; i < d.data.skus.length; i++) {
+                    d.data.count += parseInt(d.data.skus[i].goodsCount);
+                }
+                Comm.laytpl($("#formTpl").html()).render(d.data, function (html) {
+                    $("#form").html(html);
+                })
+            }
+        })
+    }
+</script>
+
+</html>

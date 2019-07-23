@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>投诉维权</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">投诉类型</label>
+                    <div class="layui-input-block">
+                        <select name="type" id="type">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-block">
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="startDate" laydate id="startDate" autocomplete="off">
+                        </div>
+                        <div class="layui-col-xs1">&nbsp;</div>
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="endDate" laydate id="endDate" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" onclick="opendialog()">申请维权</button>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="info">查看详情</a>
+    {{# if(d.state==0){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="tx">提醒处理</a>
+    {{# } }}
+</script>
+
+<script type="text/html" id="formTpl">
+    <div id="form" class="layui-form" style="margin-top: 20px;margin-right:30px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉原因</label>
+            <div class="layui-input-block">
+                <select name="reason" id="reason" lay-verify="required">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉对象</label>
+            <div class="layui-input-block">
+                <select name="businessId" id="businessId" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉说明</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" lay-verify="required" id="message" name="message"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item ">
+            <label class="layui-form-label">投诉凭证</label>
+            <div class="layui-input-block">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="btnimg">上传凭证</button>
+                    <div class="layui-upload-list">
+                        <div id="uploadimg" style="height:140px;">
+                        </div>
+                        <br>
+                        <span class="f12">建议：400px*400px，1M以内，2~3张图片</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="layer.closeAll()">关闭</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript" src="../inc/dict.js"></script>
+<script type="text/javascript">
+    //小窗口编辑
+    function opendialog(title) {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length > 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+
+        Comm.laytpl($("#formTpl").html()).render(d, function (html) {
+            layer.open({
+                type: 1,
+                title: '申请维权',
+                area: ['600px', '580px'],
+                maxmin: true,
+                content: html,
+                success: function () {
+                    //Comm.SetData({}, 'form')
+
+                    var d = GDict.get('tousu');
+                    for (var i = 0; i < d.length; i++) {
+                        $('#reason').append('<option value="' + d[i].dictid + '">' + d[i].dictname + '</option>')
+                    }
+
+                    //businessId
+                    AJAX.GET('/bus/business/queryAllBUS?schoolId='+Comm.db('user').schoolId, function (d) {
+                        if (d.code == 1) {
+                            for (var i = 0; i < d.data.length; i++) {
+                                $('#businessId').append('<option value="' + d.data[i].businessId + '">' + d.data[i].businessName+ '</option>')
+                            }
+                        }
+                        Comm.form.render();
+                    })
+
+                    upimg()
+                    Comm.form.render();
+                    //验证必填项
+                    Comm.form.verify();
+                    //提交表单
+                    Comm.form.on('submit(sub)', function (data) {
+                        data.field.originator = Comm.db('user').schoolId
+                        data.field.orgType = 2
+                        data.field.img = []
+                        $("#uploadimg img").each(function (i, e) {
+                            data.field.img.push($(this).attr('data'))
+                        })
+                        if (data.field.img.length > 0) {
+                            data.field.img = data.field.img.join(',')
+                        } else {
+                            data.field.img = ''
+                        }
+
+                        AJAX.POST('/bus/business/insertComplaintInfo', data.field, function (d) {
+                            if (d.code == 1) {
+                                layer.closeAll();
+                                layer.msg("保存成功!", { icon: 1 })
+                                //执行重载
+                                reload()
+                            } else {
+                                layer.msg("保存失败!", { icon: 5 })
+                            }
+                        })
+                    });
+                }
+            });
+        })
+    }
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+    function pageload() {
+        GDict.init(function () {
+            var d = GDict.get('tousu');
+            for (var i = 0; i < d.length; i++) {
+                $('#type').append('<option value="' + d[i].dictid + '">' + d[i].dictname + '</option>')
+            }
+            Comm.form.render();
+        })
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/bus/business/queryComplaintInfo',//列表请求接口
+            where: {//接口参数
+                schoolId: top.Comm.db('user').schoolId
+            },
+            cols: [[
+                { checkbox: true },
+                { field: 'customerName', title: '投诉人',renderData:function(d,v){
+                    if(d.customerName!=""){
+                        return d.customerName
+                    }else{
+                        return d.schoolName
+                    }
+                } },
+                { field: 'phone', title: '联系电话' },
+                //{ field: 'phone', title: '关联事件', },
+                { field: 'businessName', title: '投诉对象', },
+                { field: 'reason', title: '投诉原因', },
+                { field: 'message', title: '投诉说明', },
+                { field: 'addTime', title: '提交时间', renderData: function (d, v) { return Comm.format(v, 'yyyy-mm-dd') } },
+                { field: 'state', title: '状态', renderData: function (d, v) { return v == "0" ? '未处理' : '已处理' } },
+                { field: 'wxuserid', title: '操作', toolbar: '#barDemo', width: 160 },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+
+        //监听table列表里按钮点击事件
+        Comm.table.on('tool(table)', function (obj) {
+            if (obj.event == 'info') {
+                parent.cms.addtab('投诉详情', 'complaintprotection/cpinfo.html?id=' + obj.data.complaintInfoId, 'cpinfo' + obj.data.complaintInfoId)
+            } else if (obj.event == 'tx') {//
+                Comm.msg('消息已发送',1);
+            }
+        });
+    }
+
+    function upimg() {
+        //多图片上传
+        Comm.upload.render({
+            elem: '#btnimg',
+            field: 'file',
+            accept: 'images',
+            acceptMime: 'image/jpg,image/png,image/JPEG',
+            multiple: true,//多图
+            number: 3,
+            url: config.ossroot,
+            before: function (obj) {
+                //上传loading
+                layer.load();
+            },
+            done: function (d) {
+                layer.closeAll('loading'); //关闭loading
+                top.Comm.OSS.inithtml(this.data, function (html) {
+                    $('#uploadimg').append(html);
+                })
+            },
+            error: function () {
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+    }
+</script>
+
+</html>

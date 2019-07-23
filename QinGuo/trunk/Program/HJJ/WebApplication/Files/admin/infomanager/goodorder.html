@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>商品订单</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">订单编号</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="orderNumber" id="orderNumber" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">订单状态</label>
+                    <div class="layui-input-block">
+                        <select name="orderState" id="orderState">
+                            <option value="">全部</option>
+                            <option value="1">待付款</option>
+                            <option value="2">待发货</option>
+                            <option value="3">待收货</option>
+                            <option value="4">完成</option>
+                            <option value="10">已取消</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-block">
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="star" laydate id="star" autocomplete="off">
+                        </div>
+                        <div class="layui-col-xs1">&nbsp;</div>
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="star" laydate id="star" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="layui-col-xs4">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="info">详情</a>
+</script>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+    var studentId = Comm.query('id');
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+    function pageload() {
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/api/normalOrder/studentProductsDetailed',//列表请求接口
+            where: {//接口参数
+                studentId: studentId,
+                schoolId: Comm.db('user').schoolId
+            },
+            cols: [[
+                { checkbox: true },
+                { field: 'orderNumber', title: '订单编号' },
+                { field: 'payTime', title: '支付时间', },
+                {
+                    field: 'totalMoney', title: '订单金额', renderData: function (d, v) {
+                        return Comm.price(v)
+                    }
+                },
+                {
+                    field: 'payMoney', title: '支付金额', renderData: function (d, v) {
+                        return Comm.price(v)
+                    }
+                },
+                {
+                    field: 'uname', title: '收货人信息', renderData: function (d, v) {
+                        return d.uname + " " + d.uphone;
+                    }
+                },
+                {
+                    field: 'orderState', title: '订单状态', renderData: function (d, v) {
+                        var d = { 1: '待付款', 2: '待发货', 3: '待收货', 4: '完成',5:'申请退款', 10: '已取消' }
+                        return d[v];
+                    }
+                },
+                {
+                    field: 'addTime', title: '下单时间', renderData: function (d, v) {
+                        return Comm.format(v, 'yyyy-mm-dd');
+                    }
+                },
+                { field: 'normalorderId', title: '操作', toolbar: '#barDemo', width: 80 },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+
+        //监听table列表里按钮点击事件
+        Comm.table.on('tool(table)', function (obj) {
+            if (obj.event == 'info') {
+                parent.cms.addtab('商品订单详情', 'infomanager/orderinfo.html?id=' + obj.data.normalorderId, 'goodorderinfo' + obj.data.normalorderId)
+            }
+        });
+    }
+</script>
+
+</html>

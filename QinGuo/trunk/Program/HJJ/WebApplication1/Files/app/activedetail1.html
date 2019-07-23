@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>活动详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .tjspx {
+            background-image: url('img/tjspx.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 40%;
+        }
+
+        .main img {
+            max-width: 100% !important;
+        }
+
+        input[type='text'],
+        input[type='tel'] {
+            border: 1px solid #ededed;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            vertical-align: bottom;
+            padding: 0 20px 0 50px;
+            font-size: 14px;
+            background-position: 20px center;
+            background-repeat: no-repeat;
+        }
+
+        input[type='checkbox'] {
+            height: 12px;
+            width: 12px;
+            border: 1px solid #efefef;
+            vertical-align: middle;
+            -webkit-appearance: checkbox;
+        }
+
+        .bgname {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .bgaddr {
+            background-image: url("img/vo/img-26.png");
+        }
+
+        .bgphone {
+            background-image: url("img/vo/img-25.png");
+        }
+
+        .bgsex {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .imgpo {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+
+        .bgcard {
+            background-image: url("img/vo/img-24.png");
+        }
+
+        .bgemail {
+            background-image: url("img/vo/n-icon-08.png");
+        }
+
+        .bgisT {
+            background-image: url("img/vo/n-icon-22.png");
+        }
+
+        .bgday {
+            background-image: url('img/vo/n-icon-18.png')
+        }
+
+        .bgschool {
+            background-image: url('img/vo/img-26.png');
+        }
+
+        .myselbtn {
+            border-radius: 5px;
+            border: 1px solid #EB3B17;
+            margin-bottom: 10px;
+            background: #ccc;
+            line-height: 20px;
+            font-size: 16px;
+            background: #fff;
+            color: #EB3B17;
+            padding: 10px 0px;
+        }
+
+            .myselbtn.active {
+                background: #FB5E3D;
+                color: #fff;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header></header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="pad10">
+                <div class="lh20"><span class="f18">{{active.title}}</span></div>
+                <p class="lh20 wordW2 color999 f12 mart10">{{active.remark}}</p>
+                <p class="lh20 color999 f12">报名时间：{{formatDate(active.countStart)}}到{{formatDate(active.countEnd)}}</p>
+                <div class="mart20 hide">
+                    <span class="f22 colorred bold hide">{{active.totalMoney}}</span>
+                    <span class="f12 colorred hide">元</span>
+                    <span class="f12 color999 fr">已报名人数：{{active.count}}</span>
+                </div>
+            </div>
+            <div class="pad10">
+                <div class="lh30">
+                    <span class="">具体活动：</span>
+                </div>
+                <div class="main">{{active.content}}</div>
+            </div>
+            <div class="{{active.status==1?'hide':''}}">
+                <div class="linebod"></div>
+                <div class="center lh40 tjspx paddt10">
+                    <span class="f16">报名</span>
+                </div>
+                <div class="center">
+                    <span class="f12 color999">Volunteer Application</span>
+                </div>
+                <div>
+                    <input value="{{order?order.id:''}}" type="hidden" name="id" id="id">
+                    <div class="pad10 mart30 marr10 marl10 marb30 bottomShadow">
+                        <div class="mart30">
+                        </div>
+                        <div class="mart10">
+                            <label class="f16">填写报考基本信息</label>
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.realName:''}}" type="text" data-reg='empty' name="realname" id="realname" class="bgname" placeholder="请输入您的真实姓名">
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.phone:''}}" type="tel" maxLength="11" data-reg='m' name="phone" id="phone" class="bgphone" placeholder="请输入您的手机号">
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.nat:''}}" type="text" maxLength="11" data-reg='empty' name="Nat" id="Nat" class="bgcard" placeholder="请输入您国籍">
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.natv:''}}" type="text" maxLength="11" data-reg='empty' name="Natv" id="Natv" class="bgcard" placeholder="请输入您的民族">
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.card:''}}" type="text" data-reg='cd' name="card" id="card" class="bgcard" placeholder="请输入您的身份证">
+                        </div>
+                        <div class="mart10">
+                            <input value="{{order?order.schoolName:''}}" type="text" data-reg='empty' name="schoolName" id="schoolName" class="bgschool" placeholder="请输入您的就读学校">
+                        </div>
+                        <div class="mart10" style="position:relative;" onclick="model.schoolPicker.show()">
+                            <input value="{{order?order.school:''}}" data="{{order?order.school:''}}" type="text" data-reg='empty' readonly name="school" id="school" class="bgschool" placeholder="请选择您的校区">
+                            <img src="img/vo/n-icon-15.png" class="imgpo" />
+                        </div>
+                        <div class="mart10" style="position:relative;" onclick="model.sexPicker.show()">
+                            <input value="{{order&&order.sex=='女'?'女':'男'}}" data="{{order&&order.sex=='女'?'1':'2'}}" type="text" data-reg='empty' readonly name="sex" id="sex" class="bgsex" placeholder="请选择您的性别">
+                            <img src="img/vo/n-icon-15.png" class="imgpo" />
+                        </div>
+                        <div class="mart10">
+                            <label class="f16">上传照片</label>
+                        </div>
+                        <div class="mart10">
+                            <div onclick="model.up()" style="height:150px;line-height:150px;width:120px; border:1px solid #ccc">
+                                {{if(order&&order.czimg)}}
+                                <img id="ava" src="{{order.czimg}}" width="100%" style="max-height:150px;" />
+                                {{else}}
+                                <img id="ava" class="" src="img/tjsptp.png" width="100%" style="max-height:150px;display:none;" />
+                                {{/if}}
+                            </div>
+                            <div class="lh30 f12 color666">
+                                一寸白底彩照
+                            </div>
+                            <div class="lh30">
+                                <input type="file" id="filebtn" name="filebtn" accept="image/jpg,image/png,image/JPEG" />
+                            </div>
+                        </div>
+                        <div class="mart10">
+                            <label class="f16">请选择报考级别</label>
+                        </div>
+                        <div class="mart10 flex_wrap classTpl">
+                        </div>
+                        <div class="center f16 lh40">
+                            <span>您需要支付</span>
+                            <span class="colorred f24" id="pricess"></span>
+                            <span>元报名费</span>
+                        </div>
+                        <div class="center f12 color666 lh30">
+                            请确认以上质料无误
+                        </div>
+                        <div class="center marb20">
+                            <button id="sub" onclick="model.sub()" class="mart10 " style="border:0px;">提交报名</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130" />
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+    <footer class="shared"></footer>
+
+</body>
+<script id="classTpl" type="text/html">
+    {{each $data v k}}
+    <button onclick="model.sl(this,{{k}})" class="{{(k+1)%3>0?'marr10':'marl10'}} myselbtn {{k==ii?'active':''}}" style="width:calc((100% - 30px)/3);">
+        {{v.title}}</br>
+        ({{v.price}}元)
+    </button>
+    {{/each}}
+</script>
+<script src="inc/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<script type="text/javascript" src="inc/ajaxupload.js"></script>
+<script>
+
+
+    function pageload() {
+
+        var dbs = Comm.db('dbs');
+        if (dbs) {
+            wx.config(dbs);
+            wx.ready(function () {
+                model.getOrder();
+            });
+        } else {
+            getconfig()
+        }
+
+        function getconfig() {
+
+            var url = location.href;
+            AJAX.GET('/api/book/GetSignature', { url: url }, function (d) {
+                dbs = {
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: d.data.appId, // 必填，公众号的唯一标识
+                    timestamp: d.data.timeStamp, // 必填，生成签名的时间戳
+                    nonceStr: d.data.nonceStr, // 必填，生成签名的随机串
+                    signature: d.data.signature,// 必填，签名
+                    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+                };
+                if (d.code == 1) {
+                    wx.config(dbs);
+                }
+                wx.ready(function () {
+                    model.getOrder();
+                    Comm.db('dbs', dbs)
+                });
+            })
+        }
+    }
+
+    var wxpay = {
+        pay: function (d) {
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+            } else {
+                onBridgeReady(d);
+            }
+        },
+        pay1: function (d, payno) {
+            wx.chooseWXPay({
+                appId: d.appId,
+                timestamp: d.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: d.nonceStr, // 支付签名随机串，不长于 32 位
+                package: d.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                signType: d.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: d.paySign, // 支付签名
+                success: function (res) {
+                    $('input').val('');
+                    //支付成功后的回调函数
+                    Comm.go('paysucc.html?payno=' + payno);
+                },
+            });
+        }
+    }
+    function onBridgeReady(d) {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                timestamp: d.data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: d.data.nonceStr, // 支付签名随机串，不长于 32 位
+                package: d.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                signType: d.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: d.data.paySign, // 支付签名
+                appId: d.data.appId,     //公众号名称，由商户传入
+            },
+            function (res) {
+                Comm.message(res.err_msg);
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    Comm.message('报名成功')
+                }
+            });
+    }
+
+
+    var model = {
+        id: Comm.query('id'),
+        userid: Comm.query('userid'),
+        classd: '',
+        getOrder: function () {
+            AJAX.GET('/api/book/GetOrderActive/' + model.id, { userid: model.userid }, function (d) {
+                if (d.code == 1) {
+                    if (d.data.order.status == 1) {
+                        Comm.go('paysucc.html?payno=' + d.data.order.payno);
+                        return
+                    } else {
+                        model.czimg = d.data.order.czimg;
+                        d.data.order.czimg = config.root + d.data.order.czimg;
+                        model.classd = d.data.order.classId;
+                        model.show(d);
+                    }
+                } else {
+                    model.init();
+                }
+            })
+        },
+        init: function () {
+            AJAX.GET('/api/book/GetActive/' + model.id, {}, function (d) {
+                if (d.code == 1) {
+                    model.show(d);
+                }
+            })
+        },
+        show: function (d) {
+            if (d.data && d.data.active.status == 1) {
+                Comm.message('活动已禁止')
+            } else {
+                var countStart = new Date(app.formatDate(d.data.active.countStart));
+                var countEnd = new Date(app.formatDate(d.data.active.countEnd));
+
+                var now = new Date();
+                if (now.getTime() < countStart.getTime()) {
+                    Comm.message('活动未开始')
+                    d.data.active.status = 1;
+                }
+                if (now.getTime() > countEnd.getTime()) {
+                    Comm.message('活动已结束')
+                    d.data.active.status = 1;
+                }
+            }
+            d.data.base = config.basedata;
+            $("section").html(template('mainTpl', d.data));
+            model.data = d.data;
+            classd();
+            initPicker(d);
+
+            upImage("filebtn", function (d) {
+                model.czimg = d[0];
+                $("#ava").attr('src', config.root + d[0]).show();
+            });
+        },
+        sl: function (a, k) {
+            if (!$(a).hasClass('active')) {
+                $('button.active').removeClass('active');
+                $(a).addClass('active');
+
+                model.selprice = model.priceData[k];
+                $('#pricess').html(model.selprice.price)
+            }
+        },
+        sub: function () {
+            var data = Check.submit('POST');
+            if (!data) {
+                return false;
+            }
+
+            if (model.czimg == "") {
+                Comm.message('请上传寸照')
+                return
+            }
+
+
+            Comm.loading('正在提交...');
+            data.czimg = model.czimg;
+            data.classId = model.selprice.id;
+            data.userid = model.userid;
+            data.activeid = model.id;
+            AJAX.POST('/api/book/AddOrdered', data, function (d) {
+                Comm.loading(false);
+                if (d.code == 1) {
+                    Comm.message('支付中...！！必须支付成功才能报名')
+                    wxpay.pay1(JSON.parse(d.data), d.msg);
+                } else {
+                    Comm.message(d.msg)
+                }
+            })
+        },
+        czimg: '',
+        up: function () {
+            $('#filebtn').trigger('Change');
+        }
+    }
+
+
+    function initPicker() {
+        var sexdata = [{ text: '女', i: 1 }, { text: '男', i: 2 }];
+        model.sexPicker = new Commpicker('选择性别', [sexdata], function (obj, name, sid) {
+            $("#sex").val(name).attr('data', sid);
+        })
+
+        var schooldata = [{ text: '红领巾少儿艺术团', i: 1 }, { text: '成都市少年宫', i: 2 }, { text: '其他', i: 3 }];
+
+        AJAX.GET('/api/book/GetSchoolListAll/', {}, function (d) {
+            if (d.code == 1) {
+                schooldata = [];
+                for (var i = 0; i < d.data.length; i++) {
+                    schooldata.push({ text: d.data[i].name, i: i })
+                }
+                model.schoolPicker = new Commpicker('选择校区', [schooldata], function (obj, name, sid) {
+                    $("#school").val(name).attr('data', name);
+                })
+            }
+        })
+    }
+
+    function classd() {
+        AJAX.GET('/api/book/GetCatoryListAll?type=' + model.data.active.type, {}, function (d) {
+            if (d.code == 1) {
+                var ii = 0;
+                d.data.ii = ii;
+                model.priceData = d.data;
+                if (d.data && d.data.length > 0 && !model.classd) {
+                    model.selprice = d.data[0];
+                    $('#pricess').html(model.selprice.price)
+                } else {
+                    for (var i = 0; i < d.data.length; i++) {
+                        if (d.data[i].id == model.classd) {
+                            model.selprice = d.data[i];
+                            $('#pricess').html(model.selprice.price);
+                            ii == i;
+                        }
+                    }
+                    d.data.ii = ii;
+                }
+                $('.classTpl').html(template('classTpl', d.data));
+            }
+        })
+    }
+
+
+    //上传图片要求格式
+    var allowfile = 'bmp,jpg,jpeg,gif,png';
+    //单图-图片上传
+    function upImage(id, callbakfun) {
+        var upload = new AjaxUpload(id, {
+            action: config.root + "/api/book/Up",
+            name: 'fileimg',
+            accept: 'image/*',
+            capture: '',
+            onChange: function (file, extension) {
+
+            },
+            onSubmit: function (file, ext) {
+                if (!(ext && allowfile.indexOf(ext.toLowerCase()) > -1)) {
+                    $.toptip("错误：无效的文件扩展名！请上传" + allowfile + "格式文件！", 'error');
+                    return false;
+                }
+                Comm.loading('上传中...')
+            },
+            onComplete: function (file, d) {
+                Comm.loading();
+                if (d.code == 1) {
+                    callbakfun(d.data);
+                } else {
+                    Comm.message(d.msg)
+                }
+            }
+        });
+    }
+
+</script>
+
+</html>

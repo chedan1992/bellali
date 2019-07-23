@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>活动订单</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">单号</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="payno" id="payno" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="name" id="name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="phone" id="phone" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择活动</label>
+                    <div class="layui-input-block">
+                        <select name="activeid" lay-search="" id="activeid"><option value="">请选择活动</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态查询</label>
+                    <div class="layui-input-block">
+                        <select name="status" lay-search="" id="status">
+                            <option value="1">已支付</option>
+                            <option value="0">未支付</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn" onclick="UpStatus()">更新已支付</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reloadcc()">刷新</button>
+                    <button class="layui-btn" onclick="OutputExcel()">导出</button>
+                    <button class="layui-btn layui-btn-danger" onclick="del()">删除</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+
+    function openedit(title) {
+        var id = '';
+        if (title == "编辑") {
+            var d = Comm.table.checkStatus('table');//获取选中的数据
+            if (d.data.length != 1) {
+                Comm.msg("请选择一条数据", 5)
+                return;
+            }
+            id = d.data[0].id;
+        }
+        parent.cms.addtab(title, 'active/edit.html?id=' + id, 'active_edit' + id)
+    }
+
+    //删除
+    function del() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择删除数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].order.id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdateOrderStatus", { ids: ids.join(','), status: -1 }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reloadcc()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg("删除失败", 5)
+                }
+            })
+        })
+    }
+
+    function UpStatus() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5);
+            return;
+        }
+        Comm.confirm('确定选择更新为已支付状态', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].order.id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdateOrderStatus", { ids: ids.join(','), status: 1 }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reloadcc()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg("删除失败", 5)
+                }
+            })
+        })
+    }
+
+    //刷新列表
+    function reloadcc() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+
+    function pageload() {
+        AJAX.GET('/api/book/GetActiveListall', {}, function (d) {
+            if (d.code == 1) {
+                for (var i = 0; i < d.data.length; i++) {
+                    $('#activeid').append('<option value="' + d.data[i].id + '">' + d.data[i].title + '</option>')
+                }
+                Comm.form.render();
+            }
+        })
+
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/api/book/GetOrderList',//列表请求接口
+            where: {//接口参数
+                name: '',
+                phone: ''
+            },
+            cols: [[
+                { checkbox: true },
+                {
+                    field: 'active', title: '单号', renderData: function (d, v) {
+                        return d.order.payno;
+                    }
+                },
+                {
+                    field: 'active', title: '活动名称', renderData: function (d, v) {
+                        return d.active.title;
+                    }
+                },
+                {
+                    field: 'active', title: '时间', renderData: function (d, v) {
+                        return Comm.format(d.active.countEnd) + "到" + Comm.format(d.active.countStart);
+                    }
+                },
+                {
+                    field: 'order["realName"]', title: '姓名', renderData: function (d, v) {
+                        return d.order.realName;
+                    }
+                },
+                {
+                    field: 'order["phone"]', title: '电话', renderData: function (d, v) {
+                        return d.order.phone;
+                    }
+                },
+                {
+                    field: 'order["card"]', title: '身份证', renderData: function (d, v) {
+                        return d.order.card;
+                    }
+                },
+                {
+                    field: 'order["sex"]', title: '性别', renderData: function (d, v) {
+                        return d.order.sex;
+                    }
+                },
+                {
+                    field: 'order["nat"]', title: '国籍', renderData: function (d, v) {
+                        return d.order.nat;
+                    }
+                },
+                {
+                    field: 'order["natv"]', title: '民族', renderData: function (d, v) {
+                        return d.order.natv;
+                    }
+                },
+                {
+                    field: 'order["natv"]', title: '寸照', renderData: function (d, v) {
+                        return "<img src='" + config.root + d.order.czimg + "' height='80px' width='60px' onclick='show(\"" + config.root + d.order.czimg + "\")'>";
+                    }
+                },
+                {
+                    field: 'order["schoolName"]', title: '就读学校', renderData: function (d, v) {
+                        return d.order.schoolName;
+                    }
+                },
+                {
+                    field: 'order["natv"]', title: '校区', renderData: function (d, v) {
+                        return d.order.school;
+                    }
+                },
+                {
+                    field: 'order["grade"]', title: '项目', renderData: function (d, v) {
+                        return d.order.grade;
+                    }
+                },
+                {
+                    field: 'order["payMoney"]', title: '支付金额', renderData: function (d, v) {
+                        return d.order.payMoney;
+                    }
+                },
+                {
+                    field: 'order["status"]', title: '状态', renderData: function (d, v) {
+                        if (d.order.status == 0) {
+                            return '待支付';
+                        } else if (d.order.status == 1) {
+                            return '已支付';
+                        }
+                    }
+                },
+            ]],
+            done: function (d, curr, count) {
+                pageno = curr;
+                pagesize = this.limit;
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+    }
+
+    function show(url) {
+        //多窗口模式，层叠置顶
+        top.layer.open({
+            type: 1,
+            title: '查看大图',
+            area: ['500px', '600px'],
+            maxmin: true,
+            content: "<img src='" + url + "' height='100%' width='100%'>"
+        });
+    }
+
+    var pageno = 1, pagesize = 15;
+    function OutputExcel() {
+        //string payno, string name, string phone, int activeid, int status = 0
+        var data = Comm.GetData('search-form');
+
+
+        var prm = [];
+        for (var key in data) {
+            prm.push(key + "=" + data[key]);
+        }
+        prm.push("pagesize=" + pagesize);
+        prm.push("pageno=" + pageno);
+        window.open('/api/book/OutputExcel?' + prm.join('&'))
+    }
+</script>
+</html>

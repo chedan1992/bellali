@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>书房介绍</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        .tjspx {
+            background-image: url('img/tjspx.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 40%;
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .main img {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+    </header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="center lh50 tjspx pad10">
+                <span class="f16">{{title}}</span>
+            </div>
+            <div class="main pad10">{{content}}</div>
+            <div class="center lh50 tjspx pad10">
+                <span class="f16">书房公约</span>
+            </div>
+            <div class="pad10">
+            {{each remark v k}}
+                <div class="lh30 ">
+                    <span>{{k+1}}.</span>
+                    <span>{{v.v}}</span>
+                </div>
+            {{/each}}
+            </div>
+            <div class="center lh50 tjspx pad10">
+                <span class="f16">环境展示</span>
+            </div>
+            <div class="pad10">
+            {{each img v k}}
+                <div class="mart10">
+                    <img src="{{OSS(v)}}" width="100%"/>
+                </div>
+            {{/each}}
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130"/>
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">公司:</span>
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+    <footer class="shared"></footer>
+
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        init: function () {
+            AJAX.GET('/api/book/GetSysConfig/1', {}, function (d) {
+                if (d.code == 1) {
+                    if (d.data.remark) {
+                        d.data.remark = JSON.parse(d.data.remark);
+                    }
+                    if (d.data.img) {
+                        d.data.img = d.data.img.split(',');
+                    }
+                    d.data.base = config.basedata;
+                    $("section").html(template('mainTpl', d.data))
+                }
+            })
+        }
+    }
+</script>
+
+</html>

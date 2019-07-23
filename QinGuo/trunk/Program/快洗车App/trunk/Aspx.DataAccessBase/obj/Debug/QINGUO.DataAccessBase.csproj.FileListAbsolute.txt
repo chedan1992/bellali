@@ -1,0 +1,16 @@
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Debug\QINGUO.DataAccessBase.csprojAssemblyReference.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Debug\QINGUO.DataAccessBase.csproj.CoreCompileInputs.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.DataAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.DataAccessBase.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\BEGDC.Utility.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.Common.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.DapperAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\GetuiServerApiSDK.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\ThoughtWorks.QRCode.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\log4net.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\Google.ProtocolBuffers.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.DapperAccessBase.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Debug\QINGUO.Common.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Debug\QINGUO.DataAccessBase.csproj.CopyComplete
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Debug\QINGUO.DataAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Debug\QINGUO.DataAccessBase.pdb

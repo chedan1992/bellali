@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>供应商信息</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户名</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="businessName" id="businessName" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <select name="state" id="state">
+                            <option value="">全部</option>
+                            <option value="0">待审核</option>
+                            <option value="1">已通过</option>
+                            <option value="2">已拒绝</option>
+                            <option value="3">已驳回</option>
+                            <option value="6">已过期</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-block">
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="startDate" laydate id="startDate" autocomplete="off">
+                        </div>
+                        <div class="layui-col-xs1">&nbsp;</div>
+                        <div class="layui-col-xs5">
+                            <input class="layui-input" name="endDate" laydate id="endDate" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs2">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs  layui-btn-primary" lay-event="info">详情</a>
+    {{# if(d.bState==1&&d.state==0){ }}
+       <!-- <a class="layui-btn layui-btn-xs" lay-event="state">审核</a>-->
+    {{# } }}
+</script>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+    //编辑
+    function edit() {
+        parent.cms.addtab('餐饮账单', 'infomanager/foodorder.html', 'foodorder')
+    }
+
+    //删除
+    function del() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择删除数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].wxuserid)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("请写入删除接口", { ids: ids.join(',') }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg(d.msg, 5)
+                }
+            })
+        })
+    }
+
+    //导出
+    function out() {
+        Comm.confirm('确定导出', function () {
+            //刷新列表
+            Comm.table.reload('table');
+            Comm.alert("执行导出完成")
+        });
+    }
+
+    //导入
+    function inp() {
+        Comm.confirm('确定导入', function () {
+            Comm.alert("执行导入完成")
+        })
+    }
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+    function pageload() {
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/bus/business/queryBusinessALL',//列表请求接口
+            where: {//接口参数
+
+            },
+            cols: [[
+                { checkbox: true },
+                { field: 'businessName', title: '商户名' },
+                {
+                    field: 'type', title: '经营项目', renderData: function (d, v) {
+                        if (v == 1) {
+                            return '校服'
+                        } else if (v == 2) {
+                            return '餐饮'
+                        } else {
+                            return '其他'
+                        }
+                    }
+                },
+                {
+                    field: 'startDate', title: '服务期', renderData: function (d, v) {
+                        return Comm.format(d.startDate, 'yyyy-mm-dd') + "到" + Comm.format(d.endDate, 'yyyy-mm-dd')
+                    }
+                },
+                {
+                    field: 'cstate',
+                    title: '供餐日历状态',
+                    renderData: function (d, v) {
+                        if(v){
+                            return (d.type==1 || d.type==3)?"-": v == 1 ? "审核完成" :  v == 0 ? "审核中":"已拒绝";
+                        }else {
+                            return "未发布";
+                        }
+                    }
+                },
+                {
+                    field: 'bState', title: '商户资质', renderData: function (d, v) {
+                        var s = emnu.state[v];
+                        return s ? s : '-'
+                    }
+                },
+                {
+                    field: 'state', title: '供应关系', renderData: function (d, v) {
+                    	console.log(v)
+                        var s = emnu.state[v];
+                        if(d.enable==1){
+                        	 return s ? s : '-'
+                        }
+                       if(d.enable==0){
+                       	return '已解约';
+                       }
+                    }
+                },
+                { field: 'businessId', title: '操作', toolbar: '#barDemo', width: 120 },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+
+        //监听table列表里按钮点击事件
+        Comm.table.on('tool(table)', function (obj) {
+            if (obj.event == 'info') {
+                parent.cms.addtab('供应商详情', 'infomanager/supplierinfo.html?id=' + obj.data.businessSchoolId + "&state=" + obj.data.state+"&isAuth="+obj.data.isAuth, 'suppinfo' + obj.data.businessSchoolId)
+            } else if (obj.event == 'state') {//
+
+            }
+        });
+    }
+</script>
+
+</html>

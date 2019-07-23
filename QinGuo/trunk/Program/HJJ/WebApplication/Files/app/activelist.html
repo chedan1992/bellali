@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>活动</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+        .item img{
+            height: 95px;
+            width: 95px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+    </header>
+    <section class="mescroll" id="box">
+        <div id="list" class="pad10"></div>
+        <div id="foot">
+            <script id="footTpl" type="text/html">
+                <div class="linebod"></div>
+                <div class="mart30 marb30">
+                    <div class="center lh20 f12">
+                        <span>热线电话:</span>
+                        <span>{{phone}}</span>
+                    </div>
+                    <div class="center lh20 f12">
+                        <span>邮箱地址:</span>
+                        <span>{{qq}}</span>
+                    </div>
+                    <div class="center mart10 marb10">
+                        <img src="{{img}}" width="130" height="130"/>
+                    </div>
+                    <div class="center lh30 f12 paddl10 paddr10">
+                        <span class="color999">公司:</span>
+                        <span class="color999">{{addr}}</span>
+                    </div>
+                </div>
+            </script>
+        </div>
+    </section>
+    <footer class="shared"></footer>
+
+    <script id="mainTpl" type="text/html">
+        {{each $data v k}}
+            <div onclick="Comm.go('activedetail.html?id={{v.id}}&userid={{uid}}')" class="item clearfix {{$data.length==(k+1)?'paddb10':'marb20 borderb paddb20'}}">
+                <div class="fl center marr10">
+                    <img onerror="app.errorimg(this)" src="{{OSS(v.img)}}" height="100%"/>
+                </div>
+                <div>
+                    <p class="lh20 wordW">{{v.title}}</p>
+                    <p class="lh20 wordW2 color999 f12">{{v.remark}}</p>
+                    <p class="lh20 color999">{{formatDate(v.countStart)}}到{{formatDate(v.countEnd)}}</p>
+                    <p class="lh20">
+                        <span class="f16 colorred">￥{{v.totalMoney}}</span>
+                        <span class="f12 color999 fr">已报名人数：{{v.count}}</span>
+                    </p>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        userid: Comm.query('userid'),
+        init: function () {
+            $('#foot').html(template('footTpl',config.basedata))
+            model.mescroll();
+        },
+        mescroll: function () {
+            if (!model.mere) {
+                model.mere = new MERefresh('box,list', {
+                    pagesize: 10,
+                    refreshUrl: '/api/book/GetActiveList',
+                    refreshTypeGet: true
+                });
+
+                model.mere.refreshOption.refreshParm = {
+
+                };
+                //页面 <刷新> 的回调
+                model.mere.refreshOption.refresh_cb = function (refresh, d) {
+                    refresh.successEndRef(d.data.length, d.totalCount);
+                    d.data.uid = model.userid;
+                    var h = template('mainTpl', d.data);
+                    refresh.appendHtml(h);
+                };
+            } else {
+                model.mere.refreshOption.refreshParm = {
+
+                };
+                //重置列表数据
+                model.mere.MeRefScroll.resetUpScroll();
+                //model.mere.MeRefScroll.triggerDownScroll();
+                //隐藏回到顶部按钮
+                model.mere.MeRefScroll.hideTopBtn();
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,793 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商家选择</title>
+    <script type="text/javascript">
+        var PapersId = ''; //虚拟试卷编号
+        var TestAuto = []; //获取选择个数
+        Ext.onReady(function () {
+            var TestTotal = []; //
+
+            PapersId = top.Ext.getCmp('WinMasterList').items.items[0].params.PapersId;
+            TestAuto = top.Ext.getCmp('WinMasterList').items.items[0].params.recordrows;
+
+            //产品线 1
+            var Type1 = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({
+                    url: "/SysCategory/SearchDataEdit",
+                    method: 'POST'
+                }),
+                reader: new Ext.data.JsonReader({},
+                    Ext.data.Record.create(["Id", "Name"]
+        ))
+            });
+
+            //证书类型2
+            var Type2 = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({
+                    url: "#",
+                    method: 'POST'
+                }),
+                reader: new Ext.data.JsonReader({},
+                      Ext.data.Record.create(["Id", "Name"]
+       ))
+            });
+
+            //技术领域3
+            var Type3 = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({
+                    url: "#",
+                    method: 'POST'
+                }),
+                reader: new Ext.data.JsonReader({},
+                    Ext.data.Record.create(["Id", "Name"]
+                ))
+            });
+
+            //知识点4
+            var Type4 = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({
+                    url: "#",
+                    method: 'POST'
+                }),
+                reader: new Ext.data.JsonReader({},
+                    Ext.data.Record.create(["Id", "Name"]
+                ))
+            });
+
+            //准备数据
+            var cm = new Ext.grid.ColumnModel([
+              new Ext.grid.RowNumberer(),
+                { header: '产品线', width: 40, dataIndex: 'Type1Name', menuDisabled: true },
+                { header: '证书类型', width: 40, dataIndex: 'Type2Name', menuDisabled: true },
+                { header: "技术领域", dataIndex: "Type3Name", width: 40, menuDisabled: true },
+                { header: '知识点', width: 40, dataIndex: 'Type4Name', menuDisabled: true },
+                { header: '题库', width: 40, dataIndex: 'StoreTypeName', menuDisabled: true },
+                { header: '试题类型', width: 40, dataIndex: 'TestTypeName', menuDisabled: true },
+                { header: '初级', width: 40, dataIndex: 'EasyNumText', menuDisabled: true },
+                { header: '中级', width: 40, dataIndex: 'MiddleNumText', menuDisabled: true },
+                { header: '高级', width: 40, dataIndex: 'HeightNumText', menuDisabled: true },
+                { header: "操作", dataIndex: "Num", width: 30, menuDisabled: true,
+                    renderer: function (data, metadata, record, rowIndex, columnIndex, store) {
+                        return "<img src='../../Resource/css/icons/toolbar/GTP_delete.png' title='删除' style='border:0px; cursor:pointer'  onclick='Delete(\"" + data + "\");'/>";
+                    }
+                }
+                ]);
+            var data = [];
+            var proxy = new Ext.data.MemoryProxy(data);
+            //Record定义记录结果
+            var Human = Ext.data.Record.create([
+                { name: "Num", type: "string", mapping: "Num" },
+                { name: "Type1", type: "string", mapping: "Type1" },
+                { name: "Type1Name", type: "string", mapping: "Type1Name" },
+                { name: "Type2", type: "string", mapping: "Type2" },
+                { name: "Type2Name", type: "string", mapping: "Type2Name" },
+                { name: "Type3", type: "string", mapping: "Type3" },
+                { name: "Type3Name", type: "string", mapping: "Type3Name" },
+                { name: "Type4", type: "string", mapping: "Type4" },
+                { name: "Type4Name", type: "string", mapping: "Type4Name" },
+                { name: "StoreType", type: "string", mapping: "StoreType" },
+                { name: "StoreTypeName", type: "string", mapping: "StoreTypeName" },
+                { name: "TestType", type: "string", mapping: "TestType" },
+                { name: "TestTypeName", type: "string", mapping: "TestTypeName" },
+                { name: "EasyNumText", type: "string", mapping: "EasyNumText" },
+                { name: "MiddleNumText", type: "string", mapping: "MiddleNumText" },
+                { name: "HeightNumText", type: "string", mapping: "HeightNumText" }
+                ]);
+            var reader = new Ext.data.JsonReader({}, Human);
+            var store = new Ext.data.Store({
+                proxy: proxy,
+                reader: reader
+            });
+            store.load();
+
+            var Testgrid = new Ext.grid.GridPanel({
+                id: 'GridShow',
+                fieldLabel: '策略',
+                cm: cm,
+                height: 200,
+                anchor: '100%',
+                bodyStyle: 'border-color:silver',
+                store: store,
+                viewConfig: {
+                    forceFit: true, // 注意不要用autoFill:true,那样设置的话当GridPanel的大小变化（比如你resize了它）时不会自动调整column的宽度
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+
+            var form = new Ext.FormPanel({
+                id: "formPanel",
+                border: false,
+                labelAlign: 'right',
+                region: 'center',
+                autoScroll: true,
+                labelWidth: 80,
+                items: [
+                        {
+                            layout: "column", // 从左往右的布局
+                            bodyStyle: 'padding-top:15px;padding-left:10px;padding-right:10px',
+                            border: false,
+                            items: [
+                                              {
+                                                  columnWidth: .25, // 该列有整行中所占百分比
+                                                  layout: "form", // 从上往下的布局
+                                                  labelWidth: 50,
+                                                  border: false,
+                                                  items: [
+                                                  {
+                                                      id: 'Type1',
+                                                      name: 'Type1',
+                                                      fieldLabel: '产品线',
+                                                      bodyStyle: "padding-left:0px;",
+                                                      xtype: 'combo',
+                                                      anchor: '100%',
+                                                      triggerAction: 'all',
+                                                      forceSelection: true,
+                                                      //editable: false,
+                                                      selectOnFocus: true,
+                                                      orceSelection: true,
+                                                      displayField: 'Name',
+                                                      emptyText: '产品线',
+                                                      valueField: 'Id',
+                                                      store: Type1,
+                                                      listeners: {
+                                                          select: {
+                                                              fn: function (combo, record, index) {
+                                                                  Type2.proxy = new Ext.data.HttpProxy({ url: '/SysCategory/SearchDataEdit?ParentCategoryId=' + record.get('Id'), method: 'POST' });
+                                                                  Type2.load();
+                                                                  top.Ext.getCmp("Type2").setValue(""); //value
+                                                                  top.Ext.getCmp("Type2").setRawValue(""); //text
+                                                                  GetTestCount();
+                                                              }
+                                                          }
+                                                      }
+                                                  }]
+                                              },
+                                              {
+                                                  columnWidth: .25,
+                                                  layout: "form",
+                                                  border: false,
+                                                  labelWidth: 70,
+                                                  items: [{
+                                                      id: 'Type2',
+                                                      name: 'Type2',
+                                                      fieldLabel: '证书类型',
+                                                      anchor: '100%',
+                                                      xtype: 'combo',
+                                                      triggerAction: 'all',
+                                                      forceSelection: true,
+                                                      //editable: false,
+                                                      displayField: 'Name',
+                                                      emptyText: '证书类型',
+                                                      valueField: 'Id',
+                                                      store: Type2,
+                                                      listeners: {
+                                                          select: {
+                                                              fn: function (combo, record, index) {
+                                                                  Type3.proxy = new Ext.data.HttpProxy({ url: '/SysCategory/SearchDataEdit?ParentCategoryId=' + record.get('Id'), method: 'POST' });
+                                                                  Type3.load();
+
+                                                                  top.Ext.getCmp("Type3").setValue(""); //value
+                                                                  top.Ext.getCmp("Type3").setRawValue(""); //text   
+                                                                  GetTestCount();
+                                                              }
+                                                          }
+                                                      }
+                                                  }]
+                                              },
+                                              {
+                                                  columnWidth: .25,
+                                                  layout: "form",
+                                                  labelWidth: 70,
+                                                  border: false,
+                                                  items: [{
+                                                      id: 'Type3',
+                                                      name: 'Type3',
+                                                      fieldLabel: '技术领域',
+                                                      anchor: '100%',
+                                                      xtype: 'combo',
+                                                      triggerAction: 'all',
+                                                      forceSelection: true,
+                                                      //editable: false,
+                                                      displayField: 'Name',
+                                                      emptyText: '技术领域',
+                                                      valueField: 'Id',
+                                                      store: Type3,
+                                                      listeners: {
+                                                          select: {
+                                                              fn: function (combo, record, index) {
+                                                                  Type4.proxy = new Ext.data.HttpProxy({ url: '/SysCategory/SearchDataEdit?ParentCategoryId=' + record.get('Id'), method: 'POST' });
+                                                                  Type4.load();
+                                                                  top.Ext.getCmp("Type4").setValue(""); //value
+                                                                  top.Ext.getCmp("Type4").setRawValue(""); //text   
+                                                                  GetTestCount();
+                                                              }
+                                                          }
+                                                      }
+                                                  }]
+                                              },
+                                              {
+                                                  columnWidth: .25,
+                                                  layout: "form",
+                                                  labelWidth: 50,
+                                                  border: false,
+                                                  items: [{
+                                                      id: 'Type4',
+                                                      name: 'Type4',
+                                                      fieldLabel: '知识点',
+                                                      anchor: '100%',
+                                                      xtype: 'combo',
+                                                      triggerAction: 'all',
+                                                      forceSelection: true,
+                                                      //editable: false,
+                                                      displayField: 'Name',
+                                                      emptyText: '知识点',
+                                                      valueField: 'Id',
+                                                      store: Type4,
+                                                      listeners: {
+                                                          select: {
+                                                              fn: function (combo, record, index) {
+                                                                  GetTestCount();
+                                                              }
+                                                          }
+                                                      }
+                                                  }]
+                                              }
+                            ]
+                        },
+                        {
+                            layout: "column", // 从左往右的布局
+                            bodyStyle: 'padding-top:5px;padding-left:10px;padding-right:10px;overflow:hidden',
+                            border: false,
+                            items: [
+                                     {
+                                         columnWidth: .25,
+                                         layout: "form",
+                                         border: false,
+                                         labelWidth: 50,
+                                         items: [
+                                                   {
+                                                       store: new Ext.data.SimpleStore({
+                                                           fields: ['text', 'value'],
+                                                           data: [['全部', ''],['ALUS题库', '1'], ['FSO题库', '2']]
+                                                       }),
+                                                       displayField: 'text',
+                                                       valueField: 'value',
+                                                       mode: 'local',
+                                                       xtype: 'combo',
+                                                       id: 'StoreType',
+                                                       name: 'StoreType',
+                                                       fieldLabel: "题库",
+                                                       selectOnFocus: true,
+                                                       orceSelection: true, //值为true时将限定选中的值为列表中的值
+                                                       triggerAction: 'all',
+                                                       emptyText: '题库',
+                                                       anchor: '100%',
+                                                       listeners: {
+                                                           select: {
+                                                               fn: function (combo, record, index) {
+                                                                   GetTestCount();
+                                                               }
+                                                           }
+                                                       }
+                                                   }
+                                                  ]
+                                     },
+                                     {
+                                         columnWidth: .25, // 该列有整行中所占百分比
+                                         layout: "form", // 从上往下的布局
+                                         labelWidth: 70,
+                                         border: false,
+                                         items: [
+                                                  {
+                                                      store: new Ext.data.SimpleStore({
+                                                          fields: ['text', 'value'],
+                                                          data: [['单选题', '1'], ['多选题', '2'], ['判断题', '3'], ['填空题', '4'], ['问答题', '5']]
+                                                      }),
+                                                      displayField: 'text',
+                                                      valueField: 'value',
+                                                      mode: 'local',
+                                                      xtype: 'combo',
+                                                      id: 'TestType',
+                                                      name: 'TestType',
+                                                      fieldLabel: "<span class='required'>*</span>试题类型",
+                                                      selectOnFocus: true,
+                                                      orceSelection: true,
+                                                      emptyText: '试题类型',
+                                                      allowBlank: false,
+                                                      value: '1',
+                                                      //editable: false,
+                                                      triggerAction: 'all',
+                                                      anchor: '100%',
+                                                      listeners: {
+                                                          select: {
+                                                              fn: function (combo, record, index) {
+                                                                  GetTestCount();
+                                                                  var value = record.get('value');
+                                                              }
+                                                          }
+                                                      }
+                                                  }
+                                                  ]
+                                     }
+                            //                                     {
+                            //                                         columnWidth: .25, // 该列有整行中所占百分比
+                            //                                         layout: "form", // 从上往下的布局
+                            //                                         labelWidth: 70,
+                            //                                         border: false,
+                            //                                         items: [
+                            //                                                    new Ext.Button({
+                            //                                                                  text: '搜索',
+                            //                                                                  iconCls: 'GTP_search',
+                            //                                                                  id: 'GTP_search',
+                            //                                                                  tooltip: '搜索满足条件的数据',
+                            //                                                                  scope: this,
+                            //                                                                  handler: GetTestCount
+                            //                                                       })
+                            //                                            
+                            //                                             ]
+                            //                                     }
+
+                            ]
+                        },
+                        {
+                            layout: "column", // 从左往右的布局
+                            bodyStyle: 'padding-top:10px;padding-left:10px;padding-right:10px;overflow:hidden',
+                            border: false,
+                            items: [
+                            {
+                                columnWidth: 1,
+                                layout: "form",
+                                border: false,
+                                labelWidth: 50,
+                                items: [
+                                           {
+                                               border: false,
+                                               html: ' <hr style="height:1px;border:none;border-top:1px dashed silver;" />'
+                                           }
+
+                                         ]
+                            }
+                                    ]
+                        },
+                           {
+                               layout: "column", // 从左往右的布局
+                               bodyStyle: 'padding-top:0px;padding-left:10px;padding-right:10px;overflow:hidden',
+                               border: false,
+                               items: [
+                            {
+                                columnWidth: 1,
+                                layout: "form",
+                                border: false,
+                                labelWidth: 50,
+                                items: [
+                                             {
+                                                 xtype: 'tbtext',
+                                                 fieldLabel: '总计',
+                                                 id: 'TotalNum',
+                                                 style: 'font-size:12px;margin-top:4px;margin-left:-6px;',
+                                                 text: '0'
+                                             }
+
+                                         ]
+                            }
+                            ]
+
+                           },
+                        {
+                            layout: "column", // 从左往右的布局
+                            bodyStyle: 'padding-top:2px;padding-left:10px;padding-right:10px;overflow:hidden',
+                            border: false,
+                            items: [
+                              {
+                                  columnWidth: .25,
+                                  layout: "form",
+                                  border: false,
+                                  labelWidth: 50,
+                                  items: [
+                                              {
+                                                  xtype: 'compositefield',
+                                                  fieldLabel: '初级',
+                                                  combineErrors: false,
+                                                  anchor: '100%',
+                                                  items: [
+							                                {
+							                                    xtype: 'numberfield',
+							                                    emptyText: '0',
+							                                    id: 'EasyNumText',
+							                                    name: 'EasyNumText',
+							                                    minValue: 0,
+							                                    maxValue: 9999,
+							                                    decimalPrecision: 0, //保留小数位
+							                                    width: 60,
+							                                    enableKeyEvents: true,
+							                                    listeners: {
+							                                        'keyup': function (val) {
+							                                            if (val.value != "") {
+							                                                var EasyNum = Ext.getCmp("EasyNum").container.dom.innerText.replace('/', '').trim();
+							                                                if (parseInt(val.value) > parseInt(EasyNum)) {
+							                                                    Ext.getCmp("EasyNumText").setValue(EasyNum);
+							                                                }
+							                                            }
+							                                        },
+							                                        'blur': function (val) {
+							                                            if (val.value) {
+							                                                var EasyNum = Ext.getCmp("EasyNum").container.dom.innerText.replace('/', '').trim();
+							                                                if (parseInt(val.value) > parseInt(EasyNum)) {
+							                                                    Ext.getCmp("EasyNumText").setValue(EasyNum);
+							                                                }
+							                                            }
+							                                        }
+							                                    }
+							                                },
+                                                            {
+                                                                xtype: 'tbtext',
+                                                                style: 'font-size:12px;margin:5px;margin-left:-1px;',
+                                                                text: '/'
+                                                            },
+                                                            {
+                                                                xtype: 'tbtext',
+                                                                style: 'font-size:12px;margin:5px;',
+                                                                id: 'EasyNum',
+                                                                text: '0'
+                                                            }
+						                                ]
+                                              }
+
+                                         ]
+                              },
+                              {
+                                  columnWidth: .25,
+                                  layout: "form",
+                                  border: false,
+                                  labelWidth: 70,
+                                  items: [
+                                              {
+                                                  xtype: 'compositefield',
+                                                  fieldLabel: '中级',
+                                                  //labelSeparator: '',
+                                                  combineErrors: false,
+                                                  anchor: '100%',
+                                                  items: [
+							                                {
+							                                    xtype: 'numberfield',
+							                                    emptyText: '0',
+							                                    id: 'MiddleNumText',
+							                                    name: 'MiddleNumText',
+							                                    minValue: 0,
+							                                    maxValue: 9999,
+							                                    decimalPrecision: 0, //保留小数位
+							                                    width: 60,
+							                                    enableKeyEvents: true,
+							                                    listeners: {
+							                                        'keyup': function (val) {
+							                                            if (val.value != "") {
+							                                                var MiddleNum = Ext.getCmp("MiddleNum").container.dom.innerText.replace('/', '').trim();
+							                                                if (parseInt(val.value) > parseInt(MiddleNum)) {
+							                                                    Ext.getCmp("MiddleNumText").setValue(MiddleNum);
+							                                                }
+							                                            }
+							                                        },
+							                                        'blur': function (val) {
+							                                            if (val.value) {
+							                                                var MiddleNum = Ext.getCmp("MiddleNum").container.dom.innerText.replace('/', '').trim();
+							                                                if (parseInt(val.value) > parseInt(MiddleNum)) {
+							                                                    Ext.getCmp("MiddleNumText").setValue(MiddleNum);
+							                                                }
+							                                            }
+							                                        }
+							                                    }
+							                                },
+                                                           {
+                                                               xtype: 'tbtext',
+                                                               style: 'font-size:12px;margin:5px;margin-left:-1px;',
+                                                               text: '/'
+                                                           },
+                                                            {
+                                                                xtype: 'tbtext',
+                                                                style: 'font-size:12px;margin:5px;',
+                                                                id: 'MiddleNum',
+                                                                text: '0'
+                                                            }
+						                                ]
+                                              }
+
+                                         ]
+                              },
+                              {
+                                  columnWidth: .25,
+                                  layout: "form",
+                                  border: false,
+                                  labelWidth: 70,
+                                  items: [
+                                              {
+                                                  xtype: 'compositefield',
+                                                  fieldLabel: '高级',
+                                                  //labelSeparator: '',
+                                                  combineErrors: false,
+                                                  anchor: '100%',
+                                                  items: [
+							                                {
+							                                    xtype: 'numberfield',
+							                                    emptyText: '0',
+							                                    id: 'HeightNumText',
+							                                    name: 'HeightNumText',
+							                                    minValue: 0,
+							                                    maxValue: 9999,
+							                                    decimalPrecision: 0, //保留小数位
+							                                    width: 60
+							                                },
+                                                           {
+                                                               xtype: 'tbtext',
+                                                               style: 'font-size:12px;margin:5px;margin-left:-1px;',
+                                                               text: '/'
+                                                           },
+                                                            {
+                                                                xtype: 'tbtext',
+                                                                style: 'font-size:12px;margin:5px;',
+                                                                id: 'HeightNum',
+                                                                text: '0'
+                                                            }
+
+						                                ]
+                                              }
+
+                                         ]
+                              },
+                              {
+                                  columnWidth: .25,
+                                  layout: "form",
+                                  border: false,
+                                  labelWidth: 30,
+                                  items: [
+                                              {
+                                                  xtype: 'compositefield',
+                                                  fieldLabel: '',
+                                                  labelSeparator: '',
+                                                  combineErrors: false,
+                                                  anchor: '100%',
+                                                  items: [
+							                                {
+							                                    xtype: 'textfield',
+							                                    hidden: true
+							                                },
+                                                             new Ext.Button({
+                                                                 text: '随机抽取',
+                                                                 iconCls: 'GTP_add',
+                                                                 id: 'GTPadd',
+                                                                 flex: 1,
+                                                                 width: 40,
+                                                                 handler: AotoTestAdd
+                                                             })
+						                                ]
+                                              }
+
+                                         ]
+                              }
+                            ]
+                        },
+
+                        {
+                            layout: "column", // 从左往右的布局
+                            bodyStyle: 'padding-top:10px;padding-left:10px;padding-right:10px;overflow:hidden',
+                            border: false,
+                            items: [
+                            {
+                                columnWidth: 1,
+                                layout: "form",
+                                border: false,
+                                labelWidth: 50,
+                                items: [
+                                           {
+                                               border: false,
+                                               html: ' <hr style="height:1px;border:none;border-top:1px dashed silver;" />'
+                                           }
+
+                                         ]
+                            }
+                                    ]
+                        },
+                         {
+                             layout: "column", // 从左往右的布局
+                             bodyStyle: 'padding-top:10px;padding-left:10px;padding-right:10px;overflow:hidden',
+                             border: false,
+                             items: [
+                                     {
+                                         columnWidth: 1,
+                                         layout: "form",
+                                         border: false,
+                                         labelWidth: 50,
+                                         items: [
+                                          Testgrid
+                                                 ]
+                                     }
+                              ]
+                         }
+                ]
+
+            });
+
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 398,
+                renderTo: 'divShop',
+                items: [form],
+                listeners: {
+                    afterrender: function () {
+                        //查询数据
+                        GetTestCount();
+                        if (TestAuto.length > 0) {
+                            Ext.getCmp("GridShow").store.loadData(TestAuto);
+                        }
+                    }
+                }
+            });
+
+        });
+
+        //删除
+        function Delete(val) {
+            //调用后台,进行随机选题
+            Ext.Ajax.request({
+                url: '/TestStore/DeleteAutoTestGeneration',
+                params: { "PapersId": PapersId,"Num": val},
+                success: function (response) {
+                    var rs = eval('(' + response.responseText + ')');
+                    if (rs.success) {
+                        GetTestCount();
+                        for (var i = 0; i < TestAuto.length; i++) {
+                            if (parseInt(TestAuto[i].Num) == parseInt(val)) {
+                                TestAuto.remove(TestAuto[i]);
+                                break;
+                            }
+                        }
+                        Ext.getCmp("GridShow").store.loadData(TestAuto);
+                    } else {
+                        top.Ext.Msg.show({ title: "信息提示", msg: "操作失败", buttons: Ext.Msg.OK, icon: Ext.MessageBox.INFO });
+                    }
+                }
+            });
+        }
+
+        //添加
+        function AotoTestAdd() {
+            var EasyNumText = Ext.getCmp("EasyNumText").getValue() == "" ? "0" : Ext.getCmp("EasyNumText").getValue();
+            var MiddleNumText = Ext.getCmp("MiddleNumText").getValue() == "" ? "0" : Ext.getCmp("MiddleNumText").getValue();
+            var HeightNumText = Ext.getCmp("HeightNumText").getValue() == "" ? "0" : Ext.getCmp("HeightNumText").getValue();
+            if (parseInt(EasyNumText) != 0 || parseInt(MiddleNumText) != 0 || parseInt(HeightNumText) != 0) {
+                var Type1Name = "";
+                var Type2Name = "";
+                var Type3Name = "";
+                var Type4Name = "";
+                var StoreTypeName = "";
+                var TestTypeName = "";
+                var Type1 = Ext.getCmp("Type1").getValue();
+                if (Type1 != "") {
+                    Type1Name = Ext.getCmp("Type1").getRawValue();
+                }
+                var Type2 = Ext.getCmp("Type2").getValue();
+                if (Type2 != "") {
+                    Type2Name = Ext.getCmp("Type2").getRawValue();
+                }
+                var Type3 = Ext.getCmp("Type3").getValue();
+                if (Type3 != "") {
+                    Type3Name = Ext.getCmp("Type3").getRawValue();
+                }
+                var Type4 = Ext.getCmp("Type4").getValue();
+                if (Type4 != "") {
+                    Type4Name = Ext.getCmp("Type4").getRawValue();
+                }
+                var StoreType = Ext.getCmp("StoreType").getValue(); //题库
+                if (StoreType != "") {
+                    StoreTypeName = Ext.getCmp("StoreType").getRawValue(); //题库
+                }
+                var TestType = Ext.getCmp("TestType").getValue(); //试题类型
+                if (TestType != "") {
+                    TestTypeName = Ext.getCmp("TestType").getRawValue(); //试题类型
+                }
+                var Num = TestAuto.length + 1;
+                TestAuto.push({ "Num": Num, "Type1": Type1, "Type1Name": Type1Name, "Type2": Type2, "Type2Name": Type2Name, "Type3": Type3, "Type3Name": Type3Name, "Type4": Type4, "Type4Name": Type4Name, "StoreType": StoreType, "StoreTypeName": StoreTypeName, "TestType": TestType, "TestTypeName": TestTypeName, "EasyNumText": EasyNumText, "MiddleNumText": MiddleNumText, "HeightNumText": HeightNumText });
+                Ext.getCmp("GridShow").store.loadData(TestAuto);
+
+                //调用后台,进行随机选题
+                Ext.Ajax.request({
+                    url: '/TestStore/AutoTestGeneration',
+                    params: { "Num": Num, "Type1": Type1, "Type1Name": Type1Name, "Type2": Type2, "Type2Name": Type2Name, "Type3": Type3, "Type3Name": Type3Name, "Type4": Type4, "Type4Name": Type4Name, "StoreType": StoreType, "StoreTypeName": StoreTypeName, "TestType": TestType, "TestTypeName": TestTypeName, "EasyNumText": EasyNumText, "MiddleNumText": MiddleNumText, "HeightNumText": HeightNumText, "PapersId": PapersId },
+                    success: function (response) {
+                        var rs = eval('(' + response.responseText + ')');
+                        if (rs.success) {
+                            PapersId = rs.msg;
+                            GetTestCount();
+                        } else {
+                            top.Ext.Msg.show({ title: "信息提示", msg:"随机生成失败", buttons: Ext.Msg.OK, icon: Ext.MessageBox.INFO });
+                        }
+                    }
+                });
+            }
+        }
+
+        //查询试题数量
+        function GetTestCount() {
+            Ext.getCmp("EasyNumText").setValue('0');
+            Ext.getCmp("MiddleNumText").setValue('0');
+            Ext.getCmp("HeightNumText").setValue('0');
+
+            var Type1 = Ext.getCmp("Type1").getValue();
+            var Type2 = Ext.getCmp("Type2").getValue();
+            var Type3 = Ext.getCmp("Type3").getValue();
+            var Type4 = Ext.getCmp("Type4").getValue();
+            var StoreType = Ext.getCmp("StoreType").getValue();
+            var TestType = Ext.getCmp("TestType").getValue();
+            Ext.Ajax.request({
+                url: '/TestStore/GetTestCount',
+                params: { "Type1": Type1, "Type2": Type2, "Type3": Type3, "Type4": Type4, "StoreType": StoreType, "TestType": TestType, "PapersId": PapersId },
+                success: function (response) {
+                    var rs = eval('(' + response.responseText + ')');
+                    if (rs.EasyNum != 0) {
+                        Ext.getCmp("EasyNumText").enable(true);
+                        Ext.getCmp("EasyNum").setText(rs.EasyNum);
+                    }
+                    else {
+                        Ext.getCmp("EasyNumText").disable(true);
+                        Ext.getCmp("EasyNum").setText('0');
+                    }
+                    if (rs.MiddleNum != 0) {
+                        Ext.getCmp("MiddleNumText").enable(true);
+                        Ext.getCmp("MiddleNum").setText(rs.MiddleNum);
+                    }
+                    else {
+                        Ext.getCmp("MiddleNumText").disable(true);
+                        Ext.getCmp("MiddleNum").setText('0');
+                    }
+                    if (rs.HeightNum != 0) {
+                        Ext.getCmp("HeightNumText").enable(true);
+                        Ext.getCmp("HeightNum").setText(rs.HeightNum);
+                    }
+                    else {
+                        Ext.getCmp("HeightNumText").disable(true);
+                        Ext.getCmp("HeightNum").setText('0');
+                    }
+                    if (rs.TotalNum != 0) {
+                        Ext.getCmp("TotalNum").setText(rs.TotalNum);
+                    }
+                    else {
+                        Ext.getCmp("TotalNum").setText('0(暂无数据)');
+                    }
+                    //增加按钮不可用
+                    if (rs.TotalNum == 0) {
+                        Ext.getCmp("GTPadd").disable(true);
+                    }
+                    else {
+                        Ext.getCmp("GTPadd").enable(true);
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

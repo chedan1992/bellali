@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>书籍</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="form" class="layui-form" style="margin-top: 20px;width: 80%;">
+        <input type="hidden" name="id" id="id" value="0"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">书籍名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">作者</label>
+            <div class="layui-input-block">
+                <input type="text" name="author" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">书籍简介</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" lay-verify="required" name="remark"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">书籍介绍</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" lay-verify="content" name="content" id="edit"
+                    style="display: none"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">书籍图片</label>
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="btnimg1">上传图片</button>
+                <div class="layui-upload-list">
+                    <div id="uploadimg1">
+                    </div>
+                    <br>
+                    <span class="f12 jiany">建议：手机拍照，1M以内</span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="model.close()">关闭</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+
+
+    function pageload() {
+
+        Comm.layedit.set({
+            uploadImage: {
+                url: config.root + "/api/book/UpEdit",  //接口url
+                type: 'Post'
+            }
+        });
+        model.init();
+        //多图片上传
+        Comm.upload.render({
+            elem: '#btnimg1',
+            field: 'file',
+            accept: 'images',
+            acceptMime: 'image/jpg,image/png,image/JPEG',
+            multiple: false, //多图
+            url: config.root + "/api/book/Up",
+            before: function (obj) {
+                //上传loading
+                layer.load();
+            },
+            done: function (d) {
+                layer.closeAll('loading'); //关闭loading
+                if (d.code == 1) {
+                    for (var i = 0; i < d.data.length; i++) {
+                        top.Comm.OSS.inithtml({ key: d.data[i] }, function (html) {
+                            $('#uploadimg1').html(html);
+                        })
+                    }
+                } else {
+                    Comm.msg(d.msg, 5);
+                }
+            },
+            error: function () {
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+        Comm.form.verify({
+            content: function (value) {
+                return Comm.layedit.sync(model.index);
+            }
+        });
+
+        //提交表单
+        Comm.form.on('submit(sub)', function (data) {
+            //获取编辑器内容
+            console.log(data);
+            data.field.img = $('#uploadimg1 img').attr('data');
+            if (!data.field.img) {
+                Comm.msg('请上传书籍图', 5);
+                return
+            }
+
+            layer.load();
+            AJAX.POST('/api/book/SaveBook', data.field, function (a) {
+                if (a && a.code == 1) {
+                    Comm.msg('保存成功', 1);
+                    parent.cms.deltab('book_edit' + model.id)
+                } else {
+                    Comm.msg(a.msg, 5);
+                }
+                layer.closeAll('loading');
+            })
+        });
+    }
+
+    var model = {
+        index: 0,
+        id: Comm.query('id'),
+        init: function () {
+            if (model.id) {
+                Comm.loading(true)
+                AJAX.GET('/api/book/GetBook/' + model.id, {}, function (d) {
+                    if (d.code == 1) {
+                        Comm.SetData(d.data, 'form')
+                        //构建一个默认的编辑器
+                        model.index = Comm.layedit.build('edit');
+
+                        if (d.data.img) {
+                            top.Comm.OSS.inithtml({ key: d.data.img }, function (html) {
+                                $('#uploadimg1').append(html);
+                            })
+                        }
+                    }
+                    Comm.loading(false)
+                })
+            } else {
+                //构建一个默认的编辑器
+                model.index = Comm.layedit.build('edit');
+            }
+        },
+        close: function () {
+            parent.cms.deltab('book_edit' + model.id)
+        }
+    }
+</script>
+
+</html>

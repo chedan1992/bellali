@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>志愿者申请-【书房】</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        .tjspx {
+            background-image: url('img/tjspx.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% auto;
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .main img {
+            max-width: 100% !important;
+        }
+
+        input[type='text'],
+        input[type='tel'] {
+            border: 1px solid #ededed;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            vertical-align: bottom;
+            padding: 0 20px 0 50px;
+            font-size: 14px;
+            background-position: 20px center;
+            background-repeat: no-repeat;
+        }
+
+        input[type='checkbox'] {
+            height: 12px;
+            width: 12px;
+            border: 1px solid #efefef;
+            vertical-align: middle;
+            -webkit-appearance: checkbox;
+        }
+
+        .bgname {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .bgaddr {
+            background-image: url("img/vo/img-26.png");
+        }
+
+        .bgphone {
+            background-image: url("img/vo/img-25.png");
+        }
+
+        .bgsex {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .imgpo {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+
+        .bgcard {
+            background-image: url("img/vo/img-24.png");
+        }
+
+        .bgemail {
+            background-image: url("img/vo/n-icon-08.png");
+        }
+
+        .bgisT {
+            background-image: url("img/vo/n-icon-22.png");
+        }
+
+        .bgday {
+            background-image: url('img/vo/n-icon-18.png')
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+    </header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="center lh40 tjspx">
+                <span class="f16">{{title}}</span>
+            </div>
+            <div class="center">
+                <span class="f12 color999">Volunteer Application</span>
+            </div>
+            <div class="pad10 mart30 marr10 marl10 marb10 bottomShadow">
+                <div class="mart30">
+                </div>
+                <div class="mart10">
+                    <input type="text" data-reg='empty' name="name" id="name" class="bgname" placeholder="请输入您的真实姓名">
+                </div>
+                <div class="mart10">
+                    <input type="text" data-reg='empty' name="address" id="address" class="bgaddr" placeholder="请输入您的居住地">
+                </div>
+                <div class="mart10">
+                    <input type="tel" maxLength="11" data-reg='m' name="phone" id="phone" class="bgphone" placeholder="请输入您的手机号">
+                </div>
+                <div class="mart10" style="position:relative;" onclick="model.sexPicker.show()">
+                    <input type="text" data-reg='empty' readonly name="sex" id="sex" class="bgsex" placeholder="请输选择您的性别">
+                    <img src="img/vo/n-icon-15.png" class="imgpo"/>
+                </div>
+                <div class="mart10">
+                    <input type="text"  data-reg='cd' name="card" id="card" class="bgcard" placeholder="请输入您的身份证">
+                </div>
+                <div class="mart10">
+                    <input type="text" data-reg='email'  name="email" id="email" class="bgemail" placeholder="请输入您的邮箱地址">
+                </div>
+                <div class="mart10">
+                    <input type="text" data-reg='empty' name="linkName" id="linkName" class="bgname" placeholder="紧急联系人姓名">
+                </div>
+                <div class="mart10">
+                    <input type="tel" maxLength="11" data-reg='m' name="linkPhone" id="linkPhone" class="bgphone" placeholder="紧急联系手机号">
+                </div>
+                <div class="mart10" style="position:relative;" onclick="model.tPicker.show()">
+                    <input type="text" data-reg='empty'  readonly name="isT" id="isT" class="bgisT" placeholder="个人/团体">
+                    <img src="img/vo/n-icon-15.png" class="imgpo"/>
+                </div>
+                <div class="mart10" style="position:relative;" onclick="model.dayPicker.show()">
+                    <input type="text" data-reg='empty'  readonly name="day" id="day" class="bgday" placeholder="请选择服务时长">
+                    <img src="img/vo/n-icon-15.png" class="imgpo"/>
+                </div>
+                <div class="mart10" style="position:relative;" onclick="model.daPicker.show()">
+                    <input type="text" data-reg='empty' readonly name="serverTime" id="serverTime" class="bgday" placeholder="到馆时间">
+                    <img src="img/vo/n-icon-15.png" class="imgpo"/>
+                </div>
+                {{if(remark.intent )}}
+                <div class="mart10">
+                    <div class="paddb10">
+                        <img src=""/><span>报名意向</span>
+                    </div>
+                    <div>
+                        {{each $data.remark.intent v k}}
+                            <label for="bmyx" class="inblock marr10 marb10">
+                                <input type="checkbox" name="bmyx" value="{{v.v}}">
+                                <span>{{v.v}}</span>
+                            </label>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+                {{if(remark.questions)}}
+                <div class="mart10">
+                        {{each $data.remark.questions v k}}
+                        <div class="paddb10">
+                            <span>{{k+1}}.</span><span>{{v.v}}</span>
+                        </div>
+                        <div>
+                            <textarea name="questions" placeholder="请选择填写" style="border-bottom:1px solid #efefef;width:100%;height:80px;"></textarea>
+                        </div>
+                        {{/each}}
+                </div>
+                {{/if}}
+            </div>
+            <div class="center marb20">
+                <button onclick="model.sub()" class="mart10 " style="border:0px;">提交申请</button>
+            </div>
+            <div class="pad10">
+                {{content}}
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130"/>
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">公司:</span>
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+    <footer class="shared"></footer>
+
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        userid: Comm.query('userid'),
+        init: function () {
+            AJAX.GET('/api/book/GetSysConfig/3', {}, function (d) {
+                if (d.code == 1) {
+                    if (d.data.remark) {
+                        d.data.remark = JSON.parse(d.data.remark);
+                    }
+                    d.data.base = config.basedata;
+                    $("section").html(template('mainTpl', d.data))
+                    initPicker()
+                }
+            })
+
+            function initPicker() {
+                var sexdata = [{ text: '女', i: 1 }, { text: '男', i: 2 }];
+                model.sexPicker = new Commpicker('选择性别', [sexdata], function (obj, name, sid) {
+                    $("#sex").val(name).attr('data', sid);
+                })
+                var Tdata = [{ text: '个人', i: 1 }, { text: '团体', i: 2 }];
+                model.tPicker = new Commpicker('选择类型', [Tdata], function (obj, name, sid) {
+                    $("#isT").val(name).attr('data', sid);
+                })
+                var daydata = [{ text: '一天', i: 1 }, { text: '两天', i: 2 }, { text: '三天', i: 3 }, { text: '四天', i: 4 }, { text: '五天', i: 5 }, { text: '六天', i: 6 }, { text: '七天', i: 7 }, { text: '十天', i: 10 }, { text: '十天', i: 10 }, { text: '半月', i: 15 }, { text: '一月', i: 30 }];
+                model.dayPicker = new Commpicker('选择类型', [daydata], function (obj, name, sid) {
+                    $("#day").val(name);
+                })
+                model.daPicker = new Datepicker('选择到店时间', function (d, v) {
+                    $("#serverTime").val(v);
+                })
+            }
+        },
+        sub: function () {
+            var data = Check.submit('POST');
+            if (!data) {
+                return false;
+            }
+
+            var bmyx = [];
+            $("input[name='bmyx']:checked").each(function (i, e) {
+                bmyx.push($(e).val())
+            })
+            var questions = [];
+            $("input[name='questions']").each(function (i, e) {
+                questions.push($(e).val())
+            })
+            data.intent=bmyx.join('@,')
+            data.questions = questions.join('@,')
+            data.userid = model.userid;
+
+            Comm.loading('正在提交...');
+            AJAX.POST('/api/book/SaveVoluntary', data, function (a) {
+                Comm.loading(false);
+                if (a.code == 1) {
+                    Comm.message('申请成功！')
+                    $('input').val('');
+                } else {
+                    Comm.message(a.msg)
+                }
+            })
+        }
+    }
+</script>
+
+</html>

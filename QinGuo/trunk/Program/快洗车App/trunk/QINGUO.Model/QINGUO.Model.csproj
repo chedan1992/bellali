@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8D1450F-BB50-49CE-BF13-4563DF593356}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QINGUO.Model</RootNamespace>
+    <AssemblyName>QINGUO.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\QINGUO.Model.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\QINGUO.Model.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="QINGUO.Common">
+      <HintPath>..\..\..\..\Lib\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdShare\ModAAShare.cs" />
+    <Compile Include="CACAI\ModHFinance.cs" />
+    <Compile Include="CACAI\ModHFinanceDetail.cs" />
+    <Compile Include="CACAI\ModHOrderIn.cs" />
+    <Compile Include="CACAI\ModHOrderInDetail.cs" />
+    <Compile Include="CACAI\ModHOrderInRelation.cs" />
+    <Compile Include="CACAI\ModHPurchase.cs" />
+    <Compile Include="CACAI\ModHPurchaseDetail.cs" />
+    <Compile Include="CACAI\ModHPurchaseRelation.cs" />
+    <Compile Include="WashCar\ModCarUser.cs" />
+    <Compile Include="WashCar\ModWashCarRecord.cs" />
+    <Compile Include="WashCar\ModWashCar.cs" />
+    <Compile Include="WashCar\ModCarEquipment.cs" />
+    <Compile Include="WashCar\ModCarProject.cs" />
+    <Compile Include="WashCar\ModCarOrder.cs" />
+    <Compile Include="WashCar\ModCar.cs" />
+    <Compile Include="Contract\ModContractInOut.cs" />
+    <Compile Include="Enum\WebPortalEnum.cs" />
+    <Compile Include="Enum\ModelEnum.cs" />
+    <Compile Include="FireApp\ModSysFlow.cs" />
+    <Compile Include="FireApp\ModSysAppointed.cs" />
+    <Compile Include="FireApp\ModSysAppointCheckNotes.cs" />
+    <Compile Include="Json\ModJsonShopCategory.cs" />
+    <Compile Include="Json\ModJsonResultTService.cs" />
+    <Compile Include="ModAdActive.cs" />
+    <Compile Include="ModEDynamic.cs" />
+    <Compile Include="FireApp\ModSysQRCode.cs" />
+    <Compile Include="FireApp\ModFireBox.cs" />
+    <Compile Include="ModOrderEvaluation.cs" />
+    <Compile Include="ModOrderRunOrder.cs" />
+    <Compile Include="ModOrderUserExtended.cs" />
+    <Compile Include="ModOrderUserMoneyRecord.cs" />
+    <Compile Include="ModSysDirc.cs" />
+    <Compile Include="ModSysFileAttach.cs" />
+    <Compile Include="ModSysModel.cs" />
+    <Compile Include="ModSysUserFriends.cs" />
+    <Compile Include="Shop\ModShopAttributeExtension.cs" />
+    <Compile Include="Shop\ModShopAttributeExtensionValue.cs" />
+    <Compile Include="Shop\ModShopCategory.cs" />
+    <Compile Include="Shop\ModShopGoods.cs" />
+    <Compile Include="Shop\ModShopAttributeType.cs" />
+    <Compile Include="System\ModSysCompanyPaySet.cs" />
+    <Compile Include="System\ModSysHatArea.cs" />
+    <Compile Include="ModSysOperateLog.cs" />
+    <Compile Include="ModSysRemarkSetting.cs" />
+    <Compile Include="ModViewSysCompany.cs" />
+    <Compile Include="System\ModSysCategory.cs" />
+    <Compile Include="System\ModSysDataBaseBack.cs" />
+    <Compile Include="Json\ModJsonResult.cs" />
+    <Compile Include="System\ModSysFeedback.cs" />
+    <Compile Include="System\ModSysGroup.cs" />
+    <Compile Include="System\ModSysImgPic.cs" />
+    <Compile Include="System\ModSysMasterPartial.cs" />
+    <Compile Include="System\ModSysPushInfo.cs" />
+    <Compile Include="System\ModSysPushMessage.cs" />
+    <Compile Include="System\ModSysPushUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\ModSysCompany.cs" />
+    <Compile Include="System\ModSysHatCity.cs" />
+    <Compile Include="System\ModSysHatProvince.cs" />
+    <Compile Include="System\ModSysMaster.cs" />
+    <Compile Include="System\ModSysUser.cs" />
+    <Compile Include="System\ModSysMessageAuthCode.cs" />
+    <Compile Include="System\ModSysBtnValue.cs" />
+    <Compile Include="System\ModSysFun.cs" />
+    <Compile Include="System\ModSysFunLinkBtnValue.cs" />
+    <Compile Include="System\ModSysMasterRole.cs" />
+    <Compile Include="System\ModSysRole.cs" />
+    <Compile Include="System\ModSysRoleFun.cs" />
+    <Compile Include="System\ModSysRoleRangeData.cs" />
+    <Compile Include="System\ModSysRemarkSetting.cs" />
+    <Compile Include="System\ModSysCompanyCognate.cs" />
+    <Compile Include="System\ModSysCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aspx.DapperAccessBase\QINGUO.DapperAccessBase.csproj">
+      <Project>{B436ED0F-9DEF-4720-AF30-B1C01B6FABB2}</Project>
+      <Name>QINGUO.DapperAccessBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

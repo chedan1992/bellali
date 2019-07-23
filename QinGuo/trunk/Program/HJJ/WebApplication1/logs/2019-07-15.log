@@ -1,0 +1,45 @@
+2019-07-15 22:09:43.429 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 211.162.218.172, not in whitelist hint: [OPm0_0784ha64]"}
+2019-07-15 22:09:52.257 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 211.162.218.172, not in whitelist hint: [iOFB_a0793sha6]"}
+2019-07-15 22:10:15.710 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 211.162.218.172, not in whitelist hint: [PMdguA0817b101]"}
+2019-07-15 22:11:25.585 DEBUG WriteLog: GetUnifiedOrderResult!10.00
+2019-07-15 22:11:25.664 DEBUG WriteLog: UnfiedOrder request :<xml><appid><![CDATA[wx31183ba598767f20]]></appid><attach><![CDATA[test]]></attach><body><![CDATA[四川红领巾少儿艺术团-报名活动]]></body><goods_tag><![CDATA[test]]></goods_tag><mch_id><![CDATA[1542995961]]></mch_id><nonce_str><![CDATA[3659631017]]></nonce_str><notify_url><![CDATA[http://hjj.bellali.cn/WxXin/SuccOrder]]></notify_url><openid><![CDATA[admin]]></openid><out_trade_no><![CDATA[154299596120190715221125851]]></out_trade_no><sign><![CDATA[9A9F350C5B3C459305FA45C7D99377BF]]></sign><sign_type><![CDATA[MD5]]></sign_type><spbill_create_ip><![CDATA[120.79.183.124]]></spbill_create_ip><time_expire><![CDATA[20190715222125]]></time_expire><time_start><![CDATA[20190715221125]]></time_start><total_fee>1000</total_fee><trade_type><![CDATA[JSAPI]]></trade_type></xml>
+2019-07-15 22:11:26.318 DEBUG WriteLog: UnfiedOrder response :<xml><return_code><![CDATA[SUCCESS]]></return_code>
+<return_msg><![CDATA[OK]]></return_msg>
+<appid><![CDATA[wx31183ba598767f20]]></appid>
+<mch_id><![CDATA[1542995961]]></mch_id>
+<nonce_str><![CDATA[JHwO7yZv0xAxh9a4]]></nonce_str>
+<sign><![CDATA[56F4FC73B7994834FAC435EF7A411697]]></sign>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[PARAM_ERROR]]></err_code>
+<err_code_des><![CDATA[无效的openid]]></err_code_des>
+</xml>
+2019-07-15 22:11:26.453 DEBUG WriteLog: UnifiedOrder response error!
+2019-07-15 22:11:36.643 DEBUG WriteLog: GetUnifiedOrderResult!10.00
+2019-07-15 22:11:36.644 DEBUG WriteLog: UnfiedOrder request :<xml><appid><![CDATA[wx31183ba598767f20]]></appid><attach><![CDATA[test]]></attach><body><![CDATA[四川红领巾少儿艺术团-报名活动]]></body><goods_tag><![CDATA[test]]></goods_tag><mch_id><![CDATA[1542995961]]></mch_id><nonce_str><![CDATA[1103904837]]></nonce_str><notify_url><![CDATA[http://hjj.bellali.cn/WxXin/SuccOrder]]></notify_url><openid><![CDATA[admin]]></openid><out_trade_no><![CDATA[154299596120190715221136561]]></out_trade_no><sign><![CDATA[9E6D0438656EE7B9A0C0B8627A658741]]></sign><sign_type><![CDATA[MD5]]></sign_type><spbill_create_ip><![CDATA[120.79.183.124]]></spbill_create_ip><time_expire><![CDATA[20190715222136]]></time_expire><time_start><![CDATA[20190715221136]]></time_start><total_fee>1000</total_fee><trade_type><![CDATA[JSAPI]]></trade_type></xml>
+2019-07-15 22:11:37.007 DEBUG WriteLog: UnfiedOrder response :<xml><return_code><![CDATA[SUCCESS]]></return_code>
+<return_msg><![CDATA[OK]]></return_msg>
+<appid><![CDATA[wx31183ba598767f20]]></appid>
+<mch_id><![CDATA[1542995961]]></mch_id>
+<nonce_str><![CDATA[bYZJ8QbIu1M1xSEL]]></nonce_str>
+<sign><![CDATA[BEBE33CC53ADC802167F2A952F572FDF]]></sign>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[PARAM_ERROR]]></err_code>
+<err_code_des><![CDATA[无效的openid]]></err_code_des>
+</xml>
+2019-07-15 22:11:37.009 DEBUG WriteLog: UnifiedOrder response error!
+2019-07-15 22:26:52.653 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-15 22:27:03.687 DEBUG WriteLog: OutputExcel：Unable to cast object of type 'NPOI.XSSF.UserModel.XSSFDrawing' to type 'NPOI.HSSF.UserModel.HSSFPatriarch'.
+2019-07-15 22:27:14.530 DEBUG WriteLog: OutputExcel：Unable to cast object of type 'NPOI.XSSF.UserModel.XSSFDrawing' to type 'NPOI.HSSF.UserModel.HSSFPatriarch'.
+2019-07-15 22:28:25.525 DEBUG WriteLog: OutputExcel：Unable to cast object of type 'NPOI.XSSF.UserModel.XSSFDrawing' to type 'NPOI.HSSF.UserModel.HSSFPatriarch'.
+2019-07-15 22:28:45.741 DEBUG WriteLog: OutputExcel：Unable to cast object of type 'NPOI.XSSF.UserModel.XSSFDrawing' to type 'NPOI.HSSF.UserModel.HSSFPatriarch'.
+2019-07-15 22:32:41.423 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:36:39.911 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:36:50.281 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:37:57.838 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:38:41.314 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:39:46.573 DEBUG WriteLog: OutputExcel：The given path's format is not supported.
+2019-07-15 22:46:12.300 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-15 22:46:15.278 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-15 22:53:57.643 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Users\Administrator\Desktop\book\WebApplication1\wwwroot\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:54:19.028 DEBUG WriteLog: OutputExcel：Could not find a part of the path 'C:\Users\Administrator\Desktop\book\WebApplication1\wwwroot\Files\Image\b71f6200-3e4e-42f3-9f1b-a7a89499511b.jpg'.
+2019-07-15 22:58:08.203 DEBUG WriteLog: OutputExcel：Unable to cast object of type 'NPOI.HSSF.UserModel.HSSFClientAnchor' to type 'NPOI.XSSF.UserModel.XSSFClientAnchor'.

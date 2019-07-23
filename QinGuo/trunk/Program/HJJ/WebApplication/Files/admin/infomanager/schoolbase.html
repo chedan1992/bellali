@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>学校基本信息</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="form" class="layui-form" style="margin-top: 20px;width: 80%;">
+        <input type="hidden" name="userid" id="userid" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">学校全称</label>
+            <div class="layui-input-block">
+                <input style="border:none;" readonly type="text" name="schoolName" id="schoolName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">学校地址</label>
+            <div class="layui-input-block" id="pca">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">详细地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="addr" id="addr" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea type="text" name="schoolDesc" id="schoolDesc" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">学校类型</label>
+            <div class="layui-input-inline">
+                <input style="border:none;" readonly type="text" name="schoolType" id="schoolType" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入驻时间</label>
+            <div class="layui-input-inline">
+                <input style="border:none;" readonly type="text" class="layui-input" name="addTime" id="addTime" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-danger" onclick="save()">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="parent.cms.deltab('2')">关闭</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript" src="../inc/area.js"></script>
+<script type="text/javascript">
+    /**
+     * 对layui进行全局配置
+     */
+    layui.config({
+        base: '../inc/layui/lay/extends/'
+    }).extend({
+        selectN: 'selectN',
+    }).use(['selectN', 'form'], function () {
+        Comm.selectN = layui.selectN;
+        Comm.form = layui.form;
+
+    });
+
+    var list = ['小学', '初中', '高中'];
+
+    function pageload() {
+        Comm.loading(true)
+        AJAX.GET('/school/school/getById', function (d) {
+            if (d.code == 1) {
+                d.data.addTime = Comm.format(d.data.addTime, 'yyyy-mm-dd');
+                var g = Comm.bitunencode(d.data.schoolType, 3);
+                d.data.schoolType = []
+                for (var i = 0; i < g.length; i++) {
+                    d.data.schoolType.push(list[g[i] - 1])
+                }
+                d.data.schoolType = d.data.schoolType.join(';')
+
+                Comm.SetData(d.data, 'form')
+                pac(d.data.areaId)
+                Comm.form.render();
+            }
+            Comm.loading(false)
+        })
+
+    }
+    var catIns2 = null;
+    function pac(areaid) {
+
+        Area.init(function () {
+            var d = Area.getArea(areaid), selected = [];
+            if (d)
+                var selected = d.if.split('/');
+
+            //无限级分类-所有配置
+            catIns2 = Comm.selectN({
+                elem: '#pca',
+                search: [true, true, true],
+                data: _area,
+                //设置了长度
+                width: null,
+                //默认值
+                selected: selected,
+                last: true,  //为真只取最后一个值
+                tips: ['请选择省', '请选择市', '请选择县'],
+                filter: ['p', 'c', 'a'],
+                delimiter: ',',
+                field: { idName: 'i', titleName: 'n', childName: 'c' },
+                formFilter: null,
+            });
+        });
+    }
+    function save() {
+        var addr = $("#addr").val();
+        if (addr == "") {
+            Comm.msg('请填写详细地址', 5)
+            return;
+        }
+
+        var schoolDesc = $("#schoolDesc").val();
+        if (schoolDesc == "") {
+            Comm.msg('请填写学校描述', 5)
+            return;
+        }
+
+        AJAX.POST('/school/school/updateArea', { areaId: catIns2.lastValue, addr: addr, schoolDesc: schoolDesc }, function (d) {
+            if (d.code == 1) {
+                Comm.msg('修改成功', 1)
+            } else {
+                Comm.msg(d.msg, 1)
+            }
+        })
+    }
+</script>
+
+</html>

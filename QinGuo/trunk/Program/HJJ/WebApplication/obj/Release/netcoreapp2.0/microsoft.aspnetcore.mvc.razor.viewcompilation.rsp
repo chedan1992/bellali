@@ -1,0 +1,12 @@
+E:\Project\书吧1\书吧\book\WebApplication
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=WebApplication
+--content-root=E:\Project\书吧1\书吧\book\WebApplication
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Home\About.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Home\Contact.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Home\Index.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Shared\Error.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Shared\_Layout.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\Shared\_ValidationScriptsPartial.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\_ViewImports.cshtml
+--file=E:\Project\书吧1\书吧\book\WebApplication\Views\_ViewStart.cshtml

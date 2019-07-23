@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>价格管理</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">价格名</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="title" id="title" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" onclick="openedit('新增')">新增</button>
+            <button class="layui-btn" onclick="openedit('编辑')">编辑</button>
+            <button class="layui-btn" onclick="enble(2)">启用</button>
+            <button class="layui-btn" onclick="enble(1)">禁用</button>
+            <button class="layui-btn layui-btn-danger" onclick="del()">删除</button>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+
+<script type="text/html" id="formTpl">
+    <div id="form" class="layui-form" style="margin-top: 20px;margin-right:30px;">
+        <input type="hidden" value="{{d.id?d.id:''}}" name="id"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">配置名称</label>
+            <div class="layui-input-block">
+                <input value="{{d.title?d.title:''}}" type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入配置名称" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">配置价格</label>
+            <div class="layui-input-block">
+                <input value="{{d.price?d.price:''}}" type="number" name="price" lay-verify="required" autocomplete="off" placeholder="请输入配置名称" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择类型</label>
+            <div class="layui-input-block" >
+                <select name="type" lay-filter="type" id="type"  lay-verify="required" >
+                    <option value="1" {{d.type=='1'?'select':''}}>报名</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align:right;">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="layer.closeAll()">关闭</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+
+    function openedit(title) {
+        var data = { };
+        if (title == "编辑") {
+            var d = Comm.table.checkStatus('table');//获取选中的数据
+            if (d.data.length != 1) {
+                Comm.msg("请选择一条数据", 5)
+                return;
+            }
+            data = d.data[0];
+        }
+        Comm.laytpl($("#formTpl").html()).render(data, function (html) {
+            Comm.layer.open({
+                type: 1,
+                title: title,
+                area: ['400px', '300px'],
+                maxmin: true,
+                content: html,
+                success: function (layero) {
+                    //验证必填项
+                    Comm.form.verify();
+                    Comm.form.render();
+                    //提交表单
+                    Comm.form.on('submit(sub)', function (data) {
+                        AJAX.POST('/api/book/SaveCatory', data.field, function (d) {
+                            if (d.code == 1) {
+                                layer.closeAll();
+                                layer.msg("保存成功!", { icon: 1 })
+                                //刷新列表
+                                reload()
+                            } else {
+                                layer.msg("保存失败!", { icon: 5 })
+                            }
+                        })
+                    });
+                }
+            });
+        })
+
+    }
+
+    //删除
+    function del() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择删除数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdatecatoryStatus", { ids: ids.join(','), status: -1 }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg("删除失败", 5)
+                }
+            })
+        })
+    }
+
+    //启用
+    function enble(status) {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择操作数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdatecatoryStatus", { ids: ids.join(','), status: status }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("操作成功", 1)
+                } else {
+                    Comm.msg("操作失败", 5)
+                }
+            })
+        })
+    }
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+
+    function pageload() {
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/api/book/GetcatoryList',//列表请求接口
+            where: {//接口参数
+                name: '',
+                phone: ''
+            },
+            cols: [[
+                { checkbox: true },
+                { field: 'title', title: '价格名称' },
+                { field: 'price', title: '价格' },
+                //{ field: 'typeName', title: '类型' }, 
+                {
+                    field: 'status', title: '状态', renderData: function (d, v) {
+                        return v == 1 ? '禁用' : '启用'
+                    }
+                },
+                {
+                    field: 'createTime', title: '创建时间', renderData: function (d, v) {
+                        return Comm.format(v)
+                    }
+                },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+    }
+</script>
+</html>

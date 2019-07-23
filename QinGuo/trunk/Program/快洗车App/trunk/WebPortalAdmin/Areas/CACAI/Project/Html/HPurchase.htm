@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>系统附件列表</title>
+    <script type="text/javascript">
+
+        var treeNodeId = '';
+        Ext.onReady(function () {
+            treeNodeId = top.Ext.getCmp('FileAttachWin').items.items[0].params.KeyId;
+            //数据源
+            var url = '';
+            //转义列
+            var Human = Ext.data.Record.create([
+               { name: "Id", type: "string", mapping: "Id" },
+                  { name: "Code", type: "string", mapping: "Code" },
+                  { name: "GoodId", type: "string", mapping: "GoodId" },
+                  { name: "GoodName", type: "string", mapping: "GoodName" },
+                  { name: "GoodUnit", type: "string", mapping: "GoodUnit" },
+                  { name: "Count", type: "string", mapping: "Count" },
+                  { name: "Price", type: "string", mapping: "Price" },
+                  { name: "Money", type: "string", mapping: "Money" },
+                  { name: "Batch", type: "string", mapping: "Batch" },
+                  { name: "Remark", type: "string", mapping: "Remark" },
+                  { name: "StyleNum", type: "Int", mapping: "StyleNum" },
+                  { name: "FreightNum", type: "Int", mapping: "FreightNum" },
+                  { name: "ListOrder", type: "Int", mapping: "ListOrder" },
+                  { name: "StylePrice", type: "decimal", mapping: "StylePrice" },
+                  { name: "BillPrice", type: "decimal", mapping: "BillPrice" },
+                  { name: "BillMoney", type: "decimal", mapping: "BillMoney" },
+                  { name: "CheckPrice", type: "decimal", mapping: "CheckPrice" },
+                  { name: "LosstPrice", type: "decimal", mapping: "LosstPrice" },
+                  { name: "StyleCount", type: "Int", mapping: "StyleCount" },
+                  { name: "BillNum", type: "Int", mapping: "BillNum" },
+                  { name: "CheckNum", type: "Int", mapping: "CheckNum" }
+            ]);
+            var rightstore = GridStore(Human, '/CACAI/HPurchase/SearchDataDetail?MainId=' + treeNodeId, '', '', '', true, true);
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'gg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: rightstore,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                    {
+                    header: "商品编码",
+                    dataIndex: 'Code',
+                    menuDisabled: true,
+                    width: 80,
+                    sortable: true
+                },
+                {
+                    header: "款式编号",
+                    dataIndex: 'StyleNum',
+                    menuDisabled: true,
+                    width: 80,
+                    sortable: true
+                },
+            {
+                header: "颜色及规格",
+                dataIndex: 'GoodUnit',
+                menuDisabled: true,
+                width: 90,
+                sortable: true
+            },
+            {
+                header: "商品名称",
+                dataIndex: 'GoodName',
+                menuDisabled: true,
+                width: 90,
+                sortable: true
+            },
+            {
+                header: "供应商货号",
+                dataIndex: 'FreightNum',
+                menuDisabled: true,
+                width: 80,
+                sortable: true
+            },
+            {
+                header: "数量",
+                dataIndex: 'Count',
+                menuDisabled: true,
+                width: 60,
+                sortable: true
+            },
+                {
+                    header: "单价",
+                    dataIndex: 'Price',
+                    menuDisabled: true,
+                    width: 60,
+                    sortable: true
+                },
+                {
+                    header: "金额",
+                    dataIndex: 'Money',
+                    menuDisabled: true,
+                    width: 60,
+                    sortable: true
+                },
+            {
+            header: "单据数量",
+            dataIndex: 'BillNum',
+            width: 70,
+            align: 'center',
+            menuDisabled: true,
+            sortable: true,
+            renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                var Count = parseFloat(record.data.Count);
+                if (parseFloat(value) - Count == 0) {
+                    return value;
+                }
+                else {
+                    return "<span style='color:red'>" + value + "</span>"; //修改过
+                }
+            }
+        },
+            {
+                header: "单据金额",
+                dataIndex: 'BillPrice',
+                width: 70,
+                align: 'center',
+                enableHdMenu: true,
+                menuDisabled: true,
+                sortable: true,
+                renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                    var Price = parseFloat(record.data.Price);
+                    if (parseFloat(value) - Price == 0) {
+                        return value;
+                    }
+                    else {
+                        return "<span style='color:red'>" + value + "</span>"; //修改过
+                    }
+                }
+            },
+                {
+                    header: "单据款金额",
+                    dataIndex: 'BillMoney',
+                    width: 70,
+                    align: 'center',
+                    enableHdMenu: true,
+                    menuDisabled: true,
+                    sortable: true
+                },
+                {
+                    header: "核查补充数量",
+                    dataIndex: 'CheckNum',
+                    width: 70,
+                    align: 'center',
+                    menuDisabled: true,
+                    sortable: true
+                },
+                {
+                    header: "核查补充金额",
+                    dataIndex: 'CheckPrice',
+                    width: 70,
+                    align: 'center',
+                    enableHdMenu: true,
+                    menuDisabled: true,
+                    sortable: true,
+                    renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                        if (parseFloat(value) != 0) {
+                            return "<span style='color:red'>" + value + "</span>"; //修改过
+                        }
+                        else {
+                            return value;
+                        }
+                    }
+                },
+            {
+                header: "盈亏金额",
+                dataIndex: 'LosstPrice',
+                menuDisabled: true,
+                width: 90,
+                align: 'center',
+                  sortable: true,
+                renderer: renderMoney
+            },
+             {
+                 header: '备注',
+                 sortable: true,
+                 dataIndex: 'Remark',
+                 menuDisabled: false,
+                 width: 70,
+                 sortable: true
+             }
+                ],
+             bbar: bbarTop(rightstore), //分页工具条
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+      
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 425,
+                renderTo: 'divShop',
+                items: [gridPanle],
+                listeners: {
+                    afterrender: function () {
+                       
+                    }
+                }
+            });
+        });
+
+        function renderMoney(val, metadata, record, rowIndex, columnIndex, store) {
+            if (val > 0) {
+                return "<span style='color:red'>" + val + "</span>";
+            }
+            else if (val == 0) {
+                return val;
+            } else {
+                return "<span style='color:green'>" + val + "</span>";
+            }
+        }
+    </script>
+</head>
+<body>
+ <!--数据导出-->
+ <form method="post" action="#" class="hide hideform"></form>
+
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

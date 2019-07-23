@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商家选择</title>
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            //数据源
+            var url = '';
+            PageSize = 15; //重新定义页数
+            //转义列
+            var Master = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "LoginName", type: "string", mapping: "LoginName" },
+              { name: "UserName", type: "string", mapping: "UserName" },
+              { name: "OperateNum", type: "string", mapping: "OperateNum" },
+              { name: "CardNum", type: "string", mapping: "CardNum" },
+              { name: "Sex", type: "int", mapping: "Sex" },
+              { name: "Pwd", type: "string", mapping: "Pwd" },
+              { name: "Email", type: "string", mapping: "Email" },
+              { name: "Phone", type: "string", mapping: "Phone" },
+              { name: "HeadImg", type: "string", mapping: "HeadImg" },
+              { name: "Status", type: "int", mapping: "Status" },
+              { name: "IsMain", type: "bool", mapping: "IsMain" },
+              { name: "HasOrder", type: "int", mapping: "HasOrder" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" },
+              { name: "CreaterName", type: "string", mapping: "CreaterName" },
+              { name: "TotalBalance", type: "string", mapping: "TotalBalance" },
+              { name: "InCome", type: "string", mapping: "InCome" },
+              { name: "OrderCount", type: "string", mapping: "OrderCount" }
+            ]);
+            //数据源
+            var store = GridStore(Master, '/UserStaff/SearchMasterGrid?Id=-1', 'SysMaster');
+
+            //快捷查询,如果不需要,可以不用定义
+            TopsearchDate = [['全查询', ''], ['用户名称', 'UserName'], ['登录账号', 'LoginName']];
+
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'gg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: store,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                 {
+                 header: "用户名称",
+                 dataIndex: 'UserName',
+                 menuDisabled: true,
+                 width:80,
+                 renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                     if (value) {
+                         return value;
+                     }
+                     else {
+                         return '<span style="color:silver">(' + record.data.LoginName + ')</span>';
+                     }
+                 }
+             }, {
+                 header: "登录账号",
+                 dataIndex: 'LoginName',
+                 width:90,
+                 menuDisabled: true
+             },
+              {
+                  header: "操作码",
+                  dataIndex: 'OperateNum',
+                  flex: 4,
+                  menuDisabled: true
+              },
+               {
+                  header: "已完成订单",
+                  dataIndex: 'OrderCount',
+                  width: 60,
+                  align:'center',
+                  menuDisabled: true
+              },
+              {
+                  header: "今日接单",
+                  dataIndex: 'HasOrder',
+                  flex: 4,
+                  menuDisabled: true,
+                  renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                      if (parseInt(value) == 1) {
+                          return "<span style='color:Red'>已满</span>";
+                      }
+                      else {
+                          return "<span style='color:green'>正常</span>";
+                      }
+                  }
+              }
+                ],
+            tbar: tbarTop(),
+            bbar: bbarTop(store), //分页工具条
+            viewConfig: {
+                forceFit: true,
+                enableRowBody: true,
+                scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+            }
+        });
+
+        var south = new top.Ext.Panel({
+            region: 'south',
+            height:60,
+            frame: true,
+            minSize: 100,
+            maxSize: 200,
+            margins: '0 0 0 0',
+            items: [
+            
+            ]
+        });
+
+        var viewport = new Ext.Panel({
+            layout: 'border',
+            border: false,
+            height: 425,
+            renderTo: 'divShop',
+            items: [gridPanle],
+            listeners: {
+                afterrender: function () {
+
+                }
+            }
+        });
+
+
+    });
+    </script>
+</head>
+<body>
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

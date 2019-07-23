@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
+自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\Administrator\Desktop\web</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/aliyun-net-sdk-core.dll">
+      <publishTime>05/25/2018 09:15:50</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>05/21/2019 23:41:45</publishTime>
+    </File>
+    <File Include="bin/GetuiServerApiSDK.dll">
+      <publishTime>05/15/2019 20:23:31</publishTime>
+    </File>
+    <File Include="bin/Google.ProtocolBuffers.dll">
+      <publishTime>05/15/2019 20:23:31</publishTime>
+    </File>
+    <File Include="bin/LitJson.dll">
+      <publishTime>05/21/2019 23:41:45</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>05/21/2019 23:41:45</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>05/21/2019 23:41:46</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>05/21/2019 23:41:46</publishTime>
+    </File>
+    <File Include="bin/Ninject.dll">
+      <publishTime>05/21/2019 23:41:46</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Business.dll">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Business.pdb">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Common.dll">
+      <publishTime>05/23/2019 23:09:02</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Common.pdb">
+      <publishTime>05/23/2019 23:09:02</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DAL.dll">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DAL.pdb">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DapperAccessBase.dll">
+      <publishTime>05/23/2019 23:09:03</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DapperAccessBase.pdb">
+      <publishTime>05/23/2019 23:09:03</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DataAccessBase.dll">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/QINGUO.DataAccessBase.pdb">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Factory.dll">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Factory.pdb">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.IDAL.dll">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.IDAL.pdb">
+      <publishTime>05/26/2019 23:58:24</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Model.dll">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/QINGUO.Model.pdb">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/QINGUO.ViewModel.dll">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/QINGUO.ViewModel.pdb">
+      <publishTime>05/26/2019 23:58:23</publishTime>
+    </File>
+    <File Include="bin/Swagger.Net.dll">
+      <publishTime>05/21/2019 23:41:46</publishTime>
+    </File>
+    <File Include="bin/Swashbuckle.Core.dll">
+      <publishTime>05/21/2019 23:41:47</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>05/21/2019 23:41:48</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>05/21/2019 23:41:48</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>05/21/2019 23:41:48</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>05/21/2019 23:41:49</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>05/21/2019 23:41:49</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>05/21/2019 23:41:49</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>05/21/2019 23:41:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>05/21/2019 23:41:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>05/21/2019 23:41:50</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>05/21/2019 23:41:50</publishTime>
+    </File>
+    <File Include="bin/ThoughtWorks.QRCode.dll">
+      <publishTime>05/15/2019 20:23:32</publishTime>
+    </File>
+    <File Include="bin/WebActivator.dll">
+      <publishTime>05/21/2019 23:41:50</publishTime>
+    </File>
+    <File Include="bin/WebActivatorEx.dll">
+      <publishTime>05/21/2019 23:41:51</publishTime>
+    </File>
+    <File Include="bin/WebApp.dll">
+      <publishTime>05/27/2019 00:21:28</publishTime>
+    </File>
+    <File Include="bin/WebApp.pdb">
+      <publishTime>05/27/2019 00:21:28</publishTime>
+    </File>
+    <File Include="bin/WebApp.xml">
+      <publishTime>05/27/2019 00:21:28</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>05/21/2019 23:41:51</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>05/21/2019 23:41:41</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>05/21/2019 23:41:41</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>05/21/2019 23:41:41</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>05/21/2019 23:41:42</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+      <publishTime>05/21/2019 23:41:43</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+      <publishTime>05/21/2019 23:41:43</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>05/21/2019 23:41:43</publishTime>
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+      <publishTime>05/21/2019 23:41:43</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>05/21/2019 23:41:44</publishTime>
+    </File>
+    <File Include="Log/config/Log4NetConfig.config">
+      <publishTime>05/21/2019 23:41:51</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>05/21/2019 23:41:52</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>05/21/2019 23:41:53</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+      <publishTime>05/21/2019 23:41:53</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+      <publishTime>05/21/2019 23:41:54</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+      <publishTime>05/21/2019 23:41:54</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.map">
+      <publishTime>05/21/2019 23:41:54</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>05/21/2019 23:41:55</publishTime>
+    </File>
+    <File Include="Scripts/respond.js">
+      <publishTime>05/21/2019 23:41:55</publishTime>
+    </File>
+    <File Include="Scripts/respond.min.js">
+      <publishTime>05/21/2019 23:41:55</publishTime>
+    </File>
+    <File Include="SwaggerUI/css/screen.css">
+      <publishTime>05/21/2019 23:41:56</publishTime>
+    </File>
+    <File Include="SwaggerUI/images/pet_store_api.png">
+      <publishTime>05/21/2019 23:41:56</publishTime>
+    </File>
+    <File Include="SwaggerUI/images/wordnik_api.png">
+      <publishTime>05/21/2019 23:41:57</publishTime>
+    </File>
+    <File Include="SwaggerUI/index.html">
+      <publishTime>05/21/2019 23:41:57</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/backbone-min.js">
+      <publishTime>05/21/2019 23:41:57</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/handlebars.runtime-1.0.0.beta.6.js">
+      <publishTime>05/21/2019 23:41:57</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/jquery.ba-bbq.min.js">
+      <publishTime>05/21/2019 23:41:57</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/jquery.min.js">
+      <publishTime>05/21/2019 23:41:58</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/jquery.slideto.min.js">
+      <publishTime>05/21/2019 23:41:58</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/jquery.wiggle.min.js">
+      <publishTime>05/21/2019 23:41:58</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/swagger.js">
+      <publishTime>05/21/2019 23:41:58</publishTime>
+    </File>
+    <File Include="SwaggerUI/lib/underscore-min.js">
+      <publishTime>05/21/2019 23:41:59</publishTime>
+    </File>
+    <File Include="SwaggerUI/swagger-ui.js">
+      <publishTime>05/21/2019 23:42:00</publishTime>
+    </File>
+    <File Include="SwaggerUI/swagger-ui.min.js">
+      <publishTime>05/21/2019 23:42:00</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>05/21/2019 23:42:00</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>05/22/2019 14:32:03</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

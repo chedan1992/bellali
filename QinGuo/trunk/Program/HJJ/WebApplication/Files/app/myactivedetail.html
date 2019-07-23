@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的活动</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <style>
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+        .item img{
+            height: 95px;
+            width: 95px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+    </header>
+    <section >
+        <script id="mainTpl" type="text/html">
+            <div class="pad10">
+                <div class="lh20"><span class="f18">{{active.title}}</span></div>
+                <p class="lh20 wordW2 color999 f12 mart10">{{active.remark}}</p>
+                <p class="lh20 color999 f12">报名时间：{{formatDate(active.countStart)}}到{{formatDate(active.countEnd)}}</p>
+                <div class="mart20">
+                    <span class="f22 colorred bold">{{active.totalMoney}}</span>
+                    <span class="f12 colorred">元</span>
+                    <span class="f12 color999 fr">已报名人数：{{active.count}}</span>
+                </div>
+            </div>
+            <div class="pad10">
+                <div class="lh30">
+                    <span class="">具体活动：</span>
+                </div>
+                <div class="main">{{active.content}}</div>
+            </div>
+            <div class="linebod"></div>
+            <div class="center lh40 tjspx paddt10">
+                <span class="f16">活动报名</span>
+            </div>
+            <div class="center">
+                <span class="f12 color999">Volunteer Application</span>
+            </div>
+            <div>
+                <div class="pad10 mart30 marr10 marl10 marb30 bottomShadow">
+                    <div class="lh45 paddl15 paddr15">
+                        <span>真实姓名</span>
+                        <span class="fr">{{order.realName}}</span>
+                    </div>
+                    <div class="lh45 paddl15 paddr15">
+                        <span>手机号</span>
+                        <span class="fr">{{order.phone}}</span>
+                    </div>
+                    <div class="lh45 paddl15 paddr15">
+                        <span>性别</span>
+                        <span class="fr">{{order.sex}}</span>
+                    </div>
+                    <div class="lh45 paddl15 paddr15">
+                        <span>身份证</span>
+                        <span class="fr">{{order.card}}</span>
+                    </div>
+                    <div class="lh45 paddl15 paddr15">
+                        <span>年级</span>
+                        <span class="fr">{{order.grade}}</span>
+                    </div>
+                    <div class="lh45 paddl15 paddr15">
+                        <span>到馆时间</span>
+                        <span class="fr">{{formatDate(order.serverTime)}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130" />
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">公司:</span>
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+        <div id="foot">
+            <script id="footTpl" type="text/html">
+                <div class="linebod"></div>
+                <div class="mart30 marb30">
+                    <div class="center lh20 f12">
+                        <span>热线电话:</span>
+                        <span>{{phone}}</span>
+                    </div>
+                    <div class="center lh20 f12">
+                        <span>邮箱地址:</span>
+                        <span>{{qq}}</span>
+                    </div>
+                    <div class="center mart10 marb10">
+                        <img src="{{img}}" width="130" height="130" />
+                    </div>
+                    <div class="center lh30 f12 paddl10 paddr10">
+                        <span class="color999">公司:</span>
+                        <span class="color999">{{addr}}</span>
+                    </div>
+                </div>
+            </script>
+        </div>
+    </section>
+    <footer class="shared"></footer>
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        userid: Comm.query('userid'),
+        id: Comm.query('id'),
+        init: function () {
+            AJAX.GET('/api/book/GetOrder/' + model.id, {}, function (d) {
+                if (d.code == 1) {
+                    d.data.base = config.basedata;
+                    $("section").html(template('mainTpl', d.data))
+                    initPicker();
+                }
+            })
+        }
+    }
+</script>
+
+</html>

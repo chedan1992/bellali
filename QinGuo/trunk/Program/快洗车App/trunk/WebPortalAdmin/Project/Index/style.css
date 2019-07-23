@@ -1,0 +1,327 @@
+﻿body
+{
+    font-family: '微软雅黑';
+    margin: 0 auto;
+    min-width: 980px;
+}
+.header
+{
+    height: 88px;
+}
+.topleft
+{
+    margin-left: 100px;
+    margin-top: 15px;
+    float: left;
+    width: 300px;
+}
+.topleft img
+{
+    margin-top: 8px;
+    margin-left: 10px;
+}
+.topright
+{
+    height: 88px;
+    float: right;
+}
+.nav
+{
+    float: left;
+}
+.nav li
+{
+    float: left;
+    width: 87px;
+    height: 88px;
+    text-align: center;
+}
+.nav li a
+{
+    display: block;
+    width: 87px;
+    height: 88px;
+    -moz-transition: none;
+    transition: background-color 0.3s linear;
+    -moz-transition: background-color 0.3s linear;
+    -webkit-transition: background-color 0.3s linear;
+    -o-transition: background-color 0.3s linear;
+}
+.nav li a.selected
+{
+    background: url(../../Resource/img/Index/navbg.png) no-repeat;
+}
+.nav li a:hover
+{
+    display: block;
+   
+    
+    background: none repeat scroll 0% 0% rgb(43, 127, 181);
+}
+.nav li img
+{
+    margin-top: 10px;
+}
+.nav li a
+{
+    display: block;
+}
+.nav a h2
+{
+    font-size: 14px;
+    color: #d6e8f1;
+}
+.nav a:hover h2
+{
+    color: #fff;
+}
+.topright ul
+{
+    padding-top: 10px;
+    float: right;
+    padding-right: 12px;
+}
+.topright ul li
+{
+    float: left;
+    padding-left: 9px;
+    padding-right: 9px;
+    background: url(../../Resource/img/Index/line.gif) no-repeat right;
+}
+.topright ul li:last-child
+{
+    background: none;
+}
+.topright ul li a
+{
+    font-size: 13px;
+    color: #e9f2f7;
+}
+.topright ul li a:hover
+{
+    color: #fff;
+}
+.topright ul li span
+{
+    margin-top: 2px;
+    float: left;
+    padding-right: 3px;
+}
+.user
+{
+    height: 30px;
+    background: url(../../Resource/img/Index/ub1.png) repeat-x;
+    clear: both;
+    margin-top: 7px;
+    float: right;
+    margin-right: 12px;
+    border-radius: 30px;
+    behavior: url(js/pie.htc);
+    white-space: nowrap;
+    position: relative;
+}
+.user span
+{
+    display: inline-block;
+    padding-right: 10px;
+    background: url(../../Resource/img/Index/user.png) no-repeat 15px 10px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #b8ceda;
+    padding-left: 20px;
+    padding-left: 35px;
+}
+.user b
+{
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    background: url(../Resource/img/Index/msg.png);
+    text-align: center;
+    font-weight: normal;
+    color: #fff;
+    font-size: 14px;
+    margin-right: 13px;
+    margin-top: 7px;
+    line-height: 18px;
+}
+.user i
+{
+    display: inline-block;
+    margin-right: 5px;
+    font-style: normal;
+    line-height: 30px;
+    font-size: 14px;
+    color: #b8ceda;
+}
+/*default*/
+.mainbox
+{
+    padding: 6px;
+    position: relative;
+    font-size: 12px;
+    overflow:hidden;
+}
+.mainleft
+{
+    padding-right: 298px;
+}
+.leftinfo
+{
+    border: #d3dbde solid 1px;
+    height:340px;
+}
+.mainright
+{
+    width: 298px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+.dflist
+{
+    border: #d3dbde solid 1px;
+    width: 288px;
+    height:340px;
+    float: right;
+}
+.dflist1
+{
+    border: #d3dbde solid 1px;
+    width: 288px;
+    height: 239px;
+    float: right;
+    margin-top: 8px;
+}
+.listtitle
+{
+    background: url(../../Resource/img/Index/tbg.png) repeat-x;
+    height: 36px;
+    line-height: 36px;
+    border-bottom: solid 1px #d3dbde;
+    text-indent: 14px;
+    font-weight: bold;
+    font-size: 14px;
+}
+.more1
+{
+    float: right;
+    font-weight: normal;
+    color: #307fb1;
+    padding-right: 17px;
+}
+.maintj
+{
+    text-align: center;
+}
+.newlist
+{
+    padding-left: 14px;
+    padding-top:5px;
+}
+.newlist li
+{
+    line-height: 25px;
+    background: url(../../Resource/img/Index/list2.png) no-repeat 0px 10px;
+    text-indent: 11px;
+}
+.newlist i
+{
+    display: block;
+    float: left;
+    font-style: normal;
+}
+.newlist b
+{
+    font-weight: normal;
+    color: #7b7b7b;
+    padding-left: 10px;
+}
+.leftinfos
+{
+    height: 238px;
+    margin-top: 8px;
+}
+.infoleft
+{
+    border: #d3dbde solid 1px;
+    float: left;
+    height: 238px;
+}
+.inforight
+{
+    border: #d3dbde solid 1px;
+    float: right;
+    height: 238px;
+}
+.tooli
+{
+    padding: 30px 20px;
+}
+.tooli li
+{
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+}
+.tooli li span
+{
+    text-align: center;
+    margin-left:5px;
+}
+.tooli li p
+{
+    line-height: 35px;
+    text-align: center;
+}
+a:link{ text-decoration:none;   /* 指正常的未被访问过的链接*/
+}
+a:visited{color:Black;text-decoration:none; /*指已经访问过的链接*/
+}
+a:hover{ color:blue; text-decoration:none;/*指鼠标在链接*/}a:active{text-decoration:none;/* 指正在点的链接*/ 
+}
+
+
+/*重写样式,取消边框*/
+.x-panel-header
+{
+    border-top: 0px;
+}
+
+.x-tab-panel-header
+{
+    border-top: 0px;
+}
+/*隐藏百度地图logo*/
+.anchorBL
+{
+    display: none;
+}
+.x-btn-text-icon .x-btn-icon-small-left .x-btn-text
+{
+    padding-top: 2px;
+}
+.x-form-element
+{
+    padding-left: 0px;
+}
+.x-fieldset-body
+{
+    padding-top: 0px;
+}
+.msg_info
+{
+    font-size: 12px;
+    text-align: left;
+    padding: 5px 10px 5px 32px;
+    border: 1px dashed #f6981e;
+    background-color: #ffc;
+    background-position: 10px 8px;
+    background-repeat: no-repeat;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-image: url(../../Resource/css/icons/info.gif);
+    background-position: 10px 5px;
+}

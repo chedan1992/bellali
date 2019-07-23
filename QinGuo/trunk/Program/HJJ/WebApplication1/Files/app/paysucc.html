@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <title>报名成功</title>
+    <link rel="stylesheet" href="css/g.css">
+    <link rel="stylesheet" href="css/comm.css">
+    <style>
+        button {
+            border: 1px solid #ebebeb;
+            background: inherit;
+            color: #222;
+            line-height: 30px;
+            height: 30px;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 40%;
+            margin: 0px 10px;
+        }
+
+        .flex_warp {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="center" style="margin-top: 50px">
+                <img src="img/ddzfcg.png" height="100" />
+            </div>
+            <div class="center mart20 f18 lh30 paddl15 paddr15">报名成功：{{active.title}}</div>
+            <div class="bold f16 paddl15 paddr15 lh50">报名信息</div>
+            <div class="paddl15 paddr15">
+                <div class="flex_warp lh40">
+                    <div>订单号：</div>
+                    <div>{{order.payno}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>报名费：</div>
+                    <div>{{order.payMoney}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>姓名：</div>
+                    <div>{{order.realName}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>电话：</div>
+                    <div>{{order.phone}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>性别：</div>
+                    <div>{{order.sex}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>国籍：</div>
+                    <div>{{order.nat}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>民族：</div>
+                    <div>{{order.natv}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>就读学校：</div>
+                    <div>{{order.schoolName}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>校区：</div>
+                    <div>{{order.school}}</div>
+                </div>
+                <div class="flex_warp lh40">
+                    <div>项目：</div>
+                    <div>{{order.grade}}</div>
+                </div>
+                <div class="flex_warp marb10">
+                    <div>存照：</div>
+                    <div><img height="150" width="120" src="{{order.czimg}}" /></div>
+                </div>
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130" />
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+
+    <script src="inc/z.js"></script>
+    <script src="inc/g.js"></script>
+    <script src="inc/comm.js"></script>
+    <script type="text/javascript" src="inc/art-template.js"></script>
+    <script>
+
+        function pageload() {
+            AJAX.GET('/api/book/GetOrderPayno/' + model.payno, {}, function (d) {
+                if (d.code == 1) {
+                    d.data.base = config.basedata;
+                    d.data.czimg = config.root + d.data.czimg;
+                    $("section").html(template('mainTpl', d.data));
+                    if (d.data.status == 1) {
+                        
+                        AJAX.POST('/api/book/UpdateOrderSucc/', { payno: model.payno, status: 1 }, function (d) {
+                            if (d.code == 1) { }
+                        })
+                    }
+                }
+            });
+        }
+
+        var model = {
+            payno: Comm.query('payno'),
+            go: function () {
+                Comm.go('order.html?payno=' + model.payno);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

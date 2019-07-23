@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>增减餐申请</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+        .layui-icon {
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        .layui-card-body div {
+            text-align: center;
+            width: 194px;
+            float: left;
+            height: 143px;
+            line-height: 50px;
+            border: 1px solid #E5E5E5;
+        }
+
+        .layui-form-select .layui-input {
+            width: 190px;
+        }
+
+        .layui-form-select .layui-edge {
+            left: 170px;
+        }
+
+        .layui-form-label {
+            width: 85px;
+        }
+
+        .layui-input-block {
+            margin-left: 120px;
+        }
+
+        .first {
+            float: left;
+            width: 80px;
+            text-align: right;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        #upload {
+            display: none;
+        }
+
+        .upfile {
+            display: inline-block;
+            padding: 7px;
+            line-height: 15px;
+            background-color: #d83636;
+            color: #fff;
+            margin-right: 10px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+        /* .uplabel {} */
+
+        .dd:hover {
+            background-color: #F2F2F2;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div style="margin-top: 10px;">
+            <div id="form" class="layui-form" lay-filter="form" style="padding: 0px 0 1px 0;">
+                <div class="layui-form-item">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">类型</li>
+                    </div>
+                    <div style="margin-left: 33px; margin-top: 10px;" id="sel">
+                        <button class="layui-btn" onclick="seltype(2,this)">按年级</button>
+                        <button class="layui-btn layui-btn-primary" onclick="seltype(3,this)">按班级</button>
+                        <button class="layui-btn layui-btn-primary" onclick="seltype(4,this)">按学生</button>
+                    </div>
+                </div>
+                <div class="layui-form-item" id="seldive">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">选择</li>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="margin-left: 33px; margin-top: 10px;">
+                        <div class="layui-row">
+                            <div class="layui-col-sm7" id="njdiv">
+
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-sm5 hide" id="bjdiv">
+
+                            </div>
+                        </div>
+                        <div id="studiv">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">适用对象</li>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="margin-left: 33px; margin-top: 10px;" id="result">
+
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">类别</li>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding-left: 30px;">
+                    <div class="layui-inline">
+                        <input type="radio" value="1" class="zy" name="ltype" lay-filter="ltype" lay-skin="primary" title="增餐">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="radio" value="2" class="zy" name="ltype" lay-filter="ltype" lay-skin="primary" title="减餐">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">时间</li>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding-left: 30px;">
+                    <div class="layui-inline">
+                        <input type="checkbox" value="1" class="zy" name="ways1" lay-filter="ways" lay-skin="primary" title="早餐">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="checkbox" value="2" class="zy" name="ways2" lay-filter="ways" lay-skin="primary" title="午餐">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="checkbox" value="3" class="zy" name="ways3" lay-filter="ways" lay-skin="primary" title="晚餐">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-card-header" style="line-height: 40px;height: 40px;">
+                        <li class="fl" style="font-size: 18px;">日期</li>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding-left: 30px;">
+                    <div class="layui-input-inline">
+                        <input readonly type="text" class="layui-input" id="dateStart" name="dateStart" placeholder="请选择开始时间" lay-verify="required">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input readonly type="text" class="layui-input" id="dateEnd" name="dateEnd" placeholder="请选择结束时间" lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="padding-left: 30px;">
+                    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="sub">提交至供应商审核</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src='../inc/g.js' type="text/javascript"></script>
+<script src='../inc/layui/layui.js' type="text/javascript"></script>
+<script src="../inc/dict.js" type="text/javascript"></script>
+<script src='../inc/area.js' type="text/javascript"></script>
+
+<script>
+    var user = top.Comm.db('user');
+    var _class = {
+        type: 2,
+        school: [],
+        selschool: user,
+        sel: [],
+        result: [],
+    };
+
+    function pageload() {
+        Comm.form = layui.form;
+        Comm.laydate = layui.laydate;
+        Comm.table = layui.table;
+        Comm.laytpl = layui.laytpl;
+        Comm.element = layui.element;
+
+        //常规用法
+        Comm.laydate.render({
+            elem: '#dateStart',
+        });
+        Comm.laydate.render({
+            elem: '#dateEnd',
+        });
+
+        Comm.laytpl($("#nj2Tpl").html()).render({ schoolType: _class.selschool.schoolType }, function (html) {
+            $("#njdiv").html(html);
+            Comm.form.render();
+            //defaultall();
+        })
+
+        //选择 年级
+        Comm.form.on('select(nj)', function (data) {
+            if (data.value != "") {
+                var gtitle = $(data.elem).find("option:selected").html()
+                _class.seldata.grade = data.value;
+                _class.seldata.gtitle = gtitle;
+                getbj();
+
+            } else {
+                $("#bjdiv").html('');
+            }
+        });
+
+        //选择 班级
+        Comm.form.on('select(bj)', function (data) {
+            if (data.value != "") {
+                _class.seldata.number = data.value;
+                getstu();
+                console.log(_class.result);
+            } else {
+                $("#studiv").html('');
+            }
+        });
+
+        //选择checkbox年级
+        Comm.form.on('checkbox(grade)', function (data) {
+            selresult(data, this)
+        });
+
+        //选择checkbox班级
+        Comm.form.on('checkbox(bj)', function (data) {
+            selresult(data, this)
+        });
+        //选择checkbox学生
+        Comm.form.on('checkbox(stu)', function (data) {
+            selresult(data, this)
+        });
+
+        Comm.form.verify();
+        //提交表单
+        Comm.form.on('submit(sub)', function (data) {
+            if (!_class.selschool.businessId) {
+                Comm.msg('暂无供餐供应商', 5);
+                return false;
+            }
+            if (_class.result && _class.result.length <= 0) {
+                Comm.msg('请选择增减餐对象', 5);
+                return false;
+            }
+
+            data.field.customerId = user.customerId;
+            data.field.schoolId = user.schoolId;
+
+            data.field.businessId = _class.selschool.businessId;
+            data.field.customerType = 2;
+
+            ////3:年级，4：班级 classesids id ,5 学生 studentids
+            if (_class.type == 1 || _class.type == 2) {
+                data.field.extraType = 3;
+                data.field.itemId = Comm.bitencode(_class.result);
+            } else if (_class.type == 3) {
+                data.field.extraType = 4;
+                data.field.itemId = _class.result.join(',');
+            } else if (_class.type == 4) {
+                data.field.extraType = 5;
+                data.field.itemId = _class.result.join(',');
+            }
+
+            data.field.dinnerInfo = 0;
+            var dinnerInfo = [];
+            if (data.field.ways1 == "1") {
+                dinnerInfo.push(1)
+            }
+            if (data.field.ways2 == "2") {
+                dinnerInfo.push(2)
+            }
+            if (data.field.ways3 == "3") {
+                dinnerInfo.push(3)
+            }
+            data.field.dinnerInfo = Comm.bitencode(dinnerInfo);
+
+            data.field.type = $('input[name="ltype"]:checked').val();
+            if (data.field.type == undefined) {
+                Comm.msg('请选择增减餐类型', 5);
+                return false;
+            }
+            if (data.field.dinnerInfo == 0) {
+                Comm.msg('请选择开餐时间', 5);
+                return false;
+            }
+
+            layer.load();
+            AJAX.POST('/api/school/addRegulationMeals', data.field, function (a) {
+                if (a && a.code == 1) {
+                    Comm.msg('操作成功', 1);
+                    setTimeout(function () {
+                        parent.cms.deltab('9')
+                    }, 1000)
+                    _class.result = [];
+                } else {
+                    Comm.msg(a.msg, 5);
+                }
+                layer.closeAll('loading');
+            })
+        });
+    }
+
+
+    //选择checkbox结果
+    function selresult(data, _this) {
+        var id = $(data.elem).attr("id")
+        if (_this.checked && _class.result.indexOf(data.value) < 0) {
+            var title = $(data.elem).attr("title")
+            Comm.laytpl($("#resultTpl").html()).render({ type: _class.type, data: [{ id: data.value, v: data.value, t: title }] }, function (html) {
+                $("#result").append(html);
+                _class.result.push(data.value);
+                console.log(_class.result);
+            })
+        } else {
+            $("#result #" + data.value).remove();
+            var i = _class.result.indexOf(data.value);
+            _class.result.splice(i, 1);
+            console.log(_class.result);
+        }
+    }
+
+    //查询 班级
+    function getbj() {
+        AJAX.POST('/school/classse/getBySchoolAndGrade', _class.seldata, function (a) {
+            if (a.code == 1) {
+                if (_class.type == 3) {
+                    Comm.laytpl($("#bjTpl").html()).render({ gtitle: _class.seldata.gtitle, grade: _class.seldata.grade, data: a.data }, function (html) {
+                        $("#bjdiv").html(html);
+                        Comm.form.render();
+                    })
+                } else if (_class.type == 4) {
+                    Comm.laytpl($("#bj2Tpl").html()).render({ gtitle: _class.seldata.gtitle, grade: _class.seldata.grade, data: a.data }, function (html) {
+                        $("#bjdiv").html(html);
+                        Comm.form.render();
+                        $("#studiv").html('');
+                    })
+                }
+            }
+        })
+    }
+
+    //查询 学生
+    function getstu() {
+        AJAX.POST('/school/student/getBySchool', _class.seldata, function (a) {
+            if (a.code == 1) {
+                Comm.laytpl($("#stuTpl").html()).render(a.data, function (html) {
+                    $("#studiv").html(html);
+                    Comm.form.render();
+                })
+            }
+        })
+    }
+
+    //切换类型
+    function seltype(i, e) {
+        if (!$(e).hasClass('layui-btn-primary')) {
+            return;
+        }
+
+        if (i == 1) {
+            $("#studiv").html('');
+            $("#njdiv").hide().html('');
+            $("#bjdiv").hide().html('');
+            $("#seldive").hide();
+        } else if (i == 2) {
+            $("#studiv").html('');
+            $("#bjdiv").hide().html('');
+            $("#njdiv").show();
+            $("#seldive").show();
+
+            _class.result = [];
+            //年级 模板
+            Comm.laytpl($("#nj2Tpl").html()).render({ schoolType: _class.selschool.schoolType }, function (html) {
+                $("#njdiv").html(html);
+                Comm.form.render();
+            })
+
+        } else if (i == 3) {
+            $("#studiv").html('');
+            $("#njdiv").show();
+            $("#bjdiv").show().html('');
+            $("#seldive").show();
+
+            _class.seldata = {};
+            _class.seldata.schoolId = _class.selschool.schoolId;
+
+            //年级 模板
+            Comm.laytpl($("#njTpl").html()).render({ schoolType: _class.selschool.schoolType }, function (html) {
+                $("#njdiv").html(html);
+                Comm.form.render();
+            })
+            _class.result = [];
+
+        } else if (i == 4) {
+            if (_class.seldata && _class.seldata.grade) {
+                _class.type = i;
+                getbj();
+            } else {
+                _class.seldata = {};
+                _class.seldata.schoolId = _class.selschool.schoolId;
+
+                //年级 模板
+                Comm.laytpl($("#njTpl").html()).render({ schoolType: _class.selschool.schoolType }, function (html) {
+                    $("#njdiv").html(html);
+                    Comm.form.render();
+                })
+            }
+            _class.result = [];
+
+            $("#njdiv").show();
+            $("#bjdiv").show();
+            $("#seldive").show();
+        }
+        Comm.laytpl($("#resultTpl").html()).render({ type: i, data: [] }, function (html) {
+            $("#result").html(html);
+        })
+
+        _class.type = i;
+        $("#sel button").addClass('layui-btn-primary')
+        $(e).removeClass('layui-btn-primary')
+    }
+
+    //默认全校
+    function defaultall() {
+
+        Comm.laytpl($("#resultTpl").html()).render({ type: 1, data: [] }, function (html) {
+            $("#result").html(html);
+        })
+
+        _class.result = [];
+        var s = Comm.bitunencode(_class.selschool.schoolType * 1, 3);
+        for (var k = 0; k < s.length; k++) {
+            if (s[k] == 1) {
+                for (var m = 1; m <= 6; m++) {
+                    _class.result.push(m)
+                }
+            } else if (s[k] == 2) {
+                for (var m = 7; m <= 9; m++) {
+                    _class.result.push(m)
+                }
+            } else if (s[k] == 3) {
+                for (var m = 10; m <= 12; m++) {
+                    _class.result.push(m)
+                }
+            }
+        }
+    }
+    function delitem(v) {
+        var i = _class.result.indexOf(v + "");
+        _class.result.splice(i, 1);
+        var ck = Comm.g("ck" + v);
+        if (ck) {
+            ck.checked = false;
+            Comm.form.render();
+        }
+        $("#" + v).remove();
+        console.log(_class.result);
+    }
+</script>
+
+<script type="text/html" id="resultTpl">
+    {{# if(d.type==1){ }}
+        <span>全校</span>
+    {{# }else if(d.type==2||d.type==3||d.type==4){ }}
+        {{# layui.each(d.data,function(i,e){ }}
+            <span id="{{e.id}}">{{e.t}}<i onclick="delitem({{e.v}})" class="layui-icon layui-icon-close"></i></span>
+        {{# }) }}
+    {{# } }}
+</script>
+<script type="text/html" id="njTpl">
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择年级</label>
+        <div class="layui-input-inline">
+            <select id="nj" lay-filter="nj" name="nj" class="layui-input" placeholder="选择年级">
+                <option value="">请选择年级</option>
+                {{# if(d.schoolType&1){ }}
+                    <option value="1">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                {{# } }}
+                {{# if(d.schoolType&2){ }}
+                    <option value="7">初一</option>
+                    <option value="8">初二</option>
+                    <option value="9">初三</option> 
+                {{# } }}
+                {{# if(d.schoolType&4){ }}
+                    <option value="10">高一</option>
+                    <option value="11">高二</option>
+                    <option value="12">高三</option>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                {{# } }}
+            </select>
+        </div>
+    </div>
+</script>
+<script id="schoolselTpl" type="text/html">
+	{{# layui.each(d, function(index, item){ }}
+		<option  value="{{item.schoolId}}" data='{{index}}' >{{item.schoolName}}</option>
+    {{# }); }}
+</script>
+
+<script type="text/html" id="nj2Tpl">
+    {{# if(d.schoolType&1){ }}
+    <div>
+        <input {{_class.result.indexOf(1)<0?'':'checked'}}  id="ck1" type="checkbox" name="grade" lay-skin="primary" title="一年级" value="1" lay-filter="grade">
+        <input {{_class.result.indexOf(2)<0?'':'checked'}}  id="ck2" type="checkbox" name="grade" lay-skin="primary" title="二年级" value="2" lay-filter="grade">
+        <input {{_class.result.indexOf(3)<0?'':'checked'}}  id="ck3" type="checkbox" name="grade" lay-skin="primary" title="三年级" value="3" lay-filter="grade">
+        <input {{_class.result.indexOf(4)<0?'':'checked'}}  id="ck4" type="checkbox" name="grade" lay-skin="primary" title="四年级" value="4" lay-filter="grade">
+        <input {{_class.result.indexOf(5)<0?'':'checked'}}  id="ck5" type="checkbox" name="grade" lay-skin="primary" title="五年级" value="5" lay-filter="grade">
+        <input {{_class.result.indexOf(6)<0?'':'checked'}}  id="ck6" type="checkbox" name="grade" lay-skin="primary" title="六年级" value="6" lay-filter="grade">
+    </div>
+    {{# } }}
+    {{# if(d.schoolType&2){ }}
+    <div>
+        <input {{_class.result.indexOf(7)<0?'':'checked'}}  id="ck7" type="checkbox" name="grade" lay-skin="primary" title="初一" value="7" lay-filter="grade">
+        <input {{_class.result.indexOf(8)<0?'':'checked'}}  id="ck8" type="checkbox" name="grade" lay-skin="primary" title="初二" value="8" lay-filter="grade">
+        <input {{_class.result.indexOf(9)<0?'':'checked'}}  id="ck9" type="checkbox" name="grade" lay-skin="primary" title="初三" value="9" lay-filter="grade">
+    </div>
+    {{# } }}
+    {{# if(d.schoolType&4){ }}
+    <div>
+        <input {{_class.result.indexOf(10)<0?'':'checked'}} id="ck10" type="checkbox" name="grade" lay-skin="primary" title="高一" value="10" lay-filter="grade">
+        <input {{_class.result.indexOf(11)<0?'':'checked'}}  id="ck11" type="checkbox" name="grade" lay-skin="primary" title="高二" value="11" lay-filter="grade">
+        <input {{_class.result.indexOf(12)<0?'':'checked'}}  id="ck12" type="checkbox" name="grade" lay-skin="primary" title="高三" value="12" lay-filter="grade">   
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    {{# } }}
+    </div>
+</script>
+
+
+<script id="bjTpl" type="text/html">
+	{{# layui.each(d.data, function(i, v){ }}
+    <input {{_class.result.indexOf(v.classesId)<0?'':'checked'}} id="ck{{v.classesId}}" type="checkbox" name="bj" lay-skin="primary" title="{{d.gtitle+v.number}}班" value="{{v.classesId}}" lay-filter="bj">
+    {{# }); }}
+</script>
+
+<script id="bj2Tpl" type="text/html">
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择班级</label>
+        <div class="layui-input-inline">
+            <select id="bj" lay-filter="bj" name="bj" class="layui-input" placeholder="选择年级">
+                <option value="">选择班级</option>
+                {{# layui.each(d.data, function(i, v){ }}
+                <option value="{{v.classesId}}">{{d.gtitle+v.number}}班</option>
+                {{# }); }}
+            </select>
+        </div>
+    </div>
+</script>
+
+<script id="stuTpl" type="text/html">
+	{{# layui.each(d, function(i, v){ }}
+    <input {{_class.result.indexOf(v.studentId)<0?'':'checked'}} id="ck{{v.studentId}}" type="checkbox" name="stu" lay-skin="primary" title="{{v.studentName}}" value="{{v.studentId}}" lay-filter="stu">
+    {{# }); }}
+</script>
+
+</html>

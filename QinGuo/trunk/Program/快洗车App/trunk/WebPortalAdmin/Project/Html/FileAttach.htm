@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>系统附件列表</title>
+    <script src="../../Content/Extjs/ux/imagePreview.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        var KeyId = '';
+        var ModelCode = '';
+        var ShowBtn = true;
+        var data=[]; //'/UploadFile/FileAttach/2018/07/119587a2b-1b29-4be8-8586-c3c19e439c1119.gif'
+        Ext.onReady(function () {
+            
+
+            //            KeyId = top.Ext.getCmp('FileAttachWin').items.items[0].items.items[0].items.items[0].params.KeyId;
+            //            ModelCode = top.Ext.getCmp('FileAttachWin').items.items[0].items.items[0].items.items[0].params.ModelCode;
+            //            ShowBtn = top.Ext.getCmp('FileAttachWin').items.items[0].items.items[0].items.items[0].params.ShowBtn; //是否显示附件工具栏
+            KeyId = top.Ext.getCmp('FileAttachWin').items.items[0].params.KeyId;
+            ModelCode = top.Ext.getCmp('FileAttachWin').items.items[0].params.ModelCode;
+            ShowBtn = top.Ext.getCmp('FileAttachWin').items.items[0].params.ShowBtn; //是否显示附件工具栏
+            //数据源
+            var url = '';
+            PageSize = 15; //重新定义页数
+            //转义列
+            var SysFileAttach = Ext.data.Record.create([
+              { name: "Id", type: "string", mapping: "Id" },
+              { name: "NameOld", type: "string", mapping: "NameOld" },
+              { name: "NameNew", type: "string", mapping: "NameNew" },
+              { name: "FileSize", type: "double", mapping: "FileSize" },
+              { name: "FilePath", type: "string", mapping: "FilePath" },
+              { name: "FileType", type: "string", mapping: "FileType" },
+              { name: "Extension", type: "string", mapping: "Extension" },
+              { name: "ReadNum", type: "int", mapping: "ReadNum" },
+              { name: "Status", type: "int", mapping: "Status" },
+              { name: "CreateTime", type: "datetime", mapping: "CreateTime" }
+
+            ]);
+            //数据源
+            var store = GridStore(SysFileAttach, "/SysFileAttach/SearchData?KeyId=" + KeyId + "&ModelCode=" + ModelCode, 'SysFileAttach', '', '',true,true);
+
+            var gridPanle = new top.Ext.grid.GridPanel({
+                layout: 'fit',
+                id: 'filegg',
+                region: 'center',
+                loadMask: { msg: '数据请求中，请稍后...' },
+                store: store,
+                stripeRows: true, //隔行颜色不同
+                border: false,
+                defult: {
+                    sortable: false
+                },
+                columns: [
+                new top.Ext.grid.RowNumberer({ header: '', width: 25 }), //设置行号
+                  {
+                  dataIndex: 'FilePath',
+                  align: 'center',
+                  header: '缩略图',
+                  renderer: function (value, metadata, record, rowIdx, colIdx, store)//renderer很有用
+                  {
+                      var Extension = record.data.Extension; //文件类型
+                      var image = '';
+                      if (Extension.toLowerCase() == ".jpg" || Extension.toLowerCase() == ".jpeg" || Extension.toLowerCase() == ".gif" || Extension.toLowerCase() == ".pdg" || Extension.toLowerCase() == ".bmp" || Extension.toLowerCase() == ".png" || Extension.toLowerCase() == ".pic" || Extension.toLowerCase() == ".tif") {
+                          //这里为缩略图的图片地址
+                          return '<img width="90"  onclick="showImg();"  height="70" src="' + value + '"/>'
+                      }
+                      else {
+                          switch (Extension.toLowerCase()) {
+                              case ".txt":
+                                  image = '../../Resource/css/icons/file/GTP_txt.png';
+                                  break;
+                              case ".rar":
+                              case ".zip":
+                              case ".arj":
+                              case ".gz":
+                              case ".z":
+                                  image = '../../Resource/css/icons/file/GTP_rar.png';
+                                  break;
+                              case ".ppt":
+                                  image = '../../Resource/css/icons/file/GTP_ppt.png';
+                                  break;
+                              case ".pdf":
+                                  image = '../../Resource/css/icons/file/GTP_pdf.png';
+                                  break;
+                              case ".wps":
+                                  image = '../../Resource/css/icons/file/GTP_wps.png';
+                                  break;
+                              case ".mp3": //音频文件
+                              case ".wmv":
+                              case ".mpeg":
+                              case ".wav":
+                              case ".wma":
+                              case ".mmf":
+                              case ".amr":
+                              case ".ogg":
+                              case ".mpc":
+                              case ".aif":
+                              case ".au":
+                                  image = '../../Resource/css/icons/file/GTP_voice.png';
+                                  break;
+                              case ".mp4": //视频文件
+                              case ".rmvp":
+                              case ".mpg":
+                              case ".3gp":
+                              case ".avi":
+                              case ".flv":
+                                  image = '../../Resource/css/icons/file/GTP_video.png';
+                                  break;
+                              case ".html": //html 文件
+                              case ".htm":
+                                  image = '../../Resource/css/icons/file/GTP_html.png';
+                                  break;
+                              case ".jpg":
+                              case ".jpeg":
+                              case ".gif":
+                              case ".ai":
+                              case ".pdg":
+                              case ".bmp":
+                              case ".ico":
+                              case ".png":
+                              case ".tif":
+                              case ".pic":
+                                  image = '../../Resource/css/icons/file/GTP_pic.png'; //图片类型
+                                  break;
+                              case ".exe":
+                              case ".com":
+                                  image = '../../Resource/css/icons/file/GTP_paper.png'; //可执行文件
+                                  break;
+                              case ".word":
+                              case ".doc":
+                              case ".wps":
+                              case ".docx":
+                                  image = '../../Resource/css/icons/file/GTP_word.png'; //文档类型
+                                  break;
+                              case ".xls":
+                              case ".xlsx":
+                              case ".excel":
+                                  image = '../../Resource/css/icons/file/GTP_excel.png'; //excel类型
+                                  break;
+                              default:
+                                  image = '../../Resource/css/icons/file/GTP_elseflie.png'; //其他文件
+                                  break;
+                          }
+                          return '<img src="' + image + '">'
+                      }
+                  }
+              },
+                 {
+                     header: "文件名称",
+                     dataIndex: 'NameOld',
+                     menuDisabled: true,
+                     width: 280
+                     //renderer: renderNameOld
+                 }, {
+                     header: "文件大小",
+                     dataIndex: 'FileSize',
+                     width: 80,
+                     menuDisabled: true
+                 },
+                //              {
+                //                  header: "文件类型",
+                //                  dataIndex: 'FileType',
+                //                  flex: 1,
+                //                  menuDisabled: true
+                //              },
+                //               {
+                //               header: "扩展名",
+                //               dataIndex: 'Extension',
+                //               width: 80,
+                //               align: 'center',
+                //               menuDisabled: true
+                //           },
+              {
+              header: "上传时间",
+              dataIndex: 'CreateTime',
+              flex: 1,
+              menuDisabled: true
+          },
+               {
+                   header: '操作',
+                   dataIndex: 'Id',
+                   align: 'center',
+                   width: 100,
+                   menuDisabled: true,
+                   renderer: function (value, cellmeta, record, rowIndex, columnIndex, store) {
+                       var html = '';
+                       html += '<a title="文件下载" href="/SysFileAttach/FileDownInfo?Id=' + value + '"><img alt="文件下载" style="vertical-align: middle; width:15px; height:15px;border:false" src="../../Resource/css/icons/toolbar/GTP_download.png"/>&nbsp;</a>';
+
+                       html += '&nbsp;&nbsp;&nbsp;<a title="文件重命名" href="#" onclick="rename()"><img alt="文件重命名" style="vertical-align: middle; width:15px; height:15px;border:false" src="../../Resource/css/icons/toolbar/GTP_rename.png"/>&nbsp;</a>';
+                       return html;
+                   }
+               }
+                ],
+                tbar: tbarTopFile(),
+                bbar: bbarTop(store), //分页工具条
+                viewConfig: {
+                    forceFit: true,
+                    enableRowBody: true,
+                    scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
+                }
+            });
+            var south = new top.Ext.Panel({
+                region: 'south',
+                height: 60,
+                frame: true,
+                minSize: 100,
+                maxSize: 200,
+                margins: '0 0 0 0',
+                items: [
+
+            ]
+            });
+            var viewport = new Ext.Panel({
+                layout: 'border',
+                border: false,
+                height: 425,
+                renderTo: 'divShop',
+                items: [gridPanle],
+                listeners: {
+                    afterrender: function () {
+                        if (ShowBtn == false) {
+                            top.Ext.getCmp("FileAdd").hide();
+                            top.Ext.getCmp("FileDelete").hide();
+                        }
+                    }
+                }
+            });
+
+
+           
+        });
+
+        function afterListStoreLoad(a, b, c) {
+            for (var i = 0; i < a.data.length; i++) {
+                data.push(a.data.items[i].data.FilePath);
+            }
+        }
+
+        //展示图片
+        function showImg() {
+            var grid = top.Ext.getCmp("filegg");
+            var rows = grid.getSelectionModel().getSelections();
+            if (rows.length == 1) {
+                var index = grid.getSelectionModel().lastActive;//获取选中的索引
+                var FilePath = rows[0].data["FilePath"];
+                var img1 = new ImgView({
+                    imgindex: index,
+                    src: data
+                });
+                var shop = new top.Ext.Window({
+                    width: 830,
+                    id: 'ImgShowWin',
+                    height: 830,
+                    closable: true,
+                    //shadow: false,
+                    //stateful: false,
+                    border: false,
+                    buttonAlign: 'center', //左边
+                    //modal: true,
+                    layout: 'fit',
+                    plain: true,
+                    autoDestroy: true,
+                    closeAction: 'close',
+                    title: '凭证展示(图片预览)',
+                    items: [img1],
+                    buttons: [
+                    {
+                        text: '取消',
+                        iconCls: 'GTP_cancel',
+                        tooltip: '取消当前的操作',
+                        handler: function () {
+                            top.Ext.getCmp("ImgShowWin").close();
+                        }
+                    }]
+                }).show();
+
+                //top.Ext.getCmp("PagLogo").getEl().dom.src = FilePath;
+            }
+            else {
+                MessageInfo("请选中一条记录！", "statusing");
+            }
+        }  
+     
+        //渲染名称
+        function renderNameOld(value, metadata, record, rowIdx, colIdx, store) {
+            if (value) {
+                var Extension = record.data.Extension; //文件类型
+                var image = '';
+                switch (Extension.toLowerCase()) {
+                     case ".txt":
+                         image = '../../Resource/css/icons/file/GTP_txt.png';
+                         break;
+                     case ".rar":
+                     case ".zip":
+                     case ".arj":
+                     case ".gz":
+                     case ".z":
+                          image = '../../Resource/css/icons/file/GTP_rar.png';
+                          break;
+                      case ".ppt":
+                          image = '../../Resource/css/icons/file/GTP_ppt.png';
+                          break;
+                      case ".pdf":
+                          image = '../../Resource/css/icons/file/GTP_pdf.png';
+                          break;
+                      case ".wps":
+                          image = '../../Resource/css/icons/file/GTP_wps.png';
+                          break;
+                      case ".mp3": //音频文件
+                      case ".wmv":
+                      case ".mpeg":
+                      case ".wav":
+                      case ".wma":
+                      case ".mmf":
+                      case ".amr":
+                      case ".ogg":
+                      case ".mpc":
+                      case ".aif":
+                      case ".au":
+                          image = '../../Resource/css/icons/file/GTP_voice.png';
+                          break;
+                      case ".mp4": //视频文件
+                      case ".rmvp":
+                      case ".mpg":
+                      case ".3gp":
+                      case ".avi":
+                      case ".flv":
+                          image = '../../Resource/css/icons/file/GTP_video.png';
+                          break;                        
+                      case ".html": //html 文件
+                      case ".htm":
+                          image = '../../Resource/css/icons/file/GTP_html.png';
+                          break;
+                      case ".jpg":
+                      case ".jpeg":
+                      case ".gif":
+                      case ".ai":
+                      case ".pdg":
+                      case ".bmp":
+                      case ".ico":
+                      case ".png":
+                      case ".tif":
+                      case ".pic":
+                          image = '../../Resource/css/icons/file/GTP_pic.png'; //图片类型
+                          break;
+                      case ".exe":
+                      case ".com":
+                          image = '../../Resource/css/icons/file/GTP_paper.png'; //可执行文件
+                          break;
+                      case ".word":
+                      case ".doc":
+                      case ".wps":
+                      case ".docx":
+                          image = '../../Resource/css/icons/file/GTP_word.png'; //文档类型
+                          break;
+                      case ".xls":
+                      case ".xlsx":
+                      case ".excel":
+                          image = '../../Resource/css/icons/file/GTP_excel.png'; //excel类型
+                          break;
+                      default:
+                          image = '../../Resource/css/icons/file/GTP_elseflie.png'; //其他文件
+                          break;
+                  }
+                  return '<img alt="文件重命名" style="vertical-align: middle; width:15px; height:15px;border:false" src=' + image + '>&nbsp;&nbsp;' + value + record.data.Extension;
+            }
+        }
+        function tbarTopFile() {
+            //查询工具条
+            var tb = new top.Ext.Toolbar();
+
+            tb.add({
+                text: '新增',
+                tooltip: '新增',
+                id: 'FileAdd',
+                iconCls: 'GTP_add',
+                handler: BtnAddFile //因为是字符串类型,找不到方法,所以需转义一下
+            });
+            tb.add('-');
+            tb.add({
+                text: '移除',
+                tooltip: '移除',
+                id: 'FileDelete',
+                iconCls: 'GTP_delete',
+                handler: BtnDeleteFile //因为是字符串类型,找不到方法,所以需转义一下
+            });
+           
+            return tb;
+        };
+        //文件上传
+        function BtnAddFile() {
+            //多文件上传   
+            var dialog = new top.Ext.ux.UploadDialog.Dialog({
+                autoCreate: true,
+                closable: true,
+                collapsible: false,
+                draggable: true,
+                modal: true,
+                shadow: false,
+                stateful: false,
+                minWidth: 400,
+                minHeight: 200,
+                width: 400,
+                height: 350,
+                // permitted_extensions:['JPG','jpg','jpeg','JPEG','GIF','gif','xls','XLS'],      
+                proxyDrag: true,
+                resizable: true,
+                constraintoviewport: true,
+                title: '文件上传',
+                url: '/SysFileAttach/FileUpload', //上传地址
+                post_var_name: 'mms',
+                base_params: { hehe: "wayfoon", ModelCode: ModelCode, KeyId: KeyId },
+                reset_on_hide: false,
+                allow_close_on_upload: false,  //关闭上传窗口是否仍然上传文件
+                upload_autostart: false //是否自动上传文件   
+            });
+
+            dialog.show();
+
+            dialog.on('uploadsuccess', onUploadSuccess); //定义上传成功回调函数      
+            dialog.on('uploadfailed', onUploadFailed); //定义上传失败回调函数      
+            dialog.on('uploaderror', onUploadFailed); //定义上传出错回调函数     
+            dialog.on('uploadcomplete', onUploadComplete); //定义上传完成回调函数 
+        }
+        //文件删除
+        function BtnDeleteFile() {
+            var grid = top.Ext.getCmp("filegg");
+            var rows = grid.getSelectionModel().getSelections();
+            if (rows.length == 1) {
+                var confirm = top.Ext.MessageBox.confirm('系统确认', '确认要删除该文件附件吗?', function (e) {
+                    if (e == "yes") {
+                        var ids = [];
+                        for (var i = 0; i < rows.length; i++) {
+                            ids.push(rows[i].data["Id"]);
+                        }
+                        Ext.Ajax.request({
+                            url: '/SysFileAttach/DeleteData',
+                            params: { id: ids.join(",") },
+                            success: function (response) {
+                                var rs = eval('(' + response.responseText + ')');
+                                if (rs.success) {
+                                    //判断是否在grid最后一条的时候删除,如果删除,重新加载
+                                    top.Ext.getCmp("filegg").store.reload();
+                                    MessageInfo("删除成功！", "right");
+                                } else {
+                                    MessageInfo("删除失败！", "error");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                MessageInfo("请选中一条记录！", "statusing");
+            }
+        }
+        //文件重命名
+        function rename() {
+            var grid = top.Ext.getCmp("filegg");
+            var rows = grid.getSelectionModel().getSelections();
+            if (rows.length == 1) {
+
+                var shop = new top.Ext.Window({
+                    width: 350,
+                    id: 'NameWin',
+                    height: 150,
+                    closable: false,
+                    shadow: false,
+                    stateful: false,
+                    border: false,
+                    modal: true,
+                    layout: 'fit',
+                    plain: true,
+                    autoDestroy: true,
+                    closeAction: 'close',
+                    title: '文件重命名',
+                    items: new top.Ext.FormPanel({
+                        labelWidth: 65,
+                        frame: true,
+                        border: false,
+                        labelAlign: 'right',
+                        bodyStyle: 'padding:5px 5px 0',
+                        id: 'formPanel',
+                        defaultType: 'textfield',
+                        items: [
+                                                {
+                                                    name: 'Name',
+                                                    fieldLabel: '<span class="required">*</span>文件名称',
+                                                    emptyText: '输入文件名称', ////textfield自己的属性
+                                                    allowBlank: false,
+                                                    maxLength: 50,
+                                                    id: 'FileName',
+                                                    anchor: '95%',
+                                                    maxLengthText: '文件名称长度不能超过50个字符'
+                                                }
+                                            ]
+                    }),
+                    buttons: [
+                     {
+                         text: '确定',
+                         iconCls: 'GTP_submit',
+                         handler: function () {
+                             if (top.Ext.getCmp("FileName").getValue() != "") {
+                                 Ext.Ajax.request({
+                                     url: '/SysFileAttach/ReName',
+                                     params: { id: rows[0].data["Id"], FileName: top.Ext.getCmp("FileName").getValue() },
+                                     success: function (response) {
+                                         var rs = eval('(' + response.responseText + ')');
+                                         if (rs.success) {
+                                             top.Ext.getCmp("NameWin").close();
+                                             //判断是否在grid最后一条的时候删除,如果删除,重新加载
+                                             top.Ext.getCmp("filegg").store.reload();
+                                         } else {
+                                             MessageInfo("操作失败！", "error");
+                                         }
+                                     }
+                                 });
+                             }
+                         }
+                     },
+                    {
+                        text: '取消',
+                        iconCls: 'GTP_cancel',
+                        tooltip: '取消当前的操作',
+                        handler: function () {
+                            top.Ext.getCmp("NameWin").close();
+                        }
+                    }]
+                }).show();
+
+                top.Ext.getCmp("FileName").setValue(rows[0].data["NameOld"]);
+            }
+            else {
+                MessageInfo("请选中一条记录！", "statusing");
+            }
+        }
+
+        //文件上传成功后的回调函数     
+        onUploadSuccess = function (dialog, filename, resp_data, record) {
+            if (!resp_data.success) {
+                alert(resp_data.message); //resp_data是json格式的数据     
+            }
+        }
+
+        //文件上传失败后的回调函数     
+        onUploadFailed = function (dialog, filename, resp_data, record) {
+            top.Ext.getCmp("filegg").store.reload();
+            alert(resp_data.message);
+        }
+
+        //文件上传完成后的回调函数
+        onUploadComplete = function (dialog) {
+            // dialog.hide();
+            top.Ext.getCmp("filegg").store.reload();
+            Ext.getCmp("gg").store.reload();
+        }
+
+
+     
+    </script>
+</head>
+<body>
+ <!--数据导出-->
+ <form method="post" action="#" class="hide hideform"></form>
+
+    <div id="divShop" style="margin: 0px; width: 100%; height: 100%">
+    </div>
+</body>
+</html>

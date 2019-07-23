@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>开学分班</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div style="padding: 20px; ">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header" style="height: auto; padding-top: 20px;">
+                        <img id="lcimg" src="../img/1.png" width="100%" />
+                        <div class="layui-row" style="margin: 20px 0px;">
+                            <div class="layui-col-xs4 center">
+                                启动
+                            </div>
+                            <div class="layui-col-xs4 center">
+                                导入
+                            </div>
+                            <div class="layui-col-xs4 center">
+                                确认
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <div id="form" class="layui-form three hide">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">班级</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="v" lay-skin="primary" title="一班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二班" checked>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">年级</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="v" lay-skin="primary" title="一年级" checked>
+                                    <input type="checkbox" name="v" lay-skin="primary" title="二年级" checked>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <button class="layui-btn one" onclick="start()" style="width: 200px; margin: 20px 0px;">启动</button>
+                            <button class="layui-btn hide" id="btnfile" style="width: 200px; margin: 20px 0px;">启动</button>
+                            <button class="layui-btn two hide" onclick="daoru()" style="width: 200px; margin: 20px 0px;">导入</button>
+                            <a style="color:#1E9FFF;" href="http://m.gzygxy.com/admin_html/templ/kxyfb_tpl.xlsx" class="one">下载模板</a>
+                            <button class="layui-btn three hide" onclick="" style="width: 200px; margin: 20px 0px;">确认</button>
+                        </div>
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                            <legend>操作须知</legend>
+                        </fieldset>
+                        <div>
+                            1:该操作主要用于新生入学前以及高一升高二进行分班操作
+                        </div>
+                        <div>
+                            2:该操作需要在每年8月1日后可以操作，请及时为维护相关信息,以避免影响学生的正常缴费
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript " src="../inc/layui/layui.js "></script>
+<script type="text/javascript " src="../inc/g.js "></script>
+<script type="text/javascript ">
+
+    var key='';
+    function pageload() {
+        //多图片上传
+        Comm.upload.render({
+            elem: '#btnfile',
+            field: 'file',
+            accept: 'file',
+            multiple: false,//多图
+            number: 2,
+            url: config.ossroot,
+            before: function (obj) {
+                //上传loading
+                layer.load();
+            },
+            done: function (d) {
+                layer.closeAll('loading'); //关闭loading
+                key=this.data.key;
+                num=2
+                lc()
+            },
+            error: function () {
+                //请求异常回调
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+    }
+
+    function start(){
+        var now=new Date();
+        //判断时间
+        if(now.getMonth()+1>=8){
+            $("#btnfile").trigger('click');
+        }else{
+            Comm.msg('需要在每年8月1日后可以操作',5)
+        }
+    }
+
+    var num=1;
+    function lc(){
+        if(num==1){
+            $("#lcimg").attr("src","../img/1.png")
+            $(".one").show();
+            $(".two").hide();
+            $(".three").hide();
+        }else if(num==2){
+            $("#lcimg").attr("src","../img/2.png")
+            $(".two").show();
+            $(".one").hide();
+            $(".three").hide();
+        }else if(num==3){
+            $("#lcimg").attr("src","../img/3.png")
+            $(".three").show();
+            $(".two").hide();
+        }
+    }
+    function pve(){
+        num--;
+        lc()
+    }
+
+    function daoru(){
+        AJAX.POST('/school/student/shareClassse',{key:key},function(d){
+            if(d.code==1){
+                num=3
+                lc()
+            }
+        })
+    }
+</script>
+
+</html>

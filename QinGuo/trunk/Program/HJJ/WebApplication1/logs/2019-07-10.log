@@ -1,0 +1,164 @@
+2019-07-10 15:50:27.496 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [EjrEha00242790]"}
+2019-07-10 15:51:06.765 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [I66xTa0064b101]"}
+2019-07-10 15:51:07.923 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [SfLtNa00652790]"}
+2019-07-10 15:51:29.435 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [8qZkPa0086hb92]"}
+2019-07-10 15:58:45.872 DEBUG WriteLog: GetUnifiedOrderResult!10.00
+2019-07-10 15:58:46.029 DEBUG WriteLog: UnfiedOrder request :<xml><appid><![CDATA[wx31183ba598767f20]]></appid><attach><![CDATA[test]]></attach><body><![CDATA[四川红领巾少儿艺术团-报名活动]]></body><goods_tag><![CDATA[test]]></goods_tag><mch_id><![CDATA[1542995961]]></mch_id><nonce_str><![CDATA[367260891]]></nonce_str><notify_url><![CDATA[http://hjj.bellali.cn/WxXin/SuccOrder]]></notify_url><openid><![CDATA[admin]]></openid><out_trade_no><![CDATA[154299596120190710155845666]]></out_trade_no><sign><![CDATA[EA56BFCCB655370D6B1B3D11B6269E62]]></sign><sign_type><![CDATA[MD5]]></sign_type><spbill_create_ip><![CDATA[120.79.183.124]]></spbill_create_ip><time_expire><![CDATA[20190710160845]]></time_expire><time_start><![CDATA[20190710155845]]></time_start><total_fee>1000</total_fee><trade_type><![CDATA[JSAPI]]></trade_type></xml>
+2019-07-10 15:58:46.680 DEBUG WriteLog: UnfiedOrder response :<xml><return_code><![CDATA[SUCCESS]]></return_code>
+<return_msg><![CDATA[OK]]></return_msg>
+<appid><![CDATA[wx31183ba598767f20]]></appid>
+<mch_id><![CDATA[1542995961]]></mch_id>
+<nonce_str><![CDATA[olyWohY43VYQ3XFt]]></nonce_str>
+<sign><![CDATA[B6A5BFA11D1D7792CDDD461E7B5D4625]]></sign>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[PARAM_ERROR]]></err_code>
+<err_code_des><![CDATA[无效的openid]]></err_code_des>
+</xml>
+2019-07-10 15:58:46.722 DEBUG WriteLog: UnifiedOrder response error!
+2019-07-10 15:58:58.428 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [aMh9dA05352994]"}
+2019-07-10 15:59:07.390 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [PfDgPA05444100]"}
+2019-07-10 15:59:08.319 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [Z9ItUa0545hb96]"}
+2019-07-10 15:59:28.015 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [nSWvna0565hb92]"}
+2019-07-10 16:00:39.572 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [lMkqua06362790]"}
+2019-07-10 16:04:45.999 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [J3BY708831480]"}
+2019-07-10 16:06:05.798 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [90Zr30963b101]"}
+2019-07-10 16:06:16.743 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [rsDucA0973hb10]"}
+2019-07-10 16:06:42.756 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [BKPGrA0999hb96]"}
+2019-07-10 16:07:19.365 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [B3b0uA0036hb96]"}
+2019-07-10 16:07:21.618 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [6_PySA00382067]"}
+2019-07-10 16:09:53.233 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [4uOwKA0190b101]"}
+2019-07-10 16:10:09.184 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [Uyyvra0206hb96]"}
+2019-07-10 16:11:32.004 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [jeh0289hb97]"}
+2019-07-10 16:12:02.512 DEBUG WriteLog: GetUnifiedOrderResult!1.00
+2019-07-10 16:12:02.627 DEBUG WriteLog: UnfiedOrder request :<xml><appid><![CDATA[wx31183ba598767f20]]></appid><attach><![CDATA[test]]></attach><body><![CDATA[四川红领巾少儿艺术团-报名活动]]></body><goods_tag><![CDATA[test]]></goods_tag><mch_id><![CDATA[1542995961]]></mch_id><nonce_str><![CDATA[2755079579]]></nonce_str><notify_url><![CDATA[http://hjj.bellali.cn/WxXin/SuccOrder]]></notify_url><openid><![CDATA[admin]]></openid><out_trade_no><![CDATA[154299596120190710161202142]]></out_trade_no><sign><![CDATA[CA197AB47C29D246F8A452288A33426F]]></sign><sign_type><![CDATA[MD5]]></sign_type><spbill_create_ip><![CDATA[120.79.183.124]]></spbill_create_ip><time_expire><![CDATA[20190710162202]]></time_expire><time_start><![CDATA[20190710161202]]></time_start><total_fee>100</total_fee><trade_type><![CDATA[JSAPI]]></trade_type></xml>
+2019-07-10 16:12:02.999 DEBUG WriteLog: UnfiedOrder response :<xml><return_code><![CDATA[SUCCESS]]></return_code>
+<return_msg><![CDATA[OK]]></return_msg>
+<appid><![CDATA[wx31183ba598767f20]]></appid>
+<mch_id><![CDATA[1542995961]]></mch_id>
+<nonce_str><![CDATA[6WvJXaCf6rltNeCQ]]></nonce_str>
+<sign><![CDATA[740F2603A12BB0EF095B59DEBCE2BDA4]]></sign>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[PARAM_ERROR]]></err_code>
+<err_code_des><![CDATA[无效的openid]]></err_code_des>
+</xml>
+2019-07-10 16:12:03.253 DEBUG WriteLog: UnifiedOrder response error!
+2019-07-10 16:12:13.207 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [LLLo403302790]"}
+2019-07-10 16:12:14.800 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [vBNN1a03323612]"}
+2019-07-10 16:12:28.569 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:12:28.707 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [NOOa503451533]"}
+2019-07-10 16:12:54.527 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [ykYSRA0371hb96]"}
+2019-07-10 16:12:55.950 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:12:56.159 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [NR1vHA0373e669]"}
+2019-07-10 16:12:57.204 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:12:57.437 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [imtE30374b101]"}
+2019-07-10 16:12:59.936 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:00.155 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [cuLHka0377hb97]"}
+2019-07-10 16:13:00.329 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:00.510 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [lNujYa03773064]"}
+2019-07-10 16:13:01.219 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:01.437 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [O3.Wsa0378e669]"}
+2019-07-10 16:13:02.465 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:02.628 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [KBeSpA0379hb10]"}
+2019-07-10 16:13:03.648 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:03.743 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:03.828 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [jjZY80381b101]"}
+2019-07-10 16:13:04.409 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:04.518 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:04.610 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [Qt9LVa0381hb97]"}
+2019-07-10 16:13:05.200 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:05.603 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:05.729 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:05.863 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [OkoopA0383sha6]"}
+2019-07-10 16:13:05.956 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [7X4xRa0383hb10]"}
+2019-07-10 16:13:23.829 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:23.979 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [GoTDsa0401hb92]"}
+2019-07-10 16:13:41.371 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [0418hb97]"}
+2019-07-10 16:13:43.136 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:43.345 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [D5Oo50420hb96]"}
+2019-07-10 16:13:44.990 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:45.216 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [.f_CbA0422hb96]"}
+2019-07-10 16:13:50.594 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:13:50.807 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [NroTEa04284100]"}
+2019-07-10 16:14:08.608 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:14:08.918 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [7xoLPa04461533]"}
+2019-07-10 16:14:13.172 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [LxZ04503055]"}
+2019-07-10 16:14:30.001 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:14:33.411 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:16:05.314 DEBUG WriteLog: UpdateOrderSucc：null
+2019-07-10 16:17:02.749 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [lleyma06191480]"}
+2019-07-10 16:17:17.217 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [qhfuUA0634hb97]"}
+2019-07-10 16:17:19.570 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [y2lmVA0636hb96]"}
+2019-07-10 16:17:22.606 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [6FIsjA06391466]"}
+2019-07-10 16:17:23.132 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [p4k2la0640b101]"}
+2019-07-10 16:17:23.724 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [EG0m4a06401466]"}
+2019-07-10 16:17:24.259 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [mbsZsA0641sha6]"}
+2019-07-10 16:17:24.904 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [_Rjbda0642hb10]"}
+2019-07-10 16:17:25.442 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [Qvhbwa0642hb97]"}
+2019-07-10 16:27:01.620 DEBUG WriteLog: userjson:{"errcode":40164,"errmsg":"invalid ip 171.88.46.66, not in whitelist hint: [NGcY9a02183612]"}
+2019-07-10 19:04:44.259 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:04:51.488 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:05:10.997 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:05:13.911 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:05:19.643 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:05:27.490 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:11:21.687 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:11:35.233 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:11:43.400 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:00.364 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:09.902 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:10.542 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:10.736 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:10.917 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:11.333 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:11.546 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:11.700 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:11.809 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:12.056 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:24.695 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:26.184 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:26.461 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:26.628 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:26.828 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:26.942 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:27.061 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:27.826 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:28.053 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:29.354 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:29.528 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:30.305 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:30.537 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:30.713 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:30.871 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:33.686 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:35.408 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:36.206 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:36.769 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:37.111 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:37.640 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:38.200 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:39.619 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:40.533 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:41.206 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:41.774 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:42.015 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:42.188 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:42.410 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:42.488 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:12:42.572 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:17:02.734 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:18:59.934 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:27.248 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:41.923 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:43.000 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:43.479 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:43.669 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:43.865 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:44.049 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:44.161 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:44.303 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:20:44.470 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:21:02.692 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:21:03.064 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:21:03.221 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:21:39.453 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.
+2019-07-10 19:24:02.578 DEBUG WriteLog: OutputExcel：Object reference not set to an instance of an object.

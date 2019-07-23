@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>批量导入学生信息</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div style="background-color: #F2F2F2;">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header" style="height: auto; padding-top: 20px;">
+                        <img src="../img/1.png" width="100%" id="lcimg" />
+                        <div class="layui-row" style="margin: 20px 0px;">
+                            <div class="layui-col-xs4 center">
+                                导入
+                            </div>
+                            <div class="layui-col-xs4 center">
+                                系统处理中
+                            </div>
+                            <div class="layui-col-xs4 center">
+                                确认
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <div id="form" class="layui-form">
+                            <div class="layui-form-item one">
+                                <div class="layui-row" style="margin-bottom: 20px">
+                                    <div class="layui-col-xs4">
+                                        <label class="layui-form-label">学籍信息</label>
+                                        <div class="layui-input-block">
+                                            <select name="grade" id="grade" lay-filter="grade" lay-search="" lay-verify="required">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs4">
+                                        <div class="layui-input-block">
+                                            <select name="classesId" id="classesId" lay-search="" lay-verify="required">
+                                                <option value="">请选择班级</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="three hide" id="result">
+
+                            </div>
+                            <div class="center">
+                                <div class="one">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sub" style="width: 200px; margin: 20px 0px;">导入</button>
+                                    <button class="layui-btn hide" id="btnfile" style="width: 200px; margin: 20px 0px;">导入</button>
+                                    <a style="color:#1E9FFF;" href="http://m.gzygxy.com/admin_html/templ/stu_tpl.xlsx">下载模板</a>
+                                </div>
+                                <div class="two hide">
+                                    <button class="layui-btn" onclick="pve()" style="width: 200px; margin: 20px 0px;">上一步</button>
+                                </div>
+                            </div>
+                            <div class="center">
+                            </div>
+                        </div>
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                            <legend>操作须知</legend>
+                        </fieldset>
+                        <div>
+                            该操作将会以导入的表格信息为主，与系统中的现有学生进行比对，并会将表格中存在而系统 中不存在的学生补进系统
+                        </div>
+                        <div>
+                            该功能用途：
+                        </div>
+                        <div>
+                            1、学生信息批量导入。
+                        </div>
+                        <div>
+                            2、当前系统学生信息比对。
+                        </div>
+                        <div>
+                            说明：
+                        </div>
+                        <div>年级：一~六年级格式为1~6，初一~初三为7~9，高一~高三为10~12;</div>
+                        <div>班级：填写阿拉伯数字;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/html" id="resultTpl">
+		<div class="center">
+			新增学生信息
+			<a style="color:#1E9FFF;font-size: 25px;" href="###" onclick="showstu({{d.addIdList?d.addIdList.length:0}},0)">{{d.addIdList?d.addIdList.length:0}}</a>人</div>
+		<div class="center">
+			完全匹配学生信息
+			<a style="color:#1E9FFF;font-size: 25px;" href="###" onclick="showstu({{d.haveIdList?d.haveIdList.length:0}},1)">{{d.haveIdList?d.haveIdList.length:0}}</a>人</div>
+		<div class="center">
+			无法匹配学生信息
+			<a style="color:#1E9FFF;font-size: 25px;" href="###" onclick="showstu({{d.otherIdList?d.otherIdList.length:0}},2)">{{d.otherIdList?d.otherIdList.length:0}}</a>人</div>
+		<div class="center">
+			<button class="layui-btn" onclick="pve1()" style="width: 200px; margin: 20px 0px;">返回第一步</button>
+		</div>
+</script>
+
+<script type="text/html" id="stuTpl">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>学生</th>
+					<th>性别</th>
+				</tr>
+			</thead>
+			<tbody id="skulist">
+				{{# layui.each(d, function(k, v){ }}
+				<tr>
+					<td>{{v.studentName}}</td>
+					<td>{{v.sex==2?'女':'男'}}</td>
+				</tr>
+				{{# }); }}
+			</tbody>
+		</table>
+	</script>
+
+<script type="text/html" id="njTpl">
+		{{# if(d.schoolType&1){ }}
+		<option value="1">一年级</option>
+		<option value="2">二年级</option>
+		<option value="3">三年级</option>
+		<option value="4">四年级</option>
+		<option value="5">五年级</option>
+		<option value="6">六年级</option>
+		{{# } }} {{# if(d.schoolType&2){ }}
+		<option value="7">初一</option>
+		<option value="8">初二</option>
+		<option value="9">初三</option>
+
+		{{# } }} {{# if(d.schoolType&4){ }}
+		<option value="10">高一</option>
+		<option value="11">高二</option>
+		<option value="12">高三</option>
+		{{# } }}
+	</script>
+<script type="text/javascript " src="../inc/layui/layui.js "></script>
+<script type="text/javascript " src="../inc/g.js "></script>
+<script type="text/javascript ">
+		var u = Comm.db("user")
+		var result = [];
+
+		function pageload() {
+			Comm.laytpl($("#njTpl").html()).render(u, function(html) {
+				$("#grade").append(html)
+				Comm.form.render('select');
+				getBJByNj($("#grade").val())
+			})
+			Comm.form.on('select(grade)', function(data) {
+				if(data.value != "") {
+					getBJByNj(data.value)
+				}
+			});
+
+			//提交表单
+			Comm.form.on('submit(sub)', function(data) {
+				//点击 上传按钮
+				$("#btnfile").trigger('click');
+				num = 2;
+				lc()
+			});
+
+			//多图片上传
+			Comm.upload.render({
+				elem: '#btnfile',
+				field: 'file',
+				accept: 'file',
+				multiple: false, //多图
+				number: 2,
+				url: config.ossroot,
+				before: function(obj) {
+					//上传loading
+					layer.load();
+				},
+				done: function(d) {
+					layer.closeAll('loading'); //关闭loading
+					var classesId = $("#classesId").val()
+					var grade = $("#grade").val()
+					var key1 = this.data.key;
+					layer.confirm('确认导入？', {
+						btn: ['确定', '取消'] //按钮
+					}, function() {
+						AJAX.POST("/school/student/upload", {
+							key:key1,
+							grade: grade,
+							classesId: classesId
+						}, function(d) {
+							if(d.code == 1) {
+								result = d.data, num = 3;
+								lc();
+								Comm.laytpl($("#resultTpl").html()).render(d.data, function(html) {
+									$("#result").html(html)
+								})
+								Comm.msg('成功导入'+d.data.addIdList.length+'条数据', 1)
+							} else {
+								Comm.msg('导入失败', 5)
+								num = 1;
+								lc()
+							}
+						})
+					}, function() {
+						num=1;
+						lc()
+						layer.closeAll();
+					});
+
+				},
+				error: function() {
+					//请求异常回调
+					layer.closeAll('loading'); //关闭loading
+				}
+			});
+		}
+
+		var num = 1;
+
+		function lc() {
+			if(num == 1) {
+				$("#lcimg").attr("src", "../img/1.png")
+				$(".one").show();
+				$(".two").hide();
+			} else if(num == 2) {
+				$("#lcimg").attr("src", "../img/2.png")
+				$(".one").hide();
+				$(".two").show();
+				$(".three").hide();
+			} else if(num == 3) {
+				$("#lcimg").attr("src", "../img/3.png")
+				$(".one").hide();
+				$(".two").hide();
+				$(".three").show();
+			}
+		}
+
+		function pve() {
+			num--;
+			lc()
+		}
+		function pve1() {
+			num=1;
+			lc();
+			$("#result").html('');
+		}
+		function getBJByNj(grade) {
+			AJAX.GET('/school/classse/getBySchoolAndGrade?grade=' + grade, function(d) {
+				if(d.code == 1) {
+					bjlist = d.data;
+					$("#classesId").html('')
+					for(var i = 0; i < d.data.length; i++) {
+						var e = d.data[i];
+						$("#classesId").append('<option value="' + e.classesId + '">' + e.number + '班</option>');
+					}
+					Comm.form.render('select');
+				}
+			})
+		}
+
+		function showstu(d, i) {
+			if(d > 0) {
+				var data = [];
+				if(i == 0) {
+					data = result.addIdList
+				} else if(i == 1) {
+					data = result.haveIdList
+				} else if(i == 2) {
+					data = result.otherIdList
+				}
+
+				AJAX.GET('/school/student/getByIdStr?studentId=' + data.join(','), function(d) {
+					if(d.code == 1) {
+						Comm.laytpl($("#stuTpl").html()).render(d.data, function(html) {
+							layer.open({
+								type: 1,
+								title: '学生详情',
+								area: ['600px', '400px'],
+								maxmin: true,
+								content: html,
+								success: function(layero) {
+
+								}
+							});
+						})
+					}
+				})
+
+			}
+		}
+	</script>
+
+</html>

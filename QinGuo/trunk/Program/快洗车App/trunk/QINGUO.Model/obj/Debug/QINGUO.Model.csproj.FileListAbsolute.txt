@@ -1,0 +1,15 @@
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\obj\Debug\QINGUO.Model.csprojAssemblyReference.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\obj\Debug\QINGUO.Model.csproj.CoreCompileInputs.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.Model.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.Model.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.Common.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.DapperAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\GetuiServerApiSDK.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\ThoughtWorks.QRCode.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\log4net.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\Google.ProtocolBuffers.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.DapperAccessBase.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\bin\Debug\QINGUO.Common.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\obj\Debug\QINGUO.Model.csproj.CopyComplete
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\obj\Debug\QINGUO.Model.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\QINGUO.Model\obj\Debug\QINGUO.Model.pdb

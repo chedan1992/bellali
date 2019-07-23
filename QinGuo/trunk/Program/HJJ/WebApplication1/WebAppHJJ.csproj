@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <StartupObject></StartupObject>
+    <AssemblyName>WebAppHJJ</AssemblyName>
+    <RootNamespace>WebAppHJJ</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="UploadFiles\**" />
+    <Compile Remove="wwwroot\admin\**" />
+    <Compile Remove="新文件夹\**" />
+    <Content Remove="UploadFiles\**" />
+    <Content Remove="wwwroot\admin\**" />
+    <Content Remove="新文件夹\**" />
+    <EmbeddedResource Remove="UploadFiles\**" />
+    <EmbeddedResource Remove="wwwroot\admin\**" />
+    <EmbeddedResource Remove="新文件夹\**" />
+    <None Remove="UploadFiles\**" />
+    <None Remove="wwwroot\admin\**" />
+    <None Remove="新文件夹\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\WeiXin\business\DownloadBill.cs" />
+    <Compile Remove="Common\WeiXin\business\JsApiPay.cs" />
+    <Compile Remove="Common\WeiXin\business\MicroPay.cs" />
+    <Compile Remove="Common\WeiXin\business\NativeNotify.cs" />
+    <Compile Remove="Common\WeiXin\business\NativePay.cs" />
+    <Compile Remove="Common\WeiXin\business\OrderQuery.cs" />
+    <Compile Remove="Common\WeiXin\business\Refund.cs" />
+    <Compile Remove="Common\WeiXin\business\RefundQuery.cs" />
+    <Compile Remove="Common\WeiXin\business\ResultNotify.cs" />
+    <Compile Remove="Common\WeiXin\lib\Notify.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Bll\" />
+    <Folder Include="Common\WeiXin\" />
+    <Folder Include="Common\WeiXin\business\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>..\Lib\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\Lib\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="QINGUO.Common">
+      <HintPath>..\Lib\QINGUO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <HintPath>..\..\..\..\书吧\book\Lib\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\Lib\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+    <Reference Include="WxPayAPI">
+      <HintPath>..\Lib\WxPayAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

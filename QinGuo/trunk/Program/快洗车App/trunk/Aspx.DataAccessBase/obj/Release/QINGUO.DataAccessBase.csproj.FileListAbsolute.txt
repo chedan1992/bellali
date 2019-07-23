@@ -1,0 +1,16 @@
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.DataAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.DataAccessBase.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\BEGDC.Utility.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.Common.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.DapperAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\GetuiServerApiSDK.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\ThoughtWorks.QRCode.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\log4net.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\Google.ProtocolBuffers.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.DapperAccessBase.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\bin\Release\QINGUO.Common.pdb
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Release\QINGUO.DataAccessBase.csprojAssemblyReference.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Release\QINGUO.DataAccessBase.csproj.CoreCompileInputs.cache
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Release\QINGUO.DataAccessBase.csproj.CopyComplete
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Release\QINGUO.DataAccessBase.dll
+E:\Project\MyProjects-\trunk\Program\快洗车App\trunk\Aspx.DataAccessBase\obj\Release\QINGUO.DataAccessBase.pdb
