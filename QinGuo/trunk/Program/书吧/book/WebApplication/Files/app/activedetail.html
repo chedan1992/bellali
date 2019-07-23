@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>活动详情</title>
+    <meta content="width=device-width,initial-scale=1.0,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no,email=no,adress=no" />
+    <link rel="stylesheet" href="css/g.css" />
+    <link rel="stylesheet" href="css/comm.css" />
+    <link rel="stylesheet" href="inc/mescroll/mescroll.min.css" />
+    <style>
+        section {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .tjspx {
+            background-image: url('img/tjspx.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 40%;
+        }
+
+        .main img {
+            max-width: 100% !important;
+        }
+
+        input[type='text'],
+        input[type='tel'] {
+            border: 1px solid #ededed;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            vertical-align: bottom;
+            padding: 0 20px 0 50px;
+            font-size: 14px;
+            background-position: 20px center;
+            background-repeat: no-repeat;
+        }
+
+        input[type='checkbox'] {
+            height: 12px;
+            width: 12px;
+            border: 1px solid #efefef;
+            vertical-align: middle;
+            -webkit-appearance: checkbox;
+        }
+
+        .bgname {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .bgaddr {
+            background-image: url("img/vo/img-26.png");
+        }
+
+        .bgphone {
+            background-image: url("img/vo/img-25.png");
+        }
+
+        .bgsex {
+            background-image: url("img/vo/img-23.png");
+        }
+
+        .imgpo {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+
+        .bgcard {
+            background-image: url("img/vo/img-24.png");
+        }
+
+        .bgemail {
+            background-image: url("img/vo/n-icon-08.png");
+        }
+
+        .bgisT {
+            background-image: url("img/vo/n-icon-22.png");
+        }
+
+        .bgday {
+            background-image: url('img/vo/n-icon-18.png')
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header></header>
+    <section>
+        <script id="mainTpl" type="text/html">
+            <div class="pad10">
+                <div class="lh20"><span class="f18">{{active.title}}</span></div>
+                <p class="lh20 wordW2 color999 f12 mart10">{{active.remark}}</p>
+                <p class="lh20 color999 f12">报名时间：{{formatDate(active.countStart)}}到{{formatDate(active.countEnd)}}</p>
+                <div class="mart20">
+                    <span class="f22 colorred bold">{{active.totalMoney}}</span>
+                    <span class="f12 colorred">元</span>
+                    <span class="f12 color999 fr">已报名人数：{{active.count}}</span>
+                </div>
+            </div>
+            <div class="pad10">
+                <div class="lh30">
+                    <span class="">具体活动：</span>
+                </div>
+                <div class="main">{{active.content}}</div>
+            </div>
+            <div class="linebod"></div>
+            <div class="center lh40 tjspx paddt10">
+                <span class="f16">活动报名</span>
+            </div>
+            <div class="center">
+                <span class="f12 color999">Volunteer Application</span>
+            </div>
+            <div>
+                <div class="pad10 mart30 marr10 marl10 marb30 bottomShadow">
+                    <div class="mart30">
+                    </div>
+                    <div class="mart10">
+                        <input type="text" data-reg='empty' name="realname" id="realname" class="bgname" placeholder="请输入您的真实姓名">
+                    </div>
+                    <div class="mart10">
+                        <input type="tel" maxLength="11" data-reg='m' name="phone" id="phone" class="bgphone" placeholder="请输入您的手机号">
+                    </div>
+                    <div class="mart10" style="position:relative;" onclick="model.sexPicker.show()">
+                        <input type="text" data-reg='empty' readonly name="sex" id="sex" class="bgsex" placeholder="请输选择您的性别">
+                        <img src="img/vo/n-icon-15.png" class="imgpo" />
+                    </div>
+                    <div class="mart10">
+                        <input type="text" data-reg='cd' name="card" id="card" class="bgcard" placeholder="请输入您的身份证">
+                    </div>
+                    <div class="mart10" style="position:relative;" onclick="model.gradePiceer.show()">
+                        <input type="text" data-reg='empty' readonly name="grade" id="grade" class="bgday" placeholder="请选择年级">
+                        <img src="img/vo/n-icon-15.png" class="imgpo" />
+                    </div>
+                    <div class="mart10" style="position:relative;" onclick="model.daPicker.show()">
+                        <input type="text" data-reg='empty' readonly name="serverTime" id="serverTime" class="bgday" placeholder="请选择到馆时间">
+                        <img src="img/vo/n-icon-15.png" class="imgpo" />
+                    </div>
+                    <div class="center marb20">
+                        <button onclick="model.sub()" class="mart10 " style="border:0px;">提交报名</button>
+                    </div>
+                </div>
+            </div>
+            <div class="linebod"></div>
+            <div class="mart30 marb30">
+                <div class="center lh20 f12">
+                    <span>热线电话:</span>
+                    <span>{{base.phone}}</span>
+                </div>
+                <div class="center lh20 f12">
+                    <span>邮箱地址:</span>
+                    <span>{{base.qq}}</span>
+                </div>
+                <div class="center mart10 marb10">
+                    <img src="{{base.img}}" width="130" height="130" />
+                </div>
+                <div class="center lh30 f12 paddl10 paddr10">
+                    <span class="color999">公司:</span>
+                    <span class="color999">{{base.addr}}</span>
+                </div>
+            </div>
+        </script>
+    </section>
+    <footer class="shared"></footer>
+
+</body>
+<script type="text/javascript" src="inc/z.js"></script>
+<script type="text/javascript" src="inc/g.js"></script>
+<script type="text/javascript" src="inc/comm.js"></script>
+<script type="text/javascript" src="inc/art-template.js"></script>
+<script type="text/javascript" src="inc/picker.min.js"></script>
+<script type="text/javascript" src="inc/mescroll/mescroll.min.js"></script>
+<script>
+    function pageload() {
+        model.init();
+    }
+
+    var model = {
+        id: Comm.query('id'),
+        userid: Comm.query('userid'),
+        init: function () {
+            AJAX.GET('/api/book/GetActive/' + model.id, {}, function (d) {
+                if (d.code == 1) {
+                    d.data.base = config.basedata;
+                    $("section").html(template('mainTpl', d.data))
+                    initPicker();
+                }
+            })
+
+            function initPicker() {
+                var sexdata = [{ text: '女', i: 1 }, { text: '男', i: 2 }];
+                model.sexPicker = new Commpicker('选择性别', [sexdata], function (obj, name, sid) {
+                    $("#sex").val(name).attr('data', sid);
+                })
+
+                var gradedata = [{ text: '一年级', i: 1 },
+                { text: '二年级', i: 2 },
+                { text: '三年级', i: 3 },
+                { text: '四年级', i: 4 },
+                { text: '五年级', i: 5 },
+                { text: '六年级', i: 6 },
+                { text: '初一', i: 7 },
+                { text: '初二', i: 8 },
+                { text: '初三', i: 9 },
+                { text: '高一', i: 10 },
+                { text: '高二', i: 11 },
+                { text: '高三', i: 12 },
+                { text: '大一', i: 13 },
+                { text: '大二', i: 14 },
+                { text: '大三', i: 15 },
+                { text: '大四', i: 16 },
+                ];
+                model.gradePiceer = new Commpicker('请选择年级', [gradedata], function (obj, name, sid) {
+                    $("#grade").val(name).attr('data', sid);
+                })
+
+                model.daPicker = new Datepicker('请选择到店时间', function (d, v) {
+                    $("#serverTime").val(v);
+                })
+            }
+        },
+        sub: function () {
+            var data = Check.submit('POST');
+            if (!data) {
+                return false;
+            }
+            Comm.loading('正在提交...');
+            data.userid = model.userid;
+            data.activeid = model.id;
+            AJAX.POST('/api/book/addOrder', data, function (a) {
+                Comm.loading(false);
+                if (a.code == 1) {
+                    Comm.message('提交报名成功！')
+                    $('input').val('');
+                } else {
+                    Comm.message(a.msg)
+                }
+            })
+        }
+    }
+</script>
+
+</html>

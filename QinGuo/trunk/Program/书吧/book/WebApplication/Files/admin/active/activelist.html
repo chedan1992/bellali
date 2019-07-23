@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>活动管理</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="layui-form" id="search-form">
+        <div class="layui-row">
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">活动名</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input " name="name" id="name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div style="float: right;">
+                    <button class="layui-btn" onclick="Comm.search()">搜索</button>
+                    <button class="layui-btn layui-btn-primary" onclick="reload()">刷新</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" onclick="openedit('新增')">新增</button>
+            <button class="layui-btn" onclick="openedit('编辑')">编辑</button>
+            <button class="layui-btn" onclick="enble(2)">启用</button>
+            <button class="layui-btn" onclick="enble(1)">禁用</button>
+            <button class="layui-btn layui-btn-danger" onclick="del()">删除</button>
+        </div>
+    </div>
+    <table class="layui-hide" id="table" lay-filter="table"></table>
+</body>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="copy">复制链接</a>
+</script>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+
+    function openedit(title) {
+        var id = '';
+        if (title == "编辑") {
+            var d = Comm.table.checkStatus('table');//获取选中的数据
+            if (d.data.length != 1) {
+                Comm.msg("请选择一条数据", 5)
+                return;
+            }
+            id = d.data[0].id;
+        }
+        parent.cms.addtab(title, 'active/edit.html?id=' + id, 'active_edit' + id)
+    }
+
+    //删除
+    function del() {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择删除数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdateActiveStatus", { ids: ids.join(','), status: -1 }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("删除成功", 1)
+                } else {
+                    Comm.msg("删除失败", 5)
+                }
+            })
+        })
+    }
+
+    //启用
+    function enble(status) {
+        var d = Comm.table.checkStatus('table');//获取选中的数据
+        if (d.data.length <= 0) {
+            Comm.msg("请至少选择一条数据", 5)
+            return;
+        }
+        Comm.confirm('确定选择操作数据', function () {
+            var ids = [];
+            for (var i = 0; i < d.data.length; i++) {
+                ids.push(d.data[i].id)
+            }
+            //执行 ajax del 操作
+            AJAX.POST("/api/book/UpdateActiveStatus", { ids: ids.join(','), status: status }, function (d) {
+                if (d.code == 1) {
+                    //刷新列表
+                    reload()
+                    Comm.msg("操作成功", 1)
+                } else {
+                    Comm.msg("操作失败", 5)
+                }
+            })
+        })
+    }
+    //刷新列表
+    function reload() {
+        //刷新列表
+        Comm.table.reload('table');
+    }
+
+    function pageload() {
+        //初始化列表
+        Comm.table.render({
+            elem: '#table',
+            url: '/api/book/GetActiveList',//列表请求接口
+            where: {//接口参数
+                name: '',
+                phone: ''
+            },
+            cols: [[
+                { checkbox: true },
+                { field: 'title', title: '活动名称' },
+                { field: 'img', title: '图片', },
+                {
+                    field: 'countStart', title: '开始时间', renderData: function (d, v) {
+                        return Comm.format(v)
+                    }
+                },
+                {
+                    field: 'countEnd', title: '结束时间', renderData: function (d, v) {
+                        return Comm.format(v)
+                    }
+                },
+                { field: 'totalMoney', title: '活动金额' },
+                {
+                    field: 'status', title: '状态', renderData: function (d, v) {
+                        return v == 1 ? '禁用' : '启用'
+                    }
+                },
+                {
+                    field: 'createTime', title: '创建时间', renderData: function (d, v) {
+                        return Comm.format(v)
+                    }
+                },
+                { field: 'status', title: '复制链接', toolbar: '#barDemo', width: 80 },
+            ]],
+            done: function (d, curr, count) {
+            },
+            limit: 15,//分页大小
+            id: 'table',
+            page: true,//是否分页
+            height: 'full-' + ($(".layui-form").height() + 50),//计算table底部距离
+        });
+        //监听table列表里按钮点击事件
+        Comm.table.on('tool(table)', function (obj) {
+            if (obj.event == 'copy') {
+                textArea = document.createElement('textarea')
+                textArea.style.width = '0'
+                textArea.style.height = '0'
+                textArea.value = obj.data.id
+                document.body.appendChild(textArea)
+                try {
+                    textArea.select()
+                    document.execCommand('copy')
+                    Comm.msg('复制成功', 1);
+                } catch (e) {
+                    Comm.msg('复制失败', 5);
+                }
+            }
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="Generator" content="xnr®">
+    <meta name="Author" content="小男人-923227829@qq.com">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>志愿者须知</title>
+    <link rel="stylesheet" href="../inc/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/comm.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="form" class="layui-form" style="margin-top: 20px;width: 80%;">
+        <input type="hidden" name="id" value="3">
+        <div class="layui-form-item">
+            <label class="layui-form-label">志愿者须知</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" lay-verify="content" name="content" id="edit"
+                    style="display: none"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报名意向</label>
+            <div class="layui-input-block" id="bm">
+                <div style="height:40px;">
+                    <div class="layui-col-xs9">
+                        <input type="text" name="bm" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                    <div class="layui-col-xs1">
+                        &nbsp;
+                    </div>
+                    <div class="layui-col-xs2">
+                        <button class="layui-btn" onclick="model.addbm()">
+                            <i class="layui-icon layui-icon-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">问答</label>
+            <div class="layui-input-block" id="gy">
+                <div style="height:40px;">
+                    <div class="layui-col-xs9">
+                        <input type="text" name="gy" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                    <div class="layui-col-xs1">
+                        &nbsp;
+                    </div>
+                    <div class="layui-col-xs2">
+                        <button class="layui-btn" onclick="model.addgy()">
+                            <i class="layui-icon layui-icon-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
+                <button class="layui-btn layui-btn-primary" onclick="parent.cms.deltab('1')">关闭</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../inc/layui/layui.js"></script>
+<script type="text/javascript" src="../inc/g.js"></script>
+<script type="text/javascript">
+
+    function pageload() {
+        Comm.loading(true)
+        AJAX.GET('/api/book/GetSysConfig/3', {}, function (d) {
+            if (d.code == 1) {
+                Comm.SetData(d.data, 'form')
+                Comm.layedit.set({
+                    uploadImage: {
+                        url: config.root + "/api/book/UpEdit",  //接口url
+                        type: 'Post'
+                    }
+                });
+                //构建一个默认的编辑器
+                model.index = Comm.layedit.build('edit');
+                if (d.data.remark) {
+                    d.data.remark = JSON.parse(d.data.remark);
+                    if (d.data.remark.questions) {
+                        for (var i = 0; i < d.data.remark.questions.length; i++) {
+                            if (i == 0) {
+                                $("#gy input[name='gy']").val(d.data.remark.questions[i].v)
+                                continue;
+                            }
+                            Comm.laytpl($("#gyTpl").html()).render(d.data.remark.questions[i], function (html) {
+                                $("#gy").append(html)
+                            })
+                        }
+                    }
+                    if (d.data.remark.intent) {
+                        for (var i = 0; i < d.data.remark.intent.length; i++) {
+                            if (i == 0) {
+                                $("#bm input[name='bm']").val(d.data.remark.intent[i].v)
+                                continue;
+                            }
+                            Comm.laytpl($("#bmTpl").html()).render(d.data.remark.intent[i], function (html) {
+                                $("#bm").append(html)
+                            })
+                        }
+                    }
+                }
+            }
+            Comm.loading(false)
+        })
+
+        Comm.form.verify({
+            content: function (value) {
+                return Comm.layedit.sync(model.index);
+            }
+        });
+
+        //提交表单
+        Comm.form.on('submit(sub)', function (data) {
+            //获取编辑器内容
+            console.log(data)
+            data.field.remark = { questions: [], intent: [], };
+
+            $("#gy input[name='gy']").each(function (i, e) {
+                data.field.remark.questions.push({ v: $(e).val() });
+            })
+            $("#bm input[name='bm']").each(function (i, e) {
+                data.field.remark.intent.push({ v: $(e).val() });
+            })
+            data.field.remark = JSON.stringify(data.field.remark)
+            data.field.title = '志愿者申请'
+
+            layer.load();
+            AJAX.POST('/api/book/SaveSysConfig', data.field, function (a) {
+                if (a && a.code == 1) {
+                    Comm.msg('保存成功', 1);
+                } else {
+                    Comm.msg(a.msg, 5);
+                }
+                layer.closeAll('loading');
+            })
+        });
+    }
+
+    var model = {
+        index: 0,
+        addgy: function () {
+            Comm.laytpl($("#gyTpl").html()).render({}, function (html) {
+                $("#gy").append(html)
+            })
+        },
+        delgy: function (a) {
+            $(a).parent().parent().remove();
+        },
+        addbm: function () {
+            Comm.laytpl($("#bmTpl").html()).render({}, function (html) {
+                $("#bm").append(html)
+            })
+        },
+        delbm: function (a) {
+            $(a).parent().parent().remove();
+        }
+    }
+</script>
+
+<script type="text/html" id="bmTpl">
+    <div style="margin-top:10px;" class="clearfix">
+        <div class="layui-col-xs9">
+            <input type="text" name="bm" autocomplete="off" class="layui-input" value="{{d.v?d.v:''}}" lay-verify="required">
+        </div>
+        <div class="layui-col-xs1">
+            &nbsp;
+        </div>
+        <div class="layui-col-xs2">
+            <button class="layui-btn  layui-btn-danger" onclick="model.delbm(this)"><i class="layui-icon layui-icon-delete"></i></button>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="gyTpl">
+    <div style="margin-top:10px;" class="clearfix">
+        <div class="layui-col-xs9">
+            <input type="text" name="gy" autocomplete="off" class="layui-input" value="{{d.v?d.v:''}}" lay-verify="required">
+        </div>
+        <div class="layui-col-xs1">
+            &nbsp;
+        </div>
+        <div class="layui-col-xs2">
+            <button class="layui-btn  layui-btn-danger" onclick="model.delgy(this)"><i class="layui-icon layui-icon-delete"></i></button>
+        </div>
+    </div>
+</script>
+
+</html>
