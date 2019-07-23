@@ -856,9 +856,6 @@ namespace Commonlication.Controllers
         #endregion
 
 
-
-
-
         #region Comm
 
         //上传 文件
@@ -1016,13 +1013,13 @@ namespace Commonlication.Controllers
         //获取订单信息
         [HttpGet("GetMenu")]
 
-        public IActionResult GetMenu(string access_token)
+        public IActionResult GetMenu()
         {
             var r = new RequestModel();
             try
             {
-                StringBuilder userurl = new StringBuilder(string.Format("https://api.weixin.qq.com/cgi-bin/menu/get?access_token={0}", access_token));
-                r.data = HttpService.Get(userurl.ToString());
+                List<SysMenu> rlist = db.SysMenus.ToList();
+                r.data = rlist;
                 r.code = 1;
                 return Ok(r);
             }
@@ -1035,17 +1032,77 @@ namespace Commonlication.Controllers
             }
             return NotFound(r);
         }
-
-
+        //修改配置信息
         [HttpPost("SaveMenu")]
-        public IActionResult SaveMenu(string json,string access_token)
+        public IActionResult SaveMenu(SysMenu s)
+        {
+            var r = new RequestModel();
+            try
+            {
+                s.CreateTime = DateTime.Now;
+                //修改
+                if (s.Id > 0)
+                {
+                    db.SysMenus.Update(s);
+                }
+                else
+                {
+                    db.SysMenus.Add(s);
+                }
+                if (db.SaveChanges() > 0)
+                {
+                    r.code = 1;
+                }
+                else
+                {
+                    r.msg = "保存失败";
+                }
+                return Ok(r);
+            }
+            catch (Exception e)
+            {
+                //打印日志
+                r.msg = e.Message;
+            }
+            return NotFound(r);
+        }
+
+        //删除配置信息
+        [HttpPost("DelMenu")]
+        public IActionResult DelMenu(int id)
+        {
+            var r = new RequestModel();
+            try
+            {
+                var m = db.SysMenus.Find(id);
+                db.SysMenus.Remove(m);
+                if (db.SaveChanges() > 0)
+                {
+                    r.code = 1;
+                }
+                else
+                {
+                    r.msg = "删除失败";
+                }
+                return Ok(r);
+            }
+            catch (Exception e)
+            {
+                //打印日志
+                r.msg = e.Message;
+            }
+            return NotFound(r);
+        }
+
+        [HttpPost("SaveMenuWX")]
+        public IActionResult SaveMenuWX(string json, string access_token)
         {
 
             var r = new RequestModel();
             try
             {
                 StringBuilder userurl = new StringBuilder(string.Format(" https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", access_token));
-                r.data = HttpService.Post(json, userurl.ToString(),true,2000);
+                r.data = HttpService.Post(json, userurl.ToString(), true, 2000);
                 r.code = 1;
                 return Ok(r);
             }

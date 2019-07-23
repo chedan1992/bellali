@@ -7,7 +7,7 @@
     <meta name="Author" content="小男人-923227829@qq.com">
     <meta name="Keywords" content="">
     <meta name="Description" content="">
-    <title>菜单管理</title>
+    <title>菜单配置</title>
     <link rel="stylesheet" href="../inc/layui/css/layui.css">
     <link rel="stylesheet" href="../css/comm.css">
     <style>
@@ -20,7 +20,7 @@
         }
 
         .layui-form-radio {
-            s display: inline-block;
+            display: inline-block;
             vertical-align: middle;
             line-height: 28px;
             margin: 6px 10px 0 0;
@@ -32,32 +32,21 @@
         .layui-border-box {
             height: auto !important;
         }
-
-        .lh50 {
-            line-height: 50px;
-        }
-
-        .w120 {
-            width: 120px;
-        }
     </style>
 </head>
 <body>
     <div class="demoTable" style="margin-bottom: 10px;">
-        <button class="layui-btn" onclick="save('新增',-100)">新增菜单</button>
-        <button class="layui-btn" onclick="SaveMenu()">同步微信</button>
+        <button class="layui-btn" data-type="add">新增基节点</button>
     </div>
-    <div class="container">
-
-    </div>
+    <table class="layui-hidden" id="treeTable" lay-filter="treeTable"></table>
 </body>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 </script>
 <script type="text/html" id="formTpl">
     <div id="form" class="layui-form" style="margin-top: 20px;margin-right: 20px;">
-        <input type="hidden" value="{{d.pid}}" name="pid" id="pid" />
-        <input type="hidden" value="{{d.menuId}}" name="menuId" id="menuId" />
+        <input type="hidden" value="{{d.pid?d.pid:0}}" name="pid" id="pid" />
+        <input type="hidden" value="{{d.id?d.id:0}}" name="id" id="id" />
         <div class="layui-form-item">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-block">
@@ -68,92 +57,27 @@
             <label class="layui-form-label">类型</label>
             <div class="layui-input-block">
                 <select lay-verify="required" lay-filter="tt" name="type">
-                    {{#  if(d.add){ }}
-                    {{#  } }}
+                    <option value="0">无</option>
                     <option value="1">活动</option>
                     <option value="2">志愿者</option>
                     <option value="3">书籍链接</option>
                     <option value="4">我的活动</option>
                     <option value="5">书房介绍</option>
-
                 </select>
             </div>
         </div>
-        {{#  if(d.type){ }}
         <div class="layui-form-item">
             <label class="layui-form-label">菜单url</label>
             <div class="layui-input-block">
-                {{#  if(d.type === 'view'){ }}
-                <input readonly value="{{d.url?d.url:''}}" type="text" name="url" id="url" autocomplete="off" class="layui-input" />
-                {{#  } }}
-                {{#  if(d.type === 'click'){ }}
-                <input {{d.key>0?'':'readonly'}} value="{{d.key?d.key:''}}" type="text" name="key" id="key" autocomplete="off" class="layui-input" />
-                {{#  } }}
-
-                {{#  if(d.add){ }}
-                <input value="" type="text" name="key" id="key" lay-verify="required" autocomplete="off" class="layui-input" />
-                {{#  } }}
-
+                <input value="{{d.content?d.content:''}}" type="text" name="content" id="url" autocomplete="off" class="layui-input" />
             </div>
         </div>
-        {{#  } }}
         <div class="layui-form-item">
             <div class="fr">
                 <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="sub">保存</button>
                 <button class="layui-btn layui-btn-primary" id="closeform">取消</button>
             </div>
         </div>
-    </div>
-</script>
-<script type="text/html" id="tableTpl">
-
-    <div class="layui-row" id="one">
-        {{# layui.each(d, function(i, c){ }}
-        <div class="layui-col-xs4">
-            <button onclick="save('编辑', {{i}},-1)" style="margin-bottom:5px;" class="layui-btn layui-btn-primary w120">{{c.name}}</button>
-            <a class="layui-icon layui-icon-delete layui-btn layui-btn-xs  layui-btn-danger" onclick="del(this, {{i}},-100)">删除</a>
-        </div>
-        {{#  }); }}
-    </div>
-    <div class="layui-row">
-        {{# layui.each(d, function(i, v){ }}
-        {{# if(v.sub_button.length > 0){ }}
-        <div class="layui-col-xs4 one_{{i}}">
-            {{# layui.each(v.sub_button, function(k, c){ }}
-
-            <div style="margin-bottom:5px;">
-                <button onclick="save('编辑', {{i}},{{k}})" class="layui-btn layui-btn-primary w120">{{c.name}}</button>
-                <a class="layui-icon layui-icon-delete layui-btn layui-btn-xs  layui-btn-danger" onclick="del(this, {{i}}, {{k}})">删除</a>
-            </div>
-
-            {{# if(v.sub_button.length == (k+1)){ }}
-            <div id="one_btn{{i}}">
-                <button class="layui-btn layui-btn-primary w120" onclick="save('新增', {{i}},-100)">新增1</button>
-            </div>
-            {{#  } }}
-            {{#  }); }}
-        </div>
-        {{#  } else { }}
-        <div class="layui-col-xs4">
-            <button id="one_btn{{i}}" class="layui-btn layui-btn-primary w120" onclick="save('新增', {{i}},-100)">新增2</button>
-        </div>
-        {{#  } }}
-        {{#  }); }}
-    </div>
-
-</script>
-
-
-<script type="text/html" id="addTpl">
-    <div class="layui-col-xs4">
-        <button onclick="save('编辑', {{i}},-1)" style="margin-bottom:5px;" class="layui-btn layui-btn-primary w120">{{c.name}}</button>
-        <a class="layui-icon layui-icon-delete layui-btn layui-btn-xs  layui-btn-danger" onclick="del(this, {{i}},-100)">删除</a>
-    </div>
-</script>
-<script type="text/html" id="add1Tpl">
-    <div style="margin-bottom:5px;">
-        <button onclick="save('编辑', {{i}},{{k}})" class="layui-btn layui-btn-primary w120">{{c.name}}</button>
-        <a class="layui-icon layui-icon-delete layui-btn layui-btn-xs  layui-btn-danger" onclick="del(this, {{i}}, {{k}})">删除</a>
     </div>
 </script>
 
@@ -167,98 +91,6 @@
     layui.extend({
         treeGrid: '../../inc/layui/lay/treeGrid'
     })
-    function pageload() {
-        GetToken(true, function () {
-            GetMenu()
-        })
-    }
-
-    var ii = -1;
-    var kk = -1;
-    var dd = {};
-    //保存方法
-    function save(title, i, k) {
-        ii = i; kk = k;
-        if (i >= 0) {
-            dd = Comm.menu[i];
-            if (k >= 0) {
-                dd = Comm.menu[i].sub_button[k];
-            }
-        } else {
-            dd = { add: true };
-        }
-        console.log(dd);
-        Comm.laytpl($("#formTpl").html()).render(dd, function (html) {
-            //多窗口模式，层叠置顶
-            layer.open({
-                type: 1,
-                title: title,
-                shade: 0.3,
-                area: ['600px', '360px'],
-                //maxmin: true,
-                content: html,
-                zIndex: layer.zIndex,  //重点1
-                success: function (layero) {
-                    Comm.form.verify();
-                    //监听指定开关
-                    Comm.form.on('select(tt)', function (data) {
-                        switch (data.value) {
-                            case '1':
-                                $('#url').val('').attr('placeholder', '请复制活动链接').removeAttr('readonly');
-                                break;
-                            case '2':
-                                $('#url').val('-101').attr('readonly', 'readonly');
-                                break;
-                            case '3':
-                                $('#url').val('http://www.bellali.cn/files/app/book.html').attr('readonly', 'readonly');
-                                break;
-                            case '4':
-                                $('#url').val('-100').attr('readonly', 'readonly');
-                                break;
-                            case '5':
-                                $('#url').val('http://www.bellali.cn/files/app/index.html').attr('readonly', 'readonly');
-                                break;
-                            default:
-                                break
-                        }
-                    });
-                    Comm.form.render();
-                    //监听指定开关
-                    Comm.form.on('submit(sub)', function (data) {
-                        var r = {
-                            name: data.field.name,
-                            sub_button: []
-                        }
-
-                        if (data.field.type == "1" || data.field.type == "2" && data.field.type == "4") {
-                            r.type = 'click';
-                            r.key = data.field.key;
-                        } else if (data.field.type == "3" || data.field.type == "5") {
-                            r.type = 'view';
-                            r.url = data.field.url;
-                        }
-                        if (ii == -100) {
-                            Comm.menu.push(r);
-                        } else if (ii >= 0) {
-                            if (kk >= 0) {
-                                Comm.menu[ii].sub_button[kk] = r;
-                            } else if (kk == -100) {
-                                Comm.menu[ii].sub_button.push(r);
-                            } else {
-                                Comm.menu[ii].name = r.name
-                                Comm.menu[ii].type = r.type
-                                Comm.menu[ii].url = r.url
-                                Comm.menu[ii].key = r.key
-                            }
-                        }
-                    });
-                    $("#closeform").click(function () {
-                        layer.closeAll();
-                    })
-                },
-            });
-        })
-    }
 
     var token = '';
     function GetToken(isCache, cb) {
@@ -270,27 +102,151 @@
         })
     }
 
-    function GetMenu() {
-        AJAX.GET('/api/book/GetMenu', { access_token: token }, function (d) {
-            if (d.code == 1) {
-                d.data = JSON.parse(d.data);
-                if (d.data.errcode == 41001) {
-                    GetToken(false, function () {
-                        GetMenu()
-                    })
-                    return
+    function pageload() {
+        layui.use(['tree', 'treeGrid'], function () {
+            Comm.treeGrid = layui.treeGrid, active = {
+                add: function () {
+                    save(null, 0)
                 }
-                Comm.menu = d.data.menu.button;
-                Comm.laytpl($("#tableTpl").html()).render(d.data.menu.button, function (html) {
-                    $(".container").html(html);
-                });
+            };
+            Comm.treeGrid.render({
+                id: 'treeTable'
+                , elem: '#treeTable'
+                , url: '/api/book/GetMenu'
+                , cellMinWidth: 100
+                , idField: 'id'//必須字段
+                , treeId: 'id'//树形id字段名称
+                , treeUpId: 'pId'//树形父id字段名称
+                , treeShowName: 'name'//以树形式显示的字段
+                , heightRemove: [".dHead", 100]//不计算的高度,表格设定的是固定高度，此项不生效
+                , height: '100%'
+                , isFilter: false
+                , iconOpen: true//是否显示图标【默认显示】
+                , isOpenDefault: true//节点默认是展开还是折叠【默认展开】
+                , loading: true
+                , method: 'get'
+                , cols: [[
+                    , { type: 'radio', width: 80, align: 'center' }
+                    , { field: 'name', title: '名称', width: 250 }
+                    , { field: 'id', title: 'id', width: 100 }
+                    , { field: 'pId', title: '父级id', width: 100 }
+                    , { field: 'content', title: 'URL' }
+                    , {
+                        title: '操作', width: 300, align: 'center', templet: function (d) {
+                            var addBtn = '<a class="layui-btn layui-btn-primary  layui-btn-xs" lay-event="add">添加子级</a>';
+                            var editBtn = '<a class="layui-btn layui-btn-primary  layui-btn-xs" lay-event="edit">修改</a>';
+                            var delBtn = '<a class="layui-btn layui-btn-danger  layui-btn-xs" lay-event="del">删除</a>';
+                            return addBtn + editBtn + delBtn
+                        }
+                    }
+                ]]
+                , isPage: false
+                , parseData: function (res) {//数据加载后回调
+                    return res;
+                }
+                , onClickRow: function (index, o) {
+                    console.log(index, o, "单击！");
+                }
+                , onDblClickRow: function (index, o) {
+                    console.log(index, o, "双击");
+                }
+            });
+
+            Comm.treeGrid.on('tool(treeTable)', function (obj) {
+                if (obj.event === 'edit') {//修改行
+                    save(obj.data, obj.data.id)
+                } else if (obj.event === "add") {//添加行
+                    save(null, obj.data.id)
+                } else if (obj.event === "ttop") {//置顶
+                    uporder(0, obj.data.dictid)
+                } else if (obj.event === "top") {//上移
+                    uporder(-1, obj.data.dictid)
+                } else if (obj.event === "down") {//下移
+                    uporder(1, obj.data.dictid)
+                } else if (obj.event === "del") {//删除
+                    Comm.confirm('确认删除吗？', function () {
+                        AJAX.POST('/api/book/delMenu', { id: obj.data.id }, function (d) {
+                            if (d.code == 1) {
+                                layer.msg("删除成功!", { icon: 1 })
+                                //执行重载
+                                Comm.treeGrid.reload('treeTable', {});
+                            } else {
+                                layer.msg("删除失败!", { icon: 5 })
+                            }
+                        })
+                    })
+                }
+            });
+
+            //编辑
+            function uporder(n, id) {
+                AJAX.POST('/api/book/SaveMenu', { dictid: id, direction: n }, function (d) {
+                    if (d.code == 1) {
+                        window.sessionStorage["__dict"] = "";
+                        //执行重载
+                        Comm.treeGrid.reload('treeTable', {});
+                        layer.msg("操作成功!", { icon: 1 })
+                    } else {
+                        layer.msg(d.msg, { icon: 5 })
+                    }
+                })
             }
-        })
+
+            //添加按钮点击事件
+            $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            //保存方法
+            function save(d, pid) {
+                var title = "新增菜单配置";
+                if (d != null) {
+                    title = "编辑菜单配置";
+                } else {
+                    d = { pid: pid };
+                }
+                Comm.laytpl($("#formTpl").html()).render(d, function (html) {
+                    Comm.laytpl($("#formTpl").html()).render(d, function (html) {
+                        //多窗口模式，层叠置顶
+                        layer.open({
+                            type: 1,
+                            title: title,
+                            shade: 0.3,
+                            area: ['600px', '400px'],
+                            //maxmin: true,
+                            content: html,
+                            zIndex: layer.zIndex,  //重点1
+                            success: function (layero) {
+                                Comm.form.verify();
+                                Comm.form.render();
+                                //监听指定开关
+                                Comm.form.on('submit(sub)', function (data) {
+                                    AJAX.POST('/api/book/SaveMenu', data.field, function (d) {
+                                        if (d.code == 1) {
+                                            layer.closeAll();
+                                            layer.msg("保存成功!", { icon: 1 })
+                                            //执行重载
+                                            Comm.treeGrid.reload('treeTable', {});
+                                        } else {
+                                            layer.msg("保存失败!", { icon: 5 })
+                                        }
+                                    })
+                                });
+                                $("#closeform").click(function () {
+                                    layer.closeAll();
+                                })
+                            },
+                        });
+                    })
+                })
+            }
+        });
     }
 
     function SaveMenu() {
         Comm.laod(true);
-        AJAX.POST('/api/book/SaveMenu', { access_token: token, json: JSON.stringify(Comm.menu) }, function (d) {
+        AJAX.POST('/api/book/SaveMenuWX', { access_token: token, json: JSON.stringify(Comm.menu) }, function (d) {
             Comm.laod(false);
             if (d.code == 1) {
                 layer.closeAll();
@@ -299,15 +255,6 @@
                 layer.msg("保存失败!", { icon: 5 })
             }
         })
-    }
-    function del(t, i, k) {
-        if (k == -100) {
-            Comm.menu[i].sub_button.splice(k, 1);
-            Comm.menu[i].splice(i, 1);
-        } else {
-            Comm.menu[i].sub_button.splice(k, 1);
-            $(t).partent().remove();
-        }
     }
 </script>
 </html>

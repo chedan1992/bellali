@@ -13946,11 +13946,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Project\\书吧1\\书吧\\book\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "E:\\Project\\bellali\\QinGuo\\trunk\\Program\\书吧\\book\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "E:\\Project\\书吧1\\书吧\\book\\WebApplication\\WebApplication.csproj",
+      "projectPath": "E:\\Project\\bellali\\QinGuo\\trunk\\Program\\书吧\\book\\WebApplication\\WebApplication.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "E:\\Project\\书吧1\\书吧\\book\\WebApplication\\obj\\",
+      "outputPath": "E:\\Project\\bellali\\QinGuo\\trunk\\Program\\书吧\\book\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

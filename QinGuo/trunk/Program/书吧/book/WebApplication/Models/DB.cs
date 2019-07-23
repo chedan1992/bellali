@@ -21,6 +21,7 @@ namespace Commonlication
         public DbSet<ActiveOne> ActiveOnes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Voluntary> Voluntarys { get; set; }
-        
+        public DbSet<SysMenu> SysMenus { get; set; }
+
     }
 }
