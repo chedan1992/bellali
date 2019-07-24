@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -74,6 +75,15 @@ namespace WebApp.Controllers
 
         #region 基础接口
 
+        public static String rstring()
+        {
+            var bytes = new byte[4];
+            var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(bytes);
+            uint random = BitConverter.ToUInt32(bytes, 0) % 100000000;
+            return String.Format("{0:D8}", random);
+        }
+
         private JsonUser UserTo(ModSysMaster modsysuser)
         {
             JsonUser r = new JsonUser();
@@ -86,7 +96,7 @@ namespace WebApp.Controllers
             r.cid = modsysuser.Cid;
             r.cname = modsysuser.UserName;
             r.createrId = modsysuser.CreaterId;//创建者id 汽配商id
-
+            r.number = modsysuser.OperateNum;
             /*
             系统管理员 = 1,
             汽配商管理员 = 2,
@@ -112,7 +122,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ApiAuthorize]
         [Route("api/register/{account}/{pwd}/{phone}/{CommpanyName}")]
-        public MyJsonResult<string> register(string account, string pwd, string phone, string CommpanyName, string MobileCode = "", string code = "102913", int PaltForm = 3)
+        public MyJsonResult<string> register(string account, string phone, string pwd, string CommpanyName, string MobileCode = "", string code = "102913", int PaltForm = 3)
         {
             MyJsonResult<string> jsonResult = new MyJsonResult<string>();
             try
@@ -194,6 +204,7 @@ namespace WebApp.Controllers
                         sysMaster.HeadImg = "";//默认头像
                         sysMaster.Attribute = (int)AdminTypeEnum.维修厂管理员;
                         sysMaster.IsMain = true;
+                        sysMaster.OperateNum = rstring();
 
                         if (bllmaster.Insert(sysMaster) > 0)
                         {
@@ -268,39 +279,49 @@ namespace WebApp.Controllers
                     ModSysMaster modsysuser = bllmaster.GetModelByWhere("and LoginName='" + loginname + "' and Status<>" + (int)StatusEnum.删除);//登录名称
                     if (modsysuser != null)
                     {
-                        if (!string.IsNullOrEmpty(modsysuser.Pwd) && DESEncrypt.md5(DESEncrypt.Decrypt(modsysuser.Pwd), 32) == pwd)
+                        BllSysCompany bllcompany = new BllSysCompany();
+                        ModSysCompany com = bllcompany.LoadData(modsysuser.Cid);
+                        if (com.Status == (int)StatusEnum.正常)
                         {
-                            #region 其他扩展
-                            try
+                            if (!string.IsNullOrEmpty(modsysuser.Pwd) && DESEncrypt.md5(DESEncrypt.Decrypt(modsysuser.Pwd), 32) == pwd)
                             {
-                                //修改登录次数和时间
-                                modsysuser.LoginTime = DateTime.Now;
-                                modsysuser.LoginNum = modsysuser.LoginNum + 1;
-                                modsysuser.MobileCode = MobileCode; //机器码
-                                modsysuser.BDUserId = BDUserId;
-                                modsysuser.BDChannelId = BDChannelId;
-                                modsysuser.PaltForm = PaltForm;
+                                #region 其他扩展
+                                try
+                                {
+                                    //修改登录次数和时间
+                                    modsysuser.LoginTime = DateTime.Now;
+                                    modsysuser.LoginNum = modsysuser.LoginNum + 1;
+                                    modsysuser.MobileCode = MobileCode; //机器码
+                                    modsysuser.BDUserId = BDUserId;
+                                    modsysuser.BDChannelId = BDChannelId;
+                                    modsysuser.PaltForm = PaltForm;
 
-                                bllmaster.UpdateLogin(modsysuser);
+                                    bllmaster.UpdateLogin(modsysuser);
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogErrorRecord.ErrorFormat("其他扩展={0}", ex.Message);
+                                }
+                                #endregion
+
+                                JsonUser r = UserTo(modsysuser);
+
+                                UserTokenManager.Remove(r.token);
+                                UserTokenManager.SetCache(r.token, r);
+                                jsonResult.data = r;
+                                jsonResult.msg = "登录成功！";
+                                jsonResult.success = true;
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                LogErrorRecord.ErrorFormat("其他扩展={0}", ex.Message);
+                                jsonResult.success = false;
+                                jsonResult.msg = "登录失败,密码输入错误！";
                             }
-                            #endregion
-
-                            JsonUser r = UserTo(modsysuser);
-
-                            UserTokenManager.Remove(r.token);
-                            UserTokenManager.SetCache(r.token, r);
-                            jsonResult.data = r;
-                            jsonResult.msg = "登录成功！";
-                            jsonResult.success = true;
                         }
                         else
                         {
                             jsonResult.success = false;
-                            jsonResult.msg = "登录失败,密码输入错误！";
+                            jsonResult.msg = "登录失败，该用户不存在！";
                         }
                     }
                     else
@@ -357,10 +378,12 @@ namespace WebApp.Controllers
                     modsysuser = new ModSysMaster();
                     modsysuser.Id = Guid.NewGuid().ToString();
                     modsysuser.LoginName = loginname;
+                    modsysuser.Phone = loginname;
                     modsysuser.Pwd = DESEncrypt.Encrypt("666666");  //加密
                     modsysuser.Status = (int)StatusEnum.正常;
                     modsysuser.Attribute = (int)AdminTypeEnum.手机用户;
                     modsysuser.IsMain = false;
+                    modsysuser.OperateNum = rstring();
                     if (bllmaster.Insert(modsysuser) > 0)
                     {
                         jsonResult.success = true;
@@ -380,7 +403,7 @@ namespace WebApp.Controllers
                 {
                     //验证码是是否正确
                     BllSysMessageAuthCode regVBll = new BllSysMessageAuthCode();
-                    ModSysMessageAuthCode modAuthcode = regVBll.GetModelByWhere("and  getdate() < EndTime and TypeInt=0 and Tel='" + loginname + "'");
+                    ModSysMessageAuthCode modAuthcode = regVBll.GetModelByWhere("and getdate() < EndTime and TypeInt=0 and Tel='" + loginname + "'");
                     if (jsonResult.success && modAuthcode != null)
                     {
                         if (modAuthcode.Code != code)
@@ -1500,16 +1523,16 @@ namespace WebApp.Controllers
         #region 业务拓展接口
 
         /// <summary>
-        /// 查询汽车 洗车有效数据
+        /// 查询汽车 洗车有效数据 此接口 也用于 统计
         /// </summary>
         /// <param name="carid">汽车id</param>
         /// <returns></returns>
         [HttpPost]
         [ApiAuthorize]
         [Route("api/washcar/{carid}")]
-        public MyJsonResult<ModWashCar> WashCar(string carid)
+        public MyJsonResult<ModCar> WashCar(string carid)
         {
-            MyJsonResult<ModWashCar> jsonResult = new MyJsonResult<ModWashCar>();
+            MyJsonResult<ModCar> jsonResult = new MyJsonResult<ModCar>();
             try
             {
                 if (CurUser == null)
@@ -1526,50 +1549,46 @@ namespace WebApp.Controllers
                 string uid = "";
                 if (CurUser != null)
                 {
-                    if (CurUser.usertype != (int)AdminTypeEnum.汽配商管理员)
-                    {
-                        uid = CurUser.id;
-                    }
+                    uid = CurUser.id;
                 }
 
                 if (jsonResult.success)
                 {
-                    BllWashCar bllWashCar = new BllWashCar();
-                    //添加一条洗车信息
-                    ModWashCar modWashCar = bllWashCar.GetWashCar(uid, carid);
-                    if (modWashCar == null)
+                    BllCar bllCar = new BllCar();
+                    ModCar car = bllCar.LoadData(carid);
+                    int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                    //判断 是否有效
+                    TimeSpan ts = new DateTime(year, month, day) - car.OverdueTime.Value;
+                    if (ts.Ticks < 0)
                     {
-                        jsonResult.msg = "您不是该汽配商会员！";
-                        jsonResult.success = false;
+                        BllWashCarRecord bllWashCarRecord = new BllWashCarRecord();
+                        ModWashCarRecord modWashCarRecord = new ModWashCarRecord();
+
+                        //绑定到本账号
+                        modWashCarRecord.Id = Guid.NewGuid().ToString();
+                        modWashCarRecord.CreateId = CurUser.id;
+                        modWashCarRecord.CreateTime = DateTime.Now;
+                        modWashCarRecord.CarId = carid;
+
+                        if (bllWashCarRecord.Insert(modWashCarRecord) > 0)
+                        {
+                            jsonResult.msg = "添加成功！";
+                        }
+                        else
+                        {
+                            jsonResult.success = false;
+                            jsonResult.msg = "添加失败！";
+                        }
+                        jsonResult.success = true;
+                        car.Day = -ts.Days;
+                        car.OverdueTime = car.OverdueTime;
+                        jsonResult.data = car;
                     }
                     else
                     {
-                        //判断 是否有效
-                        TimeSpan ts = DateTime.Now - modWashCar.CreateTime.Value;
-                        if (modWashCar.Day - ts.Days > 0)
-                        {
-                            BllWashCarRecord bllWashCarRecord = new BllWashCarRecord();
-                            ModWashCarRecord modWashCarRecord = new ModWashCarRecord();
-
-                            //绑定到本账号
-                            modWashCarRecord.Id = Guid.NewGuid().ToString();
-                            modWashCarRecord.CreateId = modWashCar.CreateId;
-                            modWashCarRecord.CreateTime = DateTime.Now;
-                            modWashCarRecord.CarId = carid;
-
-                            if (bllWashCarRecord.Insert(modWashCarRecord) > 0)
-                            {
-                                jsonResult.msg = "添加成功！";
-                            }
-                            else
-                            {
-                                jsonResult.success = false;
-                                jsonResult.msg = "添加失败！";
-                            }
-                        }
-                        jsonResult.data = modWashCar;
-                        jsonResult.msg = "获取成功！";
-                        jsonResult.success = true;
+                        jsonResult.msg = "您的会员已过期！";
+                        jsonResult.success = false;
+                        jsonResult.errorCode = 301;
                     }
                 }
             }
@@ -1584,16 +1603,17 @@ namespace WebApp.Controllers
         }
 
 
+
         /// <summary>
-        /// 启动APP 添加洗车记录接口
+        /// 开启APP调用统计
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [ApiAuthorize]
         [Route("api/addWashCar")]
-        public MyJsonResult<ModWashCar> addWashCar()
+        public MyJsonResult<ModCar> addWashCar()
         {
-            MyJsonResult<ModWashCar> jsonResult = new MyJsonResult<ModWashCar>();
+            MyJsonResult<ModCar> jsonResult = new MyJsonResult<ModCar>();
             try
             {
                 if (CurUser == null)
@@ -1603,36 +1623,35 @@ namespace WebApp.Controllers
                     jsonResult.msg = "服务端拒绝访问：你没有权限，或者掉线了";
                 }
 
-                string uid = "";
-                if (CurUser != null)
+                if (jsonResult.success)
                 {
-                    if (CurUser.usertype == (int)AdminTypeEnum.手机用户)
+                    BllCarUser bllCarUser = new BllCarUser();
+                    //添加一条洗车信息
+                    ModCarUser modCarUser = bllCarUser.GetCarUser(CurUser.id, "");
+                    if (modCarUser == null)
                     {
-                        uid = CurUser.id;
+                        jsonResult.msg = "您没有车辆！";
+                        jsonResult.success = false;
+                    }
+                    else
+                    {
+                        BllWashCarRecord bllWashCarRecord = new BllWashCarRecord();
+                        ModWashCarRecord modWashCarRecord = new ModWashCarRecord();
 
-                        BllCar bllCar = new BllCar();
-                        List<ModCar> r = bllCar.getUserId(CurUser.id);
-                        if (r != null && r.Count > 0)
+                        //绑定到本账号
+                        modWashCarRecord.Id = Guid.NewGuid().ToString();
+                        modWashCarRecord.CreateId = "";
+                        modWashCarRecord.CreateTime = DateTime.Now;
+                        modWashCarRecord.CarId = modCarUser.CId;
+
+                        if (bllWashCarRecord.Insert(modWashCarRecord) > 0)
                         {
-
-                            BllWashCarRecord bllWashCarRecord = new BllWashCarRecord();
-                            ModWashCarRecord modWashCarRecord = new ModWashCarRecord();
-
-                            //绑定到本账号
-                            modWashCarRecord.Id = Guid.NewGuid().ToString();
-                            modWashCarRecord.CreateId = "-1";
-                            modWashCarRecord.CreateTime = DateTime.Now;
-                            modWashCarRecord.CarId = r[0].Id;
-
-                            if (bllWashCarRecord.Insert(modWashCarRecord) > 0)
-                            {
-                                jsonResult.msg = "添加成功！";
-                            }
-                            else
-                            {
-                                jsonResult.success = false;
-                                jsonResult.msg = "添加失败！";
-                            }
+                            jsonResult.msg = "添加成功！";
+                        }
+                        else
+                        {
+                            jsonResult.success = false;
+                            jsonResult.msg = "添加失败！";
                         }
                     }
                 }
@@ -1646,7 +1665,6 @@ namespace WebApp.Controllers
             }
             return jsonResult;
         }
-
 
 
         /// <summary>
@@ -1662,7 +1680,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ApiAuthorize]
         [Route("api/addCarOrder/{LicensePlate}/{Name}/{TermOfValidity}")]
-        public MyJsonResult<string> addCarOrder(string LicensePlate, string Name, string Type, string TypeName, int TermOfValidity, string Remarks = "")
+        public MyJsonResult<string> addCarOrder(string LicensePlate, string Name, int TermOfValidity = 0, string Type = "", string TypeName = "", string Remarks = "")
         {
             MyJsonResult<string> jsonResult = new MyJsonResult<string>();
             try
@@ -1678,11 +1696,6 @@ namespace WebApp.Controllers
                     jsonResult.success = false;
                     jsonResult.msg = "车牌号不能为空！";
                 }
-                if (jsonResult.success && string.IsNullOrEmpty(Type))
-                {
-                    jsonResult.success = false;
-                    jsonResult.msg = "汽车品牌不能为空！";
-                }
                 if (jsonResult.success && string.IsNullOrEmpty(Name))
                 {
                     jsonResult.success = false;
@@ -1693,30 +1706,38 @@ namespace WebApp.Controllers
                     jsonResult.success = false;
                     jsonResult.msg = "维保天数不能为空！";
                 }
-
-                BllCar bllCar = new BllCar();
-                ModCar car = bllCar.getLicensePlate(LicensePlate);
-                if (car == null)
+                if (jsonResult.success && string.IsNullOrEmpty(Type))
                 {
-
-                    car = new ModCar();
-                    car.LicensePlate = LicensePlate;
-                    car.Type = Type;
-                    car.TypeName = TypeName;
-
-                    car.Id = Guid.NewGuid().ToString();
-                    car.CreateTime = DateTime.Now;
-                    car.Status = StatusEnum.正常;
-
-                    if (bllCar.Insert(car) > 0)
+                    jsonResult.success = false;
+                    jsonResult.msg = "汽车品牌不能为空！";
+                }
+                ModCar car = null;
+                if (jsonResult.success)
+                {
+                    BllCar bllCar = new BllCar();
+                    car = bllCar.getLicensePlate(LicensePlate);
+                    if (car == null)
                     {
-                        jsonResult.data = car.Id;
-                        jsonResult.success = true;
-                    }
-                    else
-                    {
-                        jsonResult.msg = "系统繁忙，请稍后再试！";
-                        jsonResult.success = false;
+                        car = new ModCar();
+                        car.Id = Guid.NewGuid().ToString();
+                        car.LicensePlate = LicensePlate;
+                        car.Type = Type;
+                        car.TypeName = TypeName;
+                        car.CreateTime = DateTime.Now;
+                        car.Status = StatusEnum.正常;
+                        int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                        car.OverdueTime = new DateTime(year, month, day).AddDays(30);
+
+                        if (bllCar.Insert(car) > 0)
+                        {
+                            jsonResult.data = car.Id;
+                            jsonResult.success = true;
+                        }
+                        else
+                        {
+                            jsonResult.msg = "系统繁忙，请稍后再试！";
+                            jsonResult.success = false;
+                        }
                     }
                 }
 
@@ -1732,11 +1753,11 @@ namespace WebApp.Controllers
                     carOrder.CreateTime = DateTime.Now;
                     carOrder.Status = FlowEnum.待审核;
                     carOrder.CreateId = CurUser.id;//维修厂商
-                    carOrder.CreateName = CurUser.name;
                     carOrder.CUserId = car.CreateId;//汽车id
                     carOrder.AuditorId = CurUser.createrId;//汽配商 审核
                     carOrder.Phone = CurUser.phone;
                     carOrder.CId = car.Id;
+                    carOrder.Remarks = Remarks;
 
                     if (bllCarOrder.Insert(carOrder) > 0)
                     {
@@ -1766,7 +1787,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="carno">车牌号</param>
         /// <param name="applydate">申请时间 yyyy-mm-dd</param>
-        /// <param name="status">申请状态(删除 = -1, 待审核 = 0,审核通过 = 1,审核不通过 = 2,查询所以传 -2,审核通过,审核不通过=-3)</param>
+        /// <param name="status">申请状态(删除 = -1, 待审核 = 0,审核通过 = 1,审核不通过 = 2,查询所以传 -2)</param>
         /// <param name="pageno">第几页</param>
         /// <param name="pagesize">分页大小</param>
         /// <returns></returns>
@@ -1797,17 +1818,7 @@ namespace WebApp.Controllers
                 {
                     search.AddCondition("a.status='" + status + "'");
                 }
-
-                if (jsonResult.success && status == -2)
-                {
-                    search.AddCondition("a.status>'" + 0 + "'");
-                }
-                if (jsonResult.success && status == -3)
-                {
-                    search.AddCondition(" ( a.status=1 or a.status=2 ) ");
-                }
-
-                if (jsonResult.success && applydate != null)
+                if (jsonResult.success && !string.IsNullOrEmpty(applydate))
                 {
                     search.AddCondition("a.CreateTime='" + applydate + "'");
                 }
@@ -1820,14 +1831,18 @@ namespace WebApp.Controllers
                 if (jsonResult.success && CurUser.usertype == 2)
                 {
                     search.AddCondition("a.AuditorId='" + CurUser.id + "'");
+                    search.SortField = "a.CreateTime desc";
                 }
                 else if (jsonResult.success && CurUser.usertype == 3)
                 {
                     search.AddCondition("a.CreateId='" + CurUser.id + "'");
+                    search.AddCondition("(a.status=1 or a.status=2)");
+                    search.SortField = "a.CreateTime desc";
                 }
                 else if (jsonResult.success && CurUser.usertype == 4)
                 {
                     search.AddCondition("a.CUserId='" + CurUser.id + "'");
+                    search.SortField = "a.Status asc,a.CreateTime desc";
                 }
 
                 if (jsonResult.success)
@@ -1900,7 +1915,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ApiAuthorize]
         [Route("api/upCarOrder/{orderid}/{status}")]
-        public MyJsonResult<string> upCarOrder(string orderid, int status, string auditorRemarks)
+        public MyJsonResult<string> upCarOrder(string orderid, int status, string auditorRemarks = "")
         {
             MyJsonResult<string> jsonResult = new MyJsonResult<string>();
             try
@@ -1945,36 +1960,29 @@ namespace WebApp.Controllers
 
                     if (bllCarOrder.Update(carOrder) > 0)
                     {
+                        BllCar bllCar = new BllCar();
+                        var car = bllCar.LoadData(carOrder.CId);
+                        car.Phone = carOrder.Phone;
+
                         if (status == (int)FlowEnum.审核通过)
                         {
-                            BllCar bllCar = new BllCar();
-                            var car = bllCar.LoadData(carOrder.CId);
-                            car.Phone = carOrder.Phone;
+                            int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                            //判断 是否有效
+                            TimeSpan ts = new DateTime(year, month, day) - car.OverdueTime.Value;
+                            if (ts.Ticks < 0)
+                            {
+                                car.OverdueTime = car.OverdueTime.Value.AddDays(carOrder.TermOfValidity);
+                            }
+                            else//过期
+                            {
+                                car.OverdueTime = new DateTime(year, month, day).AddDays(carOrder.TermOfValidity);
+                            }
                             bllCar.Update(car);
-
-                            BllWashCar bllWashCar = new BllWashCar();
-                            //添加一条洗车信息
-                            ModWashCar modWashCar = bllWashCar.GetWashCar(CurUser.id, carOrder.CId);
-                            if (modWashCar == null)
-                            {
-                                modWashCar = new ModWashCar();
-                                modWashCar.Id = Guid.NewGuid().ToString();
-                                modWashCar.CId = carOrder.CId;
-                                modWashCar.CreateId = CurUser.id;
-                                modWashCar.CreateId = CurUser.id;
-                                modWashCar.Status = StatusEnum.正常;
-                                modWashCar.CreateTime = DateTime.Now;
-                                modWashCar.Day = carOrder.TermOfValidity;
-                                bllWashCar.Insert(modWashCar);
-                            }
-                            else
-                            {
-                                modWashCar.CreateTime = DateTime.Now;
-                                modWashCar.Day += carOrder.TermOfValidity;
-                                bllWashCar.Update(modWashCar);
-                            }
                         }
-
+                        else
+                        {
+                            bllCar.Update(car);
+                        }
                         jsonResult.msg = "审核成功！";
                         jsonResult.success = true;
                     }
@@ -2040,9 +2048,10 @@ namespace WebApp.Controllers
                     {
                         carUser = new ModCarUser();
                         //绑定到本账号
+                        carUser.Id = Guid.NewGuid().ToString();
                         carUser.CId = car.Id;
                         carUser.CreateId = CurUser.id;
-                        carUser.Status = StatusEnum.正常;
+                        carUser.Status = (int)StatusEnum.正常;
                         carUser.CreateTime = DateTime.Now;
                         if (bllCarUser.Insert(carUser) > 0)
                         {
@@ -2067,14 +2076,17 @@ namespace WebApp.Controllers
                         car.TypeName = TypeName;
                         car.CreateTime = DateTime.Now;
                         car.Status = StatusEnum.正常;
+                        int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                        car.OverdueTime = new DateTime(year, month, day).AddDays(30);
 
                         if (bllCar.Insert(car) > 0)
                         {
                             carUser = new ModCarUser();
                             //绑定到本账号
+                            carUser.Id = Guid.NewGuid().ToString();
                             carUser.CId = car.Id;
                             carUser.CreateId = CurUser.id;
-                            carUser.Status = StatusEnum.正常;
+                            carUser.Status = (int)StatusEnum.正常;
                             carUser.CreateTime = DateTime.Now;
                             if (bllCarUser.Insert(carUser) > 0)
                             {
@@ -2137,7 +2149,7 @@ namespace WebApp.Controllers
                     ModCarUser carUser = bllCarUser.GetCarUser(CurUser.id, CarId);
                     if (bllCarUser != null)
                     {
-                        carUser.Status = StatusEnum.删除;
+                        carUser.Status = (int)StatusEnum.删除;
                         if (bllCarUser.Update(carUser) > 0)
                         {
                             jsonResult.msg = "成功解除！";
@@ -2190,6 +2202,17 @@ namespace WebApp.Controllers
                 if (jsonResult.success)
                 {
                     List<ModCar> r = bllCar.getUserId(CurUser.id);
+
+                    foreach (var car in r)
+                    {
+                        if (car.OverdueTime != null)
+                        {
+                            int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                            TimeSpan ts = new DateTime(year, month, day) - car.OverdueTime.Value;
+                            car.Day = -ts.Days;
+                        }
+                    }
+
                     jsonResult.msg = "获取成功！";
                     jsonResult.data = r;
                 }
@@ -2225,9 +2248,22 @@ namespace WebApp.Controllers
                 if (jsonResult.success)
                 {
                     BllCar bllCar = new BllCar();
-
+                    var car = bllCar.getLicensePlate(LicensePlate);
                     jsonResult.msg = "获取成功！";
-                    jsonResult.data = bllCar.getLicensePlate(LicensePlate);
+
+                    if (car.OverdueTime != null)
+                    {
+                        int year = DateTime.Now.Year, month = DateTime.Now.Month, day = DateTime.Now.Day;
+                        TimeSpan ts = new DateTime(year, month, day) - car.OverdueTime.Value;
+                        car.Day = -ts.Days;
+                    }
+                    BllWashCarRecord bllWashCarRecord = new BllWashCarRecord();
+                    ModWashCarRecord m = bllWashCarRecord.GetCarId(car.Id);
+                    if (m != null)
+                    {
+                        car.PrvTime = m.CreateTime;
+                    }
+                    jsonResult.data = car;
                 }
             }
             catch (Exception ex)
@@ -2277,18 +2313,18 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getCategory")]
-        public MyJsonResult<List<ModSysCategory>> getCategory()
+        public MyJsonResult<List<ModEElevatorBrand>> getCategory()
         {
-            MyJsonResult<List<ModSysCategory>> jsonResult = new MyJsonResult<List<ModSysCategory>>();
+            MyJsonResult<List<ModEElevatorBrand>> jsonResult = new MyJsonResult<List<ModEElevatorBrand>>();
 
             try
             {
                 if (jsonResult.success)
                 {
-                    BllSysCategory bllCarProject = new BllSysCategory();
+                    BllEElevatorBrand bllEElevatorBrand = new BllEElevatorBrand();
 
                     jsonResult.msg = "获取成功！";
-                    jsonResult.data = bllCarProject.QueryToAll().ToList();
+                    jsonResult.data = bllEElevatorBrand.GetSysIdList("", "");
                 }
             }
             catch (Exception ex)
@@ -2308,7 +2344,7 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getCarEquipment")]
-        public MyJsonResult<List<ModCarEquipment>> getCarEquipment()
+        public MyJsonResult<List<ModCarEquipment>> getCarEquipment(string ComPLon, string CompLat, int pagesize = 10, int pageno = 1)
         {
             MyJsonResult<List<ModCarEquipment>> jsonResult = new MyJsonResult<List<ModCarEquipment>>();
             try
@@ -2321,12 +2357,34 @@ namespace WebApp.Controllers
                         uid = CurUser.id;
                     }
                 }
+
+                Search search = new Search();
+                search.PageSize = pagesize;
+                search.CurrentPageIndex = pageno;
+
+                if (jsonResult.success && !string.IsNullOrEmpty(uid))
+                {
+                    search.AddCondition(" CreateId='" + uid + "'");
+                }
+                if (jsonResult.success && !string.IsNullOrEmpty(ComPLon) && !string.IsNullOrEmpty(CompLat))
+                {
+                    search.TableName = @"  (select *,dbo.fnGetDistance(CompLat,ComPLon," + CompLat + "," + ComPLon + ") as Distance from W_Equipment) as t ";//表名
+                    search.SelectedColums = @" * ";//查询列
+                    search.SortField = " Distance asc";
+                }
+                else
+                {
+                    search.TableName = @" W_Equipment ";//表名
+                    search.SelectedColums = @" * ";//查询列
+                    search.SortField = " CreateTime desc";
+                }
+
                 if (jsonResult.success)
                 {
                     BllCarEquipment bllCarEquipment = new BllCarEquipment();
 
                     jsonResult.msg = "获取成功！";
-                    jsonResult.data = bllCarEquipment.GetList(uid);
+                    jsonResult.data = bllCarEquipment.SearchData(search).Items;
                 }
             }
             catch (Exception ex)
@@ -2422,8 +2480,8 @@ namespace WebApp.Controllers
             return jsonResult;
         }
 
-
-
         #endregion
+
+
     }
 }
