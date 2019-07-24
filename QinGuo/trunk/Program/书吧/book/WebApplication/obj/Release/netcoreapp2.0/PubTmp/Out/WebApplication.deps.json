@@ -4805,14 +4805,6 @@
           }
         }
       },
-      "ThoughtWorks.QRCode/1.0.2774.19990": {
-        "runtime": {
-          "ThoughtWorks.QRCode.dll": {
-            "assemblyVersion": "1.0.2774.19990",
-            "fileVersion": "1.0.2774.19990"
-          }
-        }
-      },
       "log4net/1.2.13.0": {
         "runtime": {
           "log4net.dll": {
@@ -7221,11 +7213,6 @@
       "sha512": ""
     },
     "GetuiServerApiSDK/4.0.1.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "ThoughtWorks.QRCode/1.0.2774.19990": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

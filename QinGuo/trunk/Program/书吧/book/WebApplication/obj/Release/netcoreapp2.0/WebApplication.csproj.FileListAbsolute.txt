@@ -36,3 +36,4 @@ E:\Project\bellali\QinGuo\trunk\Program\书吧\book\WebApplication\obj\Release\n
 E:\Project\bellali\QinGuo\trunk\Program\书吧\book\WebApplication\obj\Release\netcoreapp2.0\WebApplication.csproj.CopyComplete
 E:\Project\bellali\QinGuo\trunk\Program\书吧\book\WebApplication\obj\Release\netcoreapp2.0\WebApplication.dll
 E:\Project\bellali\QinGuo\trunk\Program\书吧\book\WebApplication\obj\Release\netcoreapp2.0\WebApplication.pdb
+E:\Project\bellali\QinGuo\trunk\Program\书吧\book\WebApplication\obj\Release\netcoreapp2.0\WebApplication.csprojAssemblyReference.cache

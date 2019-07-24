@@ -37,6 +37,7 @@
 <body>
     <div class="demoTable" style="margin-bottom: 10px;">
         <button class="layui-btn" data-type="add">新增基节点</button>
+        <button class="layui-btn layui-btn-danger" data-type="tongbu">同步微信菜单</button>
     </div>
     <table class="layui-hidden" id="treeTable" lay-filter="treeTable"></table>
 </body>
@@ -57,19 +58,19 @@
             <label class="layui-form-label">类型</label>
             <div class="layui-input-block">
                 <select lay-verify="required" lay-filter="tt" name="type">
-                    <option value="0">无</option>
-                    <option value="1">活动</option>
-                    <option value="2">志愿者</option>
-                    <option value="3">书籍链接</option>
-                    <option value="4">我的活动</option>
-                    <option value="5">书房介绍</option>
+                    <option value="0" {{d.type=="0"?'selected':''}}>无</option>
+                    <option value="1" {{d.type=="1"?'selected':''}}>活动</option>
+                    <option value="2" {{d.type=="2"?'selected':''}}>志愿者</option>
+                    <option value="3" {{d.type=="3"?'selected':''}}>书籍链接</option>
+                    <option value="4" {{d.type=="4"?'selected':''}}>我的活动</option>
+                    <option value="5" {{d.type=="5"?'selected':''}}>书房介绍</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">菜单url</label>
             <div class="layui-input-block">
-                <input value="{{d.content?d.content:''}}" type="text" name="content" id="url" autocomplete="off" class="layui-input" />
+                <input {{d.typ!="0"?'readonly':''}} value="{{d.content?d.content:''}}" type="text" name="content" id="content" autocomplete="off" class="layui-input" />
             </div>
         </div>
         <div class="layui-form-item">
@@ -92,7 +93,7 @@
         treeGrid: '../../inc/layui/lay/treeGrid'
     })
 
-    var token = '';
+    var token = '', menudata = [];
     function GetToken(isCache, cb) {
         AJAX.GET('/api/book/GetToken', { isCache: isCache }, function (d) {
             if (d.code == 1) {
@@ -103,10 +104,17 @@
     }
 
     function pageload() {
+        GetToken(true, function () {
+
+        }) 
+
         layui.use(['tree', 'treeGrid'], function () {
             Comm.treeGrid = layui.treeGrid, active = {
                 add: function () {
                     save(null, 0)
+                },
+                tongbu: function () {
+                    SaveMenu()
                 }
             };
             Comm.treeGrid.render({
@@ -142,6 +150,7 @@
                 ]]
                 , isPage: false
                 , parseData: function (res) {//数据加载后回调
+                    menudata = res.data;
                     return res;
                 }
                 , onClickRow: function (index, o) {
@@ -220,6 +229,35 @@
                             success: function (layero) {
                                 Comm.form.verify();
                                 Comm.form.render();
+
+
+                                //监听指定开关
+                                Comm.form.on('select(tt)', function (data) {
+                                    switch (data.value) {
+                                        case '0':
+                                            $('#content').val('').attr('placeholder', '').removeAttr('readonly');
+                                            break;
+                                        case '1':
+                                            $('#content').val('').attr('placeholder', '请复制活动链接').removeAttr('readonly');
+                                            break;
+                                        case '2':
+                                            $('#content').val('http://www.bellali.cn/Files/app/volunteer.html').attr('readonly', 'readonly');
+                                            break;
+                                        case '3':
+                                            $('#content').val('http://www.bellali.cn/files/app/book.html').attr('readonly', 'readonly');
+                                            break;
+                                        case '4':
+                                            $('#content').val('http://www.bellali.cn/Files/app/myactive.html').attr('readonly', 'readonly');
+                                            break;
+                                        case '5':
+                                            $('#content').val('http://www.bellali.cn/files/app/index.html').attr('readonly', 'readonly');
+                                            break;
+                                        default:
+                                            break
+                                    }
+                                });
+
+
                                 //监听指定开关
                                 Comm.form.on('submit(sub)', function (data) {
                                     AJAX.POST('/api/book/SaveMenu', data.field, function (d) {
@@ -245,9 +283,36 @@
     }
 
     function SaveMenu() {
-        Comm.laod(true);
-        AJAX.POST('/api/book/SaveMenuWX', { access_token: token, json: JSON.stringify(Comm.menu) }, function (d) {
-            Comm.laod(false);
+
+        var wxmenu = {
+            "button": []
+        }
+        for (var i = 0; i < menudata.length; i++) {
+            if (menudata[i].pId == 0) {
+                var one = {
+                    name: menudata[i].name,
+                    sub_button: []
+                }
+                for (var j = 0; j < menudata.length; j++) {
+                    if (menudata[j].pId == menudata[i].id) {
+                        one.sub_button.push({
+                            "type": "view",
+                            "name": menudata[j].name,
+                            "url": menudata[j].content
+                        })
+                    }
+                }
+                if (one.sub_button.length == 0) {
+                    one.type = 'view';
+                    one.url = menudata[i].content;
+                }
+                wxmenu.button.push(one)
+            }
+        }
+        console.log(wxmenu);
+        Comm.loading(true);
+        AJAX.POST('/api/book/SaveMenuWX', { access_token: token, json: JSON.stringify(wxmenu) }, function (d) {
+            Comm.loading(false);
             if (d.code == 1) {
                 layer.closeAll();
                 layer.msg("保存成功!", { icon: 1 })
